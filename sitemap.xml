@@ -20,4 +20,8 @@
         <loc>http://cloudson.github.io/robots.txt</loc>
         <lastmod>2013-08-17T15:23:22-03:00</lastmod>
     </url>
+    <url>
+        <loc>http://cloudson.github.io/about/</loc>
+        <lastmod>2013-08-19T00:16:40-03:00</lastmod>
+    </url>
 </urlset>
