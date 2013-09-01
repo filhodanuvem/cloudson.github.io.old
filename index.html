@@ -9,8 +9,7 @@
   <meta name="author" content="Claudson Oliveira">
 
   
-  <meta name="description" content="Bom, como você deve ter lido no pequeno primeiro post do blog, sou um mineiro desbravando terras paulistan.. Hum, bom momento
-para falar sobre a &hellip;">
+  <meta name="description" content="Há algumas semanas saiu um artigo (baseado em achismos talvez) sobre o php do futuro, e um dos pontos do autor foi que as pessoas começariam a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,352 @@ para falar sobre a &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/01/meu-metaframework-em-php/">Meu Metaframework Em PHP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-01T12:22:00-03:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
+        
+         | <a href="/2013/09/01/meu-metaframework-em-php/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Há algumas semanas saiu um artigo (baseado em <em>achismos</em> talvez) sobre <a href="http://www.sitepoint.com/a-php-from-the-future/">o php do futuro</a>, e um dos pontos do autor foi que as pessoas começariam a utilizar mais metaframeworks. Eu concordo. A verdade é que com os microframeworks instantaneamente temos metaframeworks; ferramentas próprias geradas a partir de outras menores.
+Eu mesmo, apesar de trabalhar com symfony há um tempo, nunca o utilizei em projetos pessoais &ndash; que <a href="http://temadehoje.gopagoda.com/">foram ou não pro ar</a>. <br/>
+Neste post, vou mostrar meu skeleton ou metaframework padrão para aplicações php.</p>
+
+<h3>Estrutura</h3>
+
+<p>Vamos trabalhar num sistema de diretórios análogo ao abaixo:</p>
+
+<p>&mdash;templates <br/>
+&mdash;public <br/>
+&mdash;cache <br/>
+&mdash;vendor</p>
+
+<h3>Composer</h3>
+
+<p>Este cara não é um ingrediente, mas sem ele você não vai conseguir começar. O <a href="http://getcomposer.org/">Composer</a> é um gerenciador de dependências pra projetos php. Se sua aplicação vai usar a ferramenta X, Y e Z, você as descreve num arquivo de configuração, roda um comando e todas estarão disponíveis. Se por acaso você queira atualizar Y ou trocar Z por W, basta reconfigurar esse arquivo. Veja um exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span>[composer.json] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;MeuProjeto&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;autoload&quot;</span> <span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;psr-0&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;MeuProjeto&quot;</span> <span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;php&quot;</span> <span class="p">:</span> <span class="s2">&quot;&gt;= 5.3.8&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;silex/silex&quot;</span> <span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;respect/relational&quot;</span><span class="p">:</span> <span class="s2">&quot;0.4.7&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;twig/twig&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Acima, o <em>composer.json</em> diz que faremos uma aplicação que precisa rodar num php pelo menos na versão 5.3.8 e que dependerá de outras ferramentas, que citaremos melhor abaixo.
+Vamos agora fazer com que essas dependências sejam baixadas.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>seu_diretorio_do_projeto
+</span><span class='line'><span class="nv">$ </span>curl -s http://getcomposer.org/installer | php <span class="c"># baixa o composer </span>
+</span><span class='line'><span class="nv">$ </span>php composer.phar install  <span class="c"># instala as dependencias</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Configuração</h3>
+
+<p>Costumo usar algumas constantes &ndash; que variam de acordo com o ambiente &ndash; no projeto. Agrupo essas informações num arquivo config.php</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// o composer gera um autoloader automático que já carrega as dependências</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[config.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// configuração de envio de email</span>
+</span><span class='line'><span class="c1">// ou configuração de uma app do facebook </span>
+</span><span class='line'><span class="c1">// whatever</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// configurações de banco de dados</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s1">&#39;/127.0.0.[0-9]+/&#39;</span><span class="p">,</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;SERVER_ADDR&#39;</span><span class="p">])){</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;motherfucker&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;314159265359&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;path_db.app.com&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Silex</h3>
+
+<p>O <a href="http://silex.sensiolabs.org/">Silex</a> é um roteador, em poucas linhas você consegue escrever um programa que roda diferentes funções para cada url (rota) de sua aplicação.</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Estamos na home!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Twig</h3>
+
+<p>O <a href="http://twig.sensiolabs.org/">Twig</a> nasceu no ecossistema symfony (como quase tudo deste post). Ele é um motor de templates, uma forma de escrever o html com inserção de informações dinâmicas vindas da sua aplicação.<br/>
+Vamos primeiro integrar o Twig ao Silex:</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
+</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// integrante do com silex</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;Claudson Oliveira&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">));</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[home.html] language:html</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Blog<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>        <span class="c">&lt;!-- leia a documentacao do twig para inserir as variaveis --&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Banco de dados</h3>
+
+<p>Para persistência em banco de dados, usaremos um cara brasileiro que eu sou fã. O <a href="http://github.com/respect/relational">Respect\Relational</a>, com ele não há trabalho em escrever classes que representam tabelas, ou qualquer dificuldade de configuração.</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// instanciando o relational com pdo </span>
+</span><span class='line'><span class="nv">$mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mapper</span><span class="p">(</span><span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">&#39;mysql:dbname=seu_bd;host=&#39;</span><span class="o">.</span><span class="nx">DB_PATH</span><span class="p">,</span> <span class="nx">DB_USER</span><span class="p">,</span> <span class="nx">DB_PASS</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
+</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// integrante do com silex</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// usa o mapper pra listar todos os usuarios do sistema (supondo que a tabela exista)</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$mapper</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$usuarios</span> <span class="o">=</span> <span class="nv">$mapper</span><span class="o">-&gt;</span><span class="na">user</span><span class="o">-&gt;</span><span class="na">fetchAll</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;usuarios&#39;</span><span class="o">=&gt;</span> <span class="nv">$usuarios</span><span class="p">));</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusão</h3>
+
+<p>Vimos o básico para começar um projeto rapidamente; um controlador, uma engine de templates e uma ferramenta de persistência e consulta em banco de dados. A partir disso você pode plugar outras ferramentas, de validação, envio de email ou alguma api de rede social.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -279,6 +624,10 @@ Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/09/01/meu-metaframework-em-php/">Meu metaframework em PHP</a>
+      </li>
     
       <li class="post">
         <a href="/2013/08/17/e-ai-ta-gostando-de-sp/">E aí, tá gostando de SP?!</a>

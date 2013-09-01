@@ -1,24 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Claudson Oliveira]]></title>
-  <link href="http://cloudson.github.io/atom.xml" rel="self"/>
-  <link href="http://cloudson.github.io/"/>
-  <updated>2013-09-01T15:09:54-03:00</updated>
-  <id>http://cloudson.github.io/</id>
-  <author>
-    <name><![CDATA[Claudson Oliveira]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Meu metaframework em PHP - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
 
   
-  <entry>
-    <title type="html"><![CDATA[Meu metaframework em PHP]]></title>
-    <link href="http://cloudson.github.io/2013/09/01/meu-metaframework-em-php/"/>
-    <updated>2013-09-01T12:22:00-03:00</updated>
-    <id>http://cloudson.github.io/2013/09/01/meu-metaframework-em-php</id>
-    <content type="html"><![CDATA[<p>Há algumas semanas saiu um artigo (baseado em <em>achismos</em> talvez) sobre <a href="http://www.sitepoint.com/a-php-from-the-future/">o php do futuro</a>, e um dos pontos do autor foi que as pessoas começariam a utilizar mais metaframeworks. Eu concordo. A verdade é que com os microframeworks instantaneamente temos metaframeworks; ferramentas próprias geradas a partir de outras menores.
+  <meta name="description" content="Há algumas semanas saiu um artigo (baseado em achismos talvez) sobre o php do futuro, e um dos pontos do autor foi que as pessoas começariam a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2013/09/01/meu-metaframework-em-php">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Meu Metaframework Em PHP</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-01T12:22:00-03:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Há algumas semanas saiu um artigo (baseado em <em>achismos</em> talvez) sobre <a href="http://www.sitepoint.com/a-php-from-the-future/">o php do futuro</a>, e um dos pontos do autor foi que as pessoas começariam a utilizar mais metaframeworks. Eu concordo. A verdade é que com os microframeworks instantaneamente temos metaframeworks; ferramentas próprias geradas a partir de outras menores.
 Eu mesmo, apesar de trabalhar com symfony há um tempo, nunca o utilizei em projetos pessoais &ndash; que <a href="http://temadehoje.gopagoda.com/">foram ou não pro ar</a>. <br/>
 Neste post, vou mostrar meu skeleton ou metaframework padrão para aplicações php.</p>
 
@@ -327,136 +416,172 @@ Vamos primeiro integrar o Twig ao Silex:</p>
 <h3>Conclusão</h3>
 
 <p>Vimos o básico para começar um projeto rapidamente; um controlador, uma engine de templates e uma ferramenta de persistência e consulta em banco de dados. A partir disso você pode plugar outras ferramentas, de validação, envio de email ou alguma api de rede social.</p>
-]]></content>
-  </entry>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  <entry>
-    <title type="html"><![CDATA[E aí, tá gostando de SP?!]]></title>
-    <link href="http://cloudson.github.io/2013/08/17/e-ai-ta-gostando-de-sp/"/>
-    <updated>2013-08-17T14:59:00-03:00</updated>
-    <id>http://cloudson.github.io/2013/08/17/e-ai-ta-gostando-de-sp</id>
-    <content type="html"><![CDATA[<p>Bom, como você deve ter lido no pequeno <a href="http://cloudson.github.io/2013/08/17/begin/">primeiro post</a> do blog, sou um mineiro desbravando terras paulistan.. Hum, bom momento
-para falar sobre a diferença entre paulistano e paulista, o primeiro nasceu/vive na cidade de São Paulo, e o segundo
-é o mesmo que o mineiro, é o cara que nasceu/vive no estado de São Paulo, ok? rs. Mas bem, esse post não é (só) sobre isso.</p>
 
-<p>Cheguei na cidade grande no 5º dia do 5º mês desse ano, e desde então amigos, familiares e conhecidos
-têm me jogado essa pergunta; <em>&ldquo;E aí, Tá gostando de SP?!&rdquo;</em>. Eu poderia responder com uma direta falsa animação <em>&ldquo;Uai! Como não? São Paulo é foda,
-a cidade não para, há tanta coisa pra se fazer e&hellip;&rdquo;</em> mas não é bem por aí. Neste momento se você está numa cidade menor e com a suposta qualidade de vida superior, está pensando <em>&ldquo;haha, se *udeu, falei pra ele que não valia a pena viver sob o estress de uma capital&rdquo;</em>, será mesmo que não vale a pena?
-Abaixo vou listar pontos que eu gostaria de ter lido antes de vir pra cá, numa visão de quem chegou há menos de seis meses, e tentando ser bem honesto.</p>
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
 
-<p><img src="http://www.angularaerofoto.com.br/data/photos/207_1Ponte_Estaiada_4.jpg" alt="A ponte estaiada" /></p>
-
-<h3>Trânsito!!!!!!</h3>
-
-<p>Certo. Quando pensamos numa cidade grande, pensamos em estress e quando pensamos em estress pensamos em trânsito.
-Sim, a cidade é caótica nos horários de rush, parece que as pessoas nascem com carros por aqui, e há muitos deles rs.
-No primeiro mês empregado, eu levava pouco mais que 1 hora para chegar ao trabalho, isso quer dizer 10 horas semanais dentro de um automóvel.
-A pior parte do trajeto, claro, era que os ônibus da sptrans entravam no engarrafamento com os carros.
-Mas há poucas semanas a <a href="http://g1.globo.com/sao-paulo/noticia/2013/08/faixa-no-corredor-norte-sul-deixa-passageiros-de-onibus-aliviados.html">prefeitura começou um projeto</a>
-para dar prioridade a quem deixa o carro em casa e vai de transporte coletivo ao trabalho, está melhorando num sentido e piorando MUITO para quem tem carro.<br/>
-Sobre transporte público, pode ter muito o que melhorar, mas comparado com as cidades que conheci e morei, ele é muito bom sim.
-Metrôs e trens cortam a cidade toda, o cartão que as pessoas usam não é só por modinha ou pura economia dos empresários
-(como lá na minha cidade natal).
-Aqui rola &ldquo;integração&rdquo;; se você vai pegar vários transportes seguidos, terá descontos (usando o cartão) a partir do segundo (2 ônibus seguidos te custará R$ 3,00, em Juiz de fora &ndash; MG, te custa R$ 4,00).<br/>
-O Segredo é morar perto do trabalho e começar a ler mais enquanto está no trânsito :)</p>
-
-<h3>Poluição</h3>
-
-<p>Como eu disse, há muitos carros, e consequentemente há muita poluição, quando vejo um céu totalmente azul até paro para admirá-lo. No crepúsculo poente, você pode ver o quanto de CO2 (e sabe-se lá mais o quê) foi liberado no dia.
-Quando vim para cá, pensei em todos os lados ruins, mas confesso que este era o que pesava menos. Ingenuidade, como já tive problemas respiratórios na infância, já estou pensando em ir procurar um especialista para ver como está meu querido pulmão.</p>
-
-<h3>Criminalidade</h3>
-
-<p>Não há muito o que dizer, ela existe, pessoas conhecidas são assaltadas a todo momento. Você nunca está totalmente tranquilo em SP. É um preço por todas as outras coisas boas que a cidade oferece :(</p>
-
-<h3>Desigualdade</h3>
-
-<p>Na paulista você encontrará o maior desnivel social, quem sabe, da cidade. Artistas de TV moram lá, mas mendigos também. Jovens se drogam no meio da rua, artistas de rua começam carreira, recém chegados se escondem do frio, sem um teto pra dormir. Uma vez estava andando por lá e tinha uma limousine com várias meninas bebendo espumante (ou qualquer outra coisa que foge meu nivel social) e se divertindo como num filme.
-Achei hilário e ao mesmo tempo muito non-sense. <br/>
-A desigualdade em São Paulo é exagerada, pessoas ricas são muito ricas, estupidamente ricas, e eu sequer consigo ficar perto delas.
-Parece um filme que é muito bom pela sua crítica chamado <a href="http://pt.wikipedia.org/wiki/The_Hunger_Games">Jogos vorazes</a>, vejam, vale a pena.</p>
-
-<h3>O Paulistano!</h3>
-
-<p>Lá no topo eu defini o paulistano como quem vive ou nasce em São Paulo, isso porque é difícil encontrar pessoas naturais daqui, e essas provavelmente têm pais de outros estados e cidades. A mistura aqui é das boas, somos mineiros, baianos, franceses, paraibanos, gaúchos &hellip; convivendo direta e indiretamente.
-<a href="http://www.rocket-internet.de/">Lá onde eu trabalho mesmo</a> são tantos sotaques, que você pode até ficar perdido.<br/>
-A xenofobia existe, infelizmente, de vez em quando você vê um maluco na internet falando que a cidade é dele e não dos invasores. Mas quem sofre mais são os nordestinos, que são MUITOS por aqui.
-Baianada é sinônimo de trabalho ou ato mal feito, para você ver a que ponto chegamos.<br/>
-Colocando na média, o povo é incrível, é tão bom trabalhar e viver com pessoas com histórias totalmente diferentes ou até mesmo com histórias similares mas tão distantes geográficamente; o Brasil é foda!</p>
-
-<h3>O Paulistano (novamente!) &ndash; &ldquo;Povo frio&rdquo;</h3>
-
-<p>Aqui faz muito frio haha, custumam dizer que o povo é meio frio também, metaforicamente; Distante.
-Uma das minhas músicas preferidas atualmente é do Criolo. A música é velha mas música é isso, quando você menos espera ela se encaixa na sua vida :)</p>
-
-<iframe width="560" height="315" src="http://cloudson.github.io//www.youtube.com/embed/Xo-gBWX_jXc" frameborder="0" allowfullscreen></iframe>
+      
 
 
-<p>De certa forma é verdade, as pessoas estão trabalhando a todo momento, o foco em atingir algo aqui é alto; começa no fazer as malas seja do nordestino, seja do mineiro que está vindo &ldquo;tentar a vida&rdquo;.
-Mas isso não quer dizer que ser frio é ser desonesto. Você pode ser carioca e estar lendo isso agora, tem todo o direito de ficar ofendido; Mas eu acho o povo paulistano mais justo que o povo carioca, a cultura do malandro não me atrai.<br/>
-Essa frieza também faz bem; enquanto que numa cidade de 100 mil habitantes se você fizer uma tatuagem na testa vai ser levado pra fogueira da pracinha, numa cidde de 13 milhões pff, dane-se você, fez a tatuagem, o problema é seu! A vida é sua! Então se você não se encaixa onde está agora, aqui de certo você se encaixará.</p>
 
-<h3>&ldquo;Lá rola dinheiro&rdquo;</h3>
 
-<p>Crescemos ouvindo isso, que em São Paulo rola dinheiro.
-Rolar rola, mas as pessoas não vêem ou valorizam o que muitos paulistanos passam para ter seu carro e casa própria.
-As pessoas trabalham duro aqui, fazem hora extra sem torcer bico, tem um emprego CLT e um negócio paralelo para tirar uma grana, acordam 4:30 da manhã para pegar o busão infernal.
-Então pare de associar São Paulo e paulistanos com dinheiro fácil, (estude antes de querer um bom salário e) respeite os paulistanos pelo seu esforço, ok?<br/>
-Se você quer trabalhar, aqui tem lugar, se você quer ganhar dinheiro, pense duas vezes antes de vir (Leia essa frase até conseguir entendê-la rs).</p>
 
-<h3>Satisfação profissional</h3>
 
-<p>Estou apaixonado pelo meu trabalho, e é justamente o que eu estava buscando para minha carreira. Se você é desenvolvedor como eu e se interessa por inovação, não quer ficar programando em php 5.2 ou com tecnologias da década passada, aqui você será feliz. Eu trabalho com um conjunto de ferramentas que não iria lidar em nenhuma empresa que conhecia (por dentro ou por fora) em Juiz de fora.  Num post futuro falarei mais sobre isso.</p>
 
-<h3>Conclusão</h3>
 
-<p>São Paulo é uma cidade intensa, tudo aqui é proporcional, ganha-se mais dinheiro, há mais gente, há mais coisa pra se fazer culturalmente, há mais desiguldade, há mais crimes, há mais tudo.</p>
-
-<p>Eu não tinha conclusão quando comecei a escrever, a ideia era deixar o leitor decidir de acordo com minhas palavras, mas olha o tanto que eu escrevi.
-Descobri que estou amando São Paulo e esta fase da vida, e amor é diferente de paixão, que dá e passa.
-Quero ficar mais um cadim, reescrever conclusões e tirar novas.<br/>
-Seria legal se você também desse sua opinião, já morou aqui? Quer vir pra cá? Quer saber mais de como é? Entre em contato :)<br/>
-Ps:  Se você não ouviu a música, ouça! É melancólica, mas linda e sincera. Se gostar e não conhecer o cara, baixe um cd gratuito dele <a href="http://www.criolo.net/music.html">http://www.criolo.net/music.html</a>. Vai ter samba, rap, bolero&hellip;</p>
-]]></content>
-  </entry>
   
-  <entry>
-    <title type="html"><![CDATA[(new Blog)->HelloWorld();]]></title>
-    <link href="http://cloudson.github.io/2013/08/17/begin/"/>
-    <updated>2013-08-17T00:01:00-03:00</updated>
-    <id>http://cloudson.github.io/2013/08/17/begin</id>
-    <content type="html"><![CDATA[<p>Da última vez que eu tive um blog, eu escrevi bastante mas publiquei pouco rsrs. Não me acho perfeccionista, me acho chato e por saber que minha escrita não é das melhores fico irritado e acabo demorando para chegar no nirvana do post hahaha.</p>
-
-<h3>Quem é esse aí com cara de lesado?</h3>
-
-<p><img src="http://en.gravatar.com/userimage/5255340/f664b6f32219eeef1bb0f287b40fa423.jpg?size=200" alt="It's me..." /></p>
-
-<p>Sou o Claudson, um dia tive o insight de usar o trocadilho cloudson na internet, e acabei levando assim, sendo um tipo de filho das nuvens rs.<br/>
-Sou mineiro, natural de <a href="http://pt.wikipedia.org/wiki/Muria%C3%A9">Muriaé</a>, comecei a gostar de computadores por causa de jogos, fui me interessando mais e acabei fazendo um curso chato de web design e html.<br/>
-Estava tudo muito sem vida, e acabaram me falando que existiam linguagens de programação. Comecei com pascal mas não avancei muito, decidi me matar de estudar para passar no vestibular (tanto que só conheci o que era cerveja e balada com 17 anos haha) e apesar de não ter conseguido na federal de Viçosa (o subtítulo do blog tem a ver com isso), consegui na federal de Juiz de Fora.<br/>
-Foram cinco longos e prazerosos anos de Ciência da Computação, e hoje, bacharel, tenho muito o que agradecer aos mestres de lá.<br/>
-Durante essa caminhada fui começando a carreira como software developer, trabalhei tanto em agência, como em uma fábrica de software (não gosto muito desse termo rs). Sempre gostando mais da área, resolvi vir pra São Paulo interagir mais com o <a href="">phpsp</a> (estou tentando, juro!) e aprender novas tecnologias.
-Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">já fiz um compilador em C</a> rsrs, delphi (tá amarrado em nome de jesus!)&hellip; mas sempre levei minha carreira com php. Não tenho muito orgulho disso, php é uma linguagem que tem alguns problemas mas alguns frameworks e seus contribuidores levaram o ecossistema da linguagem para outro nível, nos últimos 5 anos.</p>
-
-<h3>Por quê ter um blog?</h3>
-
-<ul>
-<li>Você pode escrever coisas para se lembrar no futuro :).</li>
-<li>Você pode desabafar e criticar coisas sobre sua profissão (e eu tenho várias críticas guardadas rs).</li>
-<li>Uma forma das pessoas te acharam rapidamente na internet.</li>
-<li>Uma forma de ajudar a sua comunidade ou profissionais da sua área, compartilhando conhecimentos, mesmo que ínfimos.</li>
-</ul>
 
 
-<h3>Por quê agora vai ser diferente?</h3>
+<time datetime="2013-09-01T12:22:00-03:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
+      
 
-<ul>
-<li>Github pages e octopress pra gerenciar o blog, eu não vou perdê-lo já que sempre estará na minha conta do github .</li>
-<li>Estou mais dedicado a minha carreira, agora que a universidade FINALMENTE terminou .</li>
-<li>Tenho conhecido pessoas e projetos legais, então mesmo que citá-los já seria útil pra terceiros.</li>
-</ul>
-
-]]></content>
-  </entry>
+<span class="categories">
   
-</feed>
+    <a class='category' href='/blog/categories/php/'>php</a>, <a class='category' href='/blog/categories/symfony/'>symfony</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/08/17/e-ai-ta-gostando-de-sp/" title="Previous Post: E aí, tá gostando de SP?!">&laquo; E aí, tá gostando de SP?!</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/09/01/meu-metaframework-em-php/">Meu metaframework em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/08/17/e-ai-ta-gostando-de-sp/">E aí, tá gostando de SP?!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/08/17/begin/">(new Blog)->HelloWorld();</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2013/09/01/meu-metaframework-em-php/';
+        var disqus_url = 'http://cloudson.github.io/2013/09/01/meu-metaframework-em-php/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
