@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: computação | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/computacao/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2013-09-29T13:14:02-03:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Conversão de base numérica]]></title>
+    <link href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/"/>
+    <updated>2013-09-28T18:32:00-03:00</updated>
+    <id>http://cloudson.github.io/2013/09/28/conversao-de-base-numerica</id>
+    <content type="html"><![CDATA[<p>Não sei se esse é um tópico desnecessário mas vejo muitas questões de prova da ZCE (php) que se relacionam com conversão de base numérica. Se ajudar uma pessoa no mundo, já fico satisfeito.</p>
+
+<h3>Começando do começo</h3>
+
+<p>Com nossos algarismos indo-arábicos usamos a base 10. Ou seja, há 10 símbolos que representam qualquer número. Para um sistema computacional, a base utilizada é a 2, como você deve imaginar. Isso quer dizer que todas as representações utilizam 2 símbolos, o 0 e o 1. A seguir vamos ver como transformamos um número em base 10 para base 2:
+Para descrobrirmos qual a representação do número 9 (base 10) para base 2, divimos o mesmo por 2 sucessivamente:</p>
+
+<p>9 / 2 = 4 (resta 1) <br/>
+4 / 2 = 2 (resta 0) <br/>
+2 / 2 = 1 (resta 0)</p>
+
+<p>Quando o resultado da divisão inteira for 1, o método para e você já tem a resposta da conversão.
+O primeiro dígito binário é resultado da última divisão; 1. A seguir aparecem os restos das divisões de baixo para cima; 001. Ou seja, 9 em base 2 é 1001. <br/>
+Vamos repetir o método para alguns números</p>
+
+<p>8 / 2 = 4 (resta 0) <br/>
+4 / 2 = 2 (resta 0)<br/>
+2 / 2 = 1 (resta 0) <br/>
+8 em base 2 é 1000</p>
+
+<p>21 / 2 = 10 (resta 1)<br/>
+10 / 2 = 5  (resta 0)<br/>
+5  / 2 = 2  (resta 1)
+2  / 2 = 1  (resta 0)
+21 em base 2 é 10101</p>
+
+<h3>E o caso contrário ?</h3>
+
+<p>Eu tenho o número 1101 na base binária e quero saber qual sua representação na base decimal. Multiplicaremos cada dígito desse numero por 2 elevado a uma potência incremental (da direita pra esquerda). Ok, ficou mais confuso do que parece, veja abaixo:</p>
+
+<p>1101 = 1*2<sup>3</sup> + 1*2<sup>2</sup> + 0*2<sup>1</sup> + 1*2<sup>0</sup> = 8 + 4 + 0 + 1 = 13</p>
+
+<p>Para tirar a prova, vamos utilizar um número que convertemos na seção anterior, o 1001 (que deve dar 9):</p>
+
+<p>1001 = 1*2<sup>3</sup> + 0*2<sup>2</sup> + 0*2<sup>1</sup> + 1*2<sup>0</sup> = 8 + 0 + 0 + 1 = 9</p>
+
+<p>Satisfeito? :) Não? <br/>
+Vamos pegar um número maior então, 101010:</p>
+
+<p>101010 = 1*2<sup>5</sup> + 0 + 1*2<sup>3</sup> + 0 + 1*2<sup>1</sup> + 0 = 32 + 8 + 2 = 42</p>
+
+<h3>E se eu estiver em outra base?</h3>
+
+<p>Quando citei o php lá no começo do post estava me referindo aos números octais nele, veja o código abaixo:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">?</span><span class="nx">php</span><span class="o">&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nv">$foo</span> <span class="o">=</span> <span class="mo">013</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nx">code</span><span class="o">&gt;&lt;/</span><span class="nx">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Qual o valor de $bar no fim do script? 18? Não. O valor é 16.<br/>
+Se você nunca trabalhou com php, eu te perdôo. Números na linguagem que começam com 0 (da esquerda pra direita) são automaticamente interpretados como base 8. Questões relacionadas a octais na ZCE (certificação da linguagem) são comuns, então vamos a seguir fazer a conversão do octal 013 para decimal, para que assim tenhamos a prova da &ldquo;hipótese&rdquo; de que o resultado é 16.<br/>
+A verdade é que não há nenhuma regra nova, a conversão de binário para decimal e de octal para decimal seguem o mesmo método, porém a base muda de 2 para 8 então &hellip;</p>
+
+<p>013 = 0*8<sup>2</sup> + 1*8<sup>1</sup> + 3*8<sup>0</sup> = 0 + 8 + 3 = 11</p>
+
+<p>Viram a diferença? Multiplicamos cada dígito por 8 elevado a um expoente incremental (incremental da direita pra esquerda rs).<br/>
+11 + 5 = 16, como foi dito anteriormente.</p>
+
+<h3>Já que estamos aqui, vamos falar também de &hellip;</h3>
+
+<p>Hexadecimais! 16 símbolos para representar qualquer número. Os símbolos são :</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Simbolo  </th>
+<th>  Valor  </th>
+<th> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>   0      </td>
+<td>   0    </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 1 </td>
+<td> 1 </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> 2 </td>
+<td> 2 </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> 3 </td>
+<td> 3 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 4 </td>
+<td> 4 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 5 </td>
+<td> 5 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 6 </td>
+<td> 6 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 7 </td>
+<td> 7 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 8 </td>
+<td> 8 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> 9 </td>
+<td> 9 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> a </td>
+<td> 10 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> b </td>
+<td> 11 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> c </td>
+<td> 12 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> d </td>
+<td> 13 </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> e </td>
+<td> 14 </td>
+<td> </td>
+</tr>
+<tr>
+<td></td>
+<td> f </td>
+<td> 15 </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Sendo redundante: A regra pra conversão de hexadecimal para decimal é a mesma, vamos converter o número #f00 para decimal:</p>
+
+<p>f00 = f*16<sup>2</sup> + 0*16<sup>1</sup> + 0*16<sup>0</sup> = 15*16<sup>2</sup> + 0*16<sup>1</sup> + 0*16<sup>0</sup> = 15*256 + 0 + 0 = 3840 .</p>
+
+<p>Perceba que usamos a tabela para converter as letras por valores numéricos, nada além disso.</p>
+
+<h3>Conclusão</h3>
+
+<p>Com essas regrinhas, não há o que temer :). Dúvidas? Mande um comentário ali aí.<br/>
+Pretendo fazer mais posts de conhecimento menos específico como este, então nos veremos em breve. Até mais.</p>
+]]></content>
+  </entry>
+  
+</feed>
