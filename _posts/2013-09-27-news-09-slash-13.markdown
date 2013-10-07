@@ -1,0 +1,37 @@
+---
+layout: post
+title: "News - 09/13"
+date: 2013-09-27 22:22
+comments: true
+categories: [news]
+---
+
+A ideia é ter uma série de posts rápidos sobre o que eu vi, li e/ou utilizei durante o mês.
+
+### Vagrant 
+Já trabalhei em lugares em que cada job tinha dependências diferentes. Um com php 5.2, outro com php 5.3+, e para quem não sabe, as coisas mudaram bastante entre essas versões. O Vagrant torna a administração de ambientes de desenvolvimento mais fácil por meio de virtualização, ele utiliza o virtualbox para subir maquinas virtuais facilmente acessíveis via ssh. 
+
+[http://www.vagrantup.com/](http://www.vagrantup.com/)
+
+
+### Octopress
+Esse é o cara! Eu já morro de preguiça de pagar hospedagem, preparar ambiente e manter um wordpress. Então pra esse blog, pensei em usar um gerador de sites estáticos utilizando o github pages e essa ferramenta, que possui gerenciamento de temas, posts e todo o mínimo que um blog precisa. 
+
+
+[http://octopress.org](http://octopress.org)
+
+### Golang 
+Golang, ou simplesmente Go, é uma linguagem do nível do C. Diferente desta, Go é menos burocrática, fortemente regrada e mais... organizada. 
+A linguagem deve estar perto do período de hype (assim como ruby esteve há uns anos), eu sigo muitos devs no github, e do nada stars em projetos Go viraram rotina.  
+Hype ou não, é uma boa dica.  
+
+[http://golang.org/](http://golang.org/)   
+[http://www.grokpodcast.com/2013/07/17/episodio-95-golang/](http://www.grokpodcast.com/2013/07/17/episodio-95-golang/)
+
+### Mondrian (php)
+
+Um cara muito doido utilizou teoria dos grafos para analisar códigos php e gerar relatórios sobre acoplamento entre classes e outros furos do SOLID. 
+
+[https://github.com/Trismegiste/Mondrian](https://github.com/Trismegiste/Mondrian)
+
+
