@@ -1,0 +1,1143 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Ne",
+				"Nears"
+			],
+			[
+				"Vert",
+				"VertexList"
+			],
+			[
+				"Ver",
+				"Vertex"
+			],
+			[
+				"nEAR",
+				"Nears"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"no",
+				"Node"
+			],
+			[
+				"Test",
+				"testing"
+			],
+			[
+				"F",
+				"fmt	 package ρ"
+			],
+			[
+				"P",
+				"Print	n int, err error ƒ"
+			],
+			[
+				"f",
+				"fmt	 package ρ"
+			],
+			[
+				"Pr",
+				"Printf	n int, err error ƒ"
+			],
+			[
+				"gist",
+				"gistJson	struct ʈ"
+			],
+			[
+				"prin",
+				"Println	 ƒ"
+			],
+			[
+				"js",
+				"jsonReturn	[]map[string]string ν"
+			],
+			[
+				"jo",
+				"jsonReturn	json.Encoder ν"
+			],
+			[
+				"json",
+				"jsonReturn	*json.Encoder ν"
+			],
+			[
+				"N",
+				"NewEncoder	*json.Encoder ƒ"
+			],
+			[
+				"get",
+				"GetSections	sections []string ƒ"
+			],
+			[
+				"sec",
+				"GetSections	sections []string ƒ"
+			],
+			[
+				"Print",
+				"Println	 ƒ"
+			],
+			[
+				"rea",
+				"ReadConfigFile	c *conf.ConfigFile, err error ƒ"
+			],
+			[
+				"func",
+				"func (*Render)	func (...) {...} ʂ"
+			],
+			[
+				"resu",
+				"result_inter	int ν"
+			],
+			[
+				"fat",
+				"fatorial_rec	result int, err error ƒ"
+			],
+			[
+				"n",
+				"Now	time.Time ƒ"
+			],
+			[
+				"T",
+				"Time	struct ʈ"
+			],
+			[
+				"imp",
+				"import	import (...) ʂ"
+			],
+			[
+				"w",
+				"ResponseWriter	interface ¡"
+			],
+			[
+				"Wr",
+				"WriteHeader	 ƒ"
+			],
+			[
+				"Std",
+				"Stdout	*os.File ν"
+			],
+			[
+				"spri",
+				"Sprintf	string ƒ"
+			],
+			[
+				"PR",
+				"Printf	n int, err error ƒ"
+			],
+			[
+				"respo",
+				"ResponseWriter	interface ¡"
+			],
+			[
+				"a",
+				"access_token_byte	[]byte ν"
+			],
+			[
+				"Respon",
+				"ResponseWriter	interface ¡"
+			],
+			[
+				"spr",
+				"Sprintf	string ƒ"
+			],
+			[
+				"fun",
+				"func main	func main {...} ʂ"
+			],
+			[
+				"Lin",
+				"ListenAndServe	error ƒ"
+			],
+			[
+				"Prin",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"had",
+				"hadRing"
+			],
+			[
+				"Ass",
+				"assertFalse"
+			],
+			[
+				"method",
+				"method_exists"
+			],
+			[
+				"ass",
+				"assertTrue"
+			],
+			[
+				"numer",
+				"numberCall"
+			],
+			[
+				"call",
+				"callParams"
+			],
+			[
+				"var",
+				"varName"
+			],
+			[
+				"return",
+				"return2"
+			],
+			[
+				"url",
+				"urlencode"
+			],
+			[
+				"str_re",
+				"str_replace"
+			],
+			[
+				"me",
+				"methods"
+			],
+			[
+				"call_us",
+				"call_user_func_array"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"asser",
+				"assertEquals"
+			],
+			[
+				"find",
+				"findByName"
+			],
+			[
+				"pal",
+				"palavra"
+			],
+			[
+				"pala",
+				"nova_palavra"
+			],
+			[
+				"try",
+				"try	Try/Except"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"sor",
+				"Sorvete"
+			],
+			[
+				"emis",
+				"emissor"
+			],
+			[
+				"em",
+				"emissor"
+			],
+			[
+				"obs",
+				"observers"
+			],
+			[
+				"ob",
+				"observers"
+			],
+			[
+				"obser",
+				"observer"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"add",
+				"addObserver"
+			],
+			[
+				"emissor",
+				"Emissor"
+			],
+			[
+				"sur",
+				"surfista"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"he",
+				"head	Tag"
+			],
+			[
+				"error",
+				"error_reporting"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"re",
+				"review-item"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"LIN",
+				"link	Tag"
+			],
+			[
+				"prod",
+				"product_id"
+			],
+			[
+				"pro",
+				"product_id"
+			],
+			[
+				"jso",
+				"jsonify"
+			],
+			[
+				"li",
+				"li	Tag"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"Re",
+				"ReviewREpository"
+			],
+			[
+				"rei",
+				"review_controller"
+			],
+			[
+				"user",
+				"user_avatar_normal"
+			],
+			[
+				"marg",
+				"margin-right"
+			],
+			[
+				"border",
+				"border-bottom"
+			],
+			[
+				"i",
+				"i	Tag"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"h",
+				"h1	Tag"
+			],
+			[
+				"bord",
+				"border-radius"
+			],
+			[
+				"cre",
+				"created_at"
+			],
+			[
+				"fae",
+				"facebook_id"
+			],
+			[
+				"faceboo",
+				"facebook_id"
+			],
+			[
+				"va",
+				"validate_save_request"
+			],
+			[
+				"save",
+				"save_to_session"
+			],
+			[
+				"us",
+				"user_repo"
+			],
+			[
+				"Reo",
+				"UserRepository"
+			],
+			[
+				"U",
+				"UserRepository"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"bir",
+				"birth"
+			],
+			[
+				"DIV",
+				"div	Tag"
+			],
+			[
+				"ge",
+				"gender"
+			],
+			[
+				"as",
+				"assert_equal"
+			],
+			[
+				"b",
+				"birth"
+			],
+			[
+				"quer",
+				"queries"
+			],
+			[
+				"ava",
+				"avatar_facebook"
+			],
+			[
+				"op",
+				"open_db_session"
+			],
+			[
+				"cl",
+				"close"
+			],
+			[
+				"is",
+				"isdigit"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"hei",
+				"height_type"
+			],
+			[
+				"e",
+				"email"
+			],
+			[
+				"fa",
+				"family"
+			],
+			[
+				"asse",
+				"assert_equal"
+			],
+			[
+				"s",
+				"socialreview"
+			],
+			[
+				"face",
+				"facebook_user"
+			],
+			[
+				"in",
+				"input	Tag"
+			],
+			[
+				"erro",
+				"errorhandler"
+			],
+			[
+				"po",
+				"pop"
+			],
+			[
+				"fi",
+				"filter_by"
+			],
+			[
+				"data",
+				"database"
+			],
+			[
+				"hea",
+				"header	Tag"
+			],
+			[
+				"faceb",
+				"facebook_id"
+			],
+			[
+				"FAC",
+				"FACE_APP_ID"
+			],
+			[
+				"APP",
+				"FACE_APP_ID"
+			],
+			[
+				"get_",
+				"get_env"
+			],
+			[
+				"gra",
+				"graph_api_url"
+			],
+			[
+				"ur",
+				"url_found"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "---\nlayout: post\ntitle: \"Faça um sistema de buscas com Solr/Lucene\"\ndate: 2013-09-07 20:58\ncomments: true\ncategories: [solr]\n---\n\nÉ muito comum necessitarmos de um sistema de buscas em um sistema web.  \nSabemos que o mysql, o banco de dados mais popular por desenvolvedores, não foi feito para isso. Se você tem um campo fulltext em uma tabela InnoDB, não podrá criar índices para esse campo, e consequentemente não conseguirá fazer uma busca otimizada.  \nEu já vi muitas soluções de busca encima do mysql, onde a aplicação tinha um algoritmo agindo como uma camada entre o usuário e a pesquisa em si. \n\n{% codeblock \"Pega o valor de busca e buscar em cada campo\" lang:sql %}\nSELECT id FROM user WHERE name like \"%cloud%\" OR family like \"%cloud%\" OR email like \"%cloud%\"  \n{% endcodeblock %}\n\nNessas soluções torna-se um martírio tentar resolver vários problemas; algumas palavras (conjunções, preposições...) deveriam ser ignoradas na hora da busca, se no banco um índice está no plural uma busca pelo seu singular deveria ser eficaz, sinônimos deveriam funcionar também...\n\nO Solr é uma plataforma acima de uma engine de busca chamada lucene que atinge todos os problemas citados acima. \n\n### É Java sim !\n\nO Solr necessita de um servidor de aplicações web em java. Utilizaremos o jetty neste post, mas primeiro vamos instalar o java 7 (supondo que estamos em um linux debian como ubuntu).  \n{% codeblock  lang:bash %}\n$ add-apt-repository ppa:webupd8team/java # adiciona o ppa que aponta para java oficial da oracle \n$ apt-get update\n$ apt-get install oracle-java7-installer \n$ apt-get install jetty # instala o servidor \n{% endcodeblock %}\n\nVocê verá que com o servidor/solr ligado, fazer com que sua aplicação converse com ele é incrivelmente fácil. Através de requests você faz as consultas. Então, largue de preconceito e preguiça! \n\n### Enfim, solr \n\nBaixaremos o solr versão 4.4.0 em [http://lucene.apache.org/solr/](http://lucene.apache.org/solr/) \n{% codeblock  lang:bash %}\nwget http://ftp.unicamp.br/pub/apache/lucene/solr/4.4.0/solr-4.4.0.tgz\ntar -xvf solr-4.4.0.tgz\n{% endcodeblock%}\n\nAgora vamos mover os arquivos essenciais para outra pasta, onde usaremos para subir a aplicação. \n{% codeblock  lang:bash %}\nmkdir solr \ncp solr-4.4.0/example/start.jar ./solr\nmkdir ./solr/webapps & cp solr-4.4.0/example/webapps/solr.war ./solr/webapps/\nsudo cp -r solr-4.4.0/example/lib/ solr\n{% endcodeblock %}\n\n### Tempo de indexação e tempo de busca\n\n### Schemas\n\nAgora já podemos pensar na busca. \n\n{% codeblock lang:bash %}\ncd solr \nmkdir schemas\ncd schemas \n{% endcodeblock %}\n\nO arquivo principal de configuração aponta para o que ele chama de núcleos, já que você pode ter vários schemas tipos de documentos diferentes (ex: você pode ter uma aplicação grande, usar o solr para indexar produtos e categorias desses produtos). \n\n{% codeblock [solr.xml] lang:xml %}\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<solr>\n  <cores adminPath=\"/admin/cores\">\n    <core name=\"product\" instanceDir=\"product\" />\n  </cores>\n</solr>\n{% endcodeblock %}\n\nDentro do diretório *product/conf* ($SOLR_HOME/schemas/product/conf) teremos nosso schema xml que dita as regras da busca. \n\n{% codeblock [schema.xml] lang:xml%}\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<schema name=\"Product\" version=\"1.1\">\n  <!-- Definindo tipos que serão usados nos campos  -->\n  <types>\n    <fieldtype name=\"sortableInt\"  class=\"solr.SortableIntField\" />\n    <fieldType name=\"double\" class=\"solr.TrieDoubleField\"  /> \n    <fieldType name=\"string\" class=\"solr.TextField\" />\n    <fieldType name=\"text_general\" class=\"solr.TextField\" >\n      <analyzer type=\"index\">\n         <tokenizer class=\"solr.StandardTokenizerFactory\"/>\n         <filter class=\"solr.EdgeNGramFilterFactory\" minGramSize=\"2\" maxGramSize=\"15\" side=\"front\"/>\n         <filter class=\"solr.LowerCaseFilterFactory\"/>\n         <filter class=\"solr.BrazilianStemFilterFactory\"/>\n      </analyzer>\n      <analyzer type=\"query\">\n        <tokenizer class=\"solr.StandardTokenizerFactory\"/>\n        <filter class=\"solr.LowerCaseFilterFactory\"/>\n        <filter class=\"solr.SynonymFilterFactory\" synonyms=\"zocsynonyms.txt\"/>\n        <filter class=\"solr.BrazilianStemFilterFactory\"/>\n      </analyzer>\n    </fieldType>\n  </types>\n\n  <!-- \n    Valores importantes para sua busca devem estar nos documentos do solr,\n    podendo ser índices de busca ou não.\n   -->\n  <fields>\n    <!-- Basic fields -->\n    <field name=\"id\" type=\"sortableInt\" indexed=\"true\"  stored=\"true\" required=\"true\" />\n    <field name=\"name\" type=\"text_general\" indexed=\"true\"  stored=\"true\" required=\"true\"/>\n    <field name=\"slug\" type=\"string\" stored=\"true\" />\n    <field name=\"price\" type=\"double\" stored=\"true\"/>    \n    <field name=\"category\" type=\"string\" stored=\"true\"/>\n  </fields>\n\n  <uniqueKey>id</uniqueKey>\n  <solrQueryParser defaultOperator=\"AND\"/><!-- long tails search more specific thing  -->\n\n</schema>\n{% endcodeblock %} \n\n{% codeblock [solrconfig.xml] lang:xml %}\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<config>\n  <luceneMatchVersion>LUCENE_35</luceneMatchVersion>\n  <directoryFactory name=\"DirectoryFactory\" class=\"${solr.directoryFactory:solr.StandardDirectoryFactory}\"/>\n\n  <updateHandler class=\"solr.DirectUpdateHandler2\" />\n  \n  <requestHandler name=\"/select/\" class=\"solr.SearchHandler\" />\n  <requestHandler name=\"/update\" class=\"solr.XmlUpdateRequestHandler\" />\n  <requestHandler name=\"/admin\" class=\"org.apache.solr.handler.admin.AdminHandlers\" />\n\n  <dataDir>${solr.data.dir:}/product</dataDir>\n</config>\n{% endcodeblock %}\n\n\n\n### Referências \n\nhttp://stackoverflow.com/questions/4960952/when-to-consider-solr\nhttp://stackoverflow.com/questions/1284083/choosing-a-stand-alone-full-text-search-server-sphinx-or-solr\nhttp://dev.mysql.com/doc/refman/5.0/en/fulltext-search.html",
+			"file": "source/_posts/2013-09-07-faca-um-sistema-de-buscas-com-solr-slash-lucene.markdown",
+			"file_size": 5596,
+			"file_write_time": 1378614458000000,
+			"settings":
+			{
+				"buffer_size": 5787,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/_posts/2013-09-01-meu-metaframework-em-php.markdown",
+			"settings":
+			{
+				"buffer_size": 6239,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 54.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"set javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"set ja",
+				"Set Syntax: Java"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"set go",
+				"Set Syntax: Go"
+			],
+			[
+				"go",
+				"Set Syntax: Go"
+			],
+			[
+				"html",
+				"Snippet: html"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"fmt ",
+				"GoSublime: Fmt and save"
+			],
+			[
+				"fmt",
+				"GoSublime: Fmt and save"
+			],
+			[
+				"import",
+				"GoSublime: Go to imports section"
+			],
+			[
+				"markd",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"snip",
+				"Snippet: #!/usr/bin/env"
+			],
+			[
+				"sni",
+				"Snippet: html"
+			],
+			[
+				"",
+				"File: New View into File"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"repos	",
+				"Snippet: Symfony2 / Doctrine / Repository"
+			],
+			[
+				"symfon",
+				"Snippet: Symfony2 / Doctrine / Repository"
+			],
+			[
+				"symfony",
+				"Snippet: Symfony2 / Model / String column doc"
+			],
+			[
+				"sett",
+				"PHP: Generate Getters and Setters"
+			],
+			[
+				"setter",
+				"PHP: Generate Setters"
+			],
+			[
+				"sniffe",
+				"PHP Code Sniffer: Sniff this file"
+			],
+			[
+				"PHP Code Sniffer: ",
+				"PHP Code Sniffer: Sniff this file"
+			],
+			[
+				"code s",
+				"PHP Code Sniffer: Sniff this file"
+			],
+			[
+				"doc",
+				"Snippet: Start Docblock"
+			],
+			[
+				"setters",
+				"PHP: Generate Setters"
+			],
+			[
+				"prev",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"previ",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"mark",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"package in",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Preferences: Browse Packages"
+			],
+			[
+				"set php",
+				"Set Syntax: PHP"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/cloud/Desktop/terminais",
+		"/home/cloud/sources/www/tests/saiadecasa.github.io/test.html",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/tests/queue_test.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/tests/stack_test.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/queue/queue.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/stack/stack.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/tests/binary_search_tree_test.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/README.md",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary_search_tree/binary_search_tree.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/main.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/pointer/pointer.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/queue/block.go",
+		"/home/cloud/sources/www/temadehoje/index.php",
+		"/home/cloud/sources/www/temadehoje/config.php",
+		"/home/cloud/sources/www/blog/source/_posts/2013-09-01-meu-metaframework-em-php.markdown",
+		"/home/cloud/sources/www/blog/source/_posts/2013-08-29-ingredientes-para-uma-aplicacao-rapida-em-php.markdown",
+		"/home/cloud/sources/www/tests/temadehoje/config.php",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/stack/block.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary_tree/binary_search_tree.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary_tree/binary_tree.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary-tree/binary_tree.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary-tree/binary-tree.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/binary-tree/binnary-tree.go",
+		"/home/cloud/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/pointer/block.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gods/block.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/gost.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/blog/gist.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/blog/blog.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/gost.conf",
+		"/home/cloud/Rocket/braprint/app/config/www/routing.yml",
+		"/home/cloud/Rocket/braprint/app/config/www/routing.dev.yml",
+		"/home/cloud/Rocket/braprint/README.md",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/config.conf",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/config.yml",
+		"/home/cloud/Rocket/zocprint-functional/README.md",
+		"/home/cloud/Rocket/dne/README.md",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/blog/init.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/readers/gist.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/readers/gist/reader.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/readers/init.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/main.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gost/.gitignore",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/Saturno/golangtests/exception/error.go",
+		"/home/cloud/Documents/ZCE/questoes.md",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gobl/README.md",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gobl/gist.go",
+		"/home/cloud/sources/goworkspace/src/github.com/cloudson/gobl/README.me",
+		"/home/cloud/Rocket/braprint/src/Rocket/UserBundle/Controller/RegistrationController.php",
+		"/home/cloud/Rocket/braprint/src/Zocprint/NewsletterBundle/Services/SubscriberRegisterService.php",
+		"/home/cloud/Rocket/braprint/src/Zocprint/NewsletterBundle/Command/PopulateSubscribersCommand.php",
+		"/home/cloud/Rocket/braprint/src/Zocprint/InternalsBundle/Check/DiskSpaceUploadTmpDirCheck.php",
+		"/home/cloud/Rocket/braprint/app/config/parameters.ini",
+		"/home/cloud/sources/socialreview/settings.py",
+		"/home/cloud/sources/www/Respect/app/config/config_dev.yml",
+		"/home/cloud/Rocket/braprint/resources/mysql/my.cnf",
+		"/home/cloud/Rocket/braprint/src/Zocprint/UtilityBundle/Command/LiveDumpCommand.php",
+		"/home/cloud/Rocket/braprint/app/config/parameters.ini.template",
+		"/home/cloud/sources/www/temadehoje/composer.phar",
+		"/home/cloud/sources/www/Respect/app/config/parameters.yml",
+		"/home/cloud/sources/www/Saturno/Gandalf/src/Gandalf/Helper.php",
+		"/home/cloud/sources/www/Saturno/Gandalf/src/Gandalf/Tests/Fixtures/Foo.php",
+		"/home/cloud/sources/www/Saturno/Gandalf/src/Gandalf/Tests/Entity/CallerTest.php",
+		"/home/cloud/sources/www/Saturno/README.md",
+		"/home/cloud/sources/www/Saturno/Gandalf/src/Gandalf/Tests/Fixtures/Bar.php",
+		"/home/cloud/sources/www/Saturno/dojo/anagrama/README.md",
+		"/home/cloud/sources/www/Saturno/dojo/anagrama/anagrama.py",
+		"/home/cloud/sources/www/Saturno/dojo/anagrama/test_gen_anagrama.py",
+		"/home/cloud/sources/www/Saturno/dojo/anagrama/test_anagrama.py",
+		"/home/cloud/sources/socialreview/tests/unit_test/util/test_facebook.py",
+		"/home/cloud/sources/www/Saturno/dojo/anagrama/__init.py__",
+		"/home/cloud/sources/design-patterns/creational/factory.php",
+		"/home/cloud/sources/design-patterns/structural/Decorator.php",
+		"/home/cloud/sources/design-patterns/behaviour/observer.php",
+		"/home/cloud/sources/design-patterns/loader.php",
+		"/home/cloud/sources/design-patterns/behavior/observer.php",
+		"/home/cloud/sources/design-patterns/structural/strategy.php",
+		"/home/cloud/sources/design-patterns/structural/adapter.php",
+		"/home/cloud/sources/design-patterns/creational/singleton.php",
+		"/var/www/kekanto_test/index.php",
+		"/var/www/kekanto_test/vendor/autoload.php",
+		"/var/www/temadehoje/index.php",
+		"/home/cloud/sources/socialreview/static/css/index.php",
+		"/home/cloud/sources/socialreview/template/product_view.html",
+		"/home/cloud/sources/socialreview/template/layout.html",
+		"/home/cloud/sources/socialreview/model/repository/user_repository.py",
+		"/home/cloud/sources/socialreview/controller/user_controller.py",
+		"/home/cloud/sources/socialreview/model/repository/review_repository.py",
+		"/home/cloud/sources/socialreview/bin/fixtures.py",
+		"/home/cloud/sources/socialreview/util/persistence.py",
+		"/home/cloud/sources/socialreview/bin/setup_database.py",
+		"/home/cloud/sources/socialreview/model/entity/user.py",
+		"/home/cloud/sources/socialreview/doc/db/scripts/initial_ddl.sql",
+		"/home/cloud/sources/socialreview/model/service/facebook.py",
+		"/home/cloud/sources/socialreview/static/css/user.css",
+		"/home/cloud/sources/socialreview/template/user_show.html",
+		"/home/cloud/sources/socialreview/static/css/style.css",
+		"/home/cloud/sources/socialreview/template/user_edit.html",
+		"/home/cloud/Documents/oauth.md",
+		"/media/cloud/PENDRIVE/porquesairdolugarqueama",
+		"/home/cloud/sources/socialreview/model/repository/product_repository.py",
+		"/home/cloud/sources/socialreview/model/repository/repository.py",
+		"/home/cloud/sources/socialreview/tests/unit_test/model/service/test_user_repository.py",
+		"/home/cloud/sources/socialreview/model/service/user_repository.py",
+		"/home/cloud/sources/socialreview/socialreview.py",
+		"/home/cloud/sources/socialreview/tests/unit_test/model/service/test_facebook.py",
+		"/home/cloud/sources/socialreview/tests/persistence.py",
+		"/home/cloud/sources/socialreview/tests/unit_test/model/service/__init__.py",
+		"/home/cloud/sources/socialreview/model/entity/comment.py",
+		"/var/www/Saturno/phpget/php-get",
+		"/home/cloud/Desktop/venv",
+		"/home/cloud/Desktop/venv.sh",
+		"/home/cloud/sources/socialreview/model/service/user.py",
+		"/var/www/temadehoje/templates/indexFace.html",
+		"/var/www/temadehoje/templates/index.html",
+		"/var/www/temadehoje/templates/lasts.html",
+		"/home/cloud/sources/socialreview/template/error404.html",
+		"/home/cloud/sources/socialreview/template/errors.html",
+		"/home/cloud/sources/socialreview/template/user_login.html",
+		"/home/cloud/sources/socialreview/util/facebook.py",
+		"/home/cloud/Desktop/porquesairdolugarqueama",
+		"/home/cloud/sources/socialreview/template/eror404.html",
+		"/var/www/temadehoje/templates/layout.html",
+		"/home/cloud/sources/socialreview/model/service/user_authentication.py",
+		"/home/cloud/sources/socialreview/util/database.py",
+		"/home/cloud/sources/socialreview/template/product_show.html",
+		"/home/cloud/sources/socialreview/requirements.txt",
+		"/home/cloud/sources/socialreview/util/response.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"category_slug",
+			"%cloud%",
+			"Edges",
+			"Block",
+			"if root.Next != nil && root.Next.Value != \"l\" {\n        t.Errorf(\"Root->next.value is not l\")\n    }",
+			"Test_",
+			"\n    ",
+			"$db",
+			"db",
+			"enqueue",
+			"stack.",
+			"Block",
+			"block",
+			"Block",
+			"block",
+			"Block",
+			"binary_tree",
+			"Right",
+			"insert",
+			"root",
+			"Left",
+			"Next",
+			"queue",
+			"prevP",
+			"Value",
+			"value",
+			"\"\n",
+			"Collector",
+			"true",
+			"\"\n",
+			"hadRing",
+			"']\"\n",
+			"bellow",
+			"foo",
+			"Bilbo",
+			"bar",
+			"Foo",
+			"invisbile",
+			"$name",
+			"		",
+			"'));\n",
+			" ",
+			"number_call",
+			"$call",
+			"call",
+			"methodPatern",
+			"addMethod",
+			"0",
+			"foo",
+			"Newsletter",
+			"configure()",
+			"($cache)",
+			"cache",
+			"$cache = CacherSingleton::getInstance();\nprint_r(spl_object_hash($cache));\n",
+			"this->",
+			"span",
+			"from",
+			"ReviewREpository",
+			"span",
+			"self.session, ",
+			"user_repository",
+			"get_user",
+			"user_repository",
+			"session",
+			"request.db_session",
+			"<input class='input'",
+			"for='",
+			"assert_item_equal",
+			"me[",
+			"me",
+			"family",
+			"g.db",
+			"g.",
+			"me[",
+			"me",
+			"settings",
+			"get_url_login",
+			"from util.facebook import get_url_login\n",
+			"com",
+			"PASSWORD",
+			"USERNAME",
+			"DATABASE",
+			"facebook_util",
+			"acces_token",
+			"FACE_APP",
+			"session",
+			"Config",
+			"my_loader",
+			"request",
+			"server",
+			"date",
+			"vetor",
+			"g_array_Access_op",
+			"g_array_Access(",
+			"y[",
+			"cols",
+			"open(self.filename)",
+			"push",
+			"self.fp",
+			"del reader",
+			"f.",
+			"f",
+			"fp",
+			"()         ",
+			"filename",
+			" \n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"category_slug"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "source/_posts/2013-09-07-faca-um-sistema-de-buscas-com-solr-slash-lucene.markdown",
+					"settings":
+					{
+						"buffer_size": 5787,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								800,
+								800
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/_posts/2013-09-01-meu-metaframework-em-php.markdown",
+					"settings":
+					{
+						"buffer_size": 6239,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1304,
+								1304
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.9o:///home/cloud/sources/goworkspace/src/github.com/cloudson/gobl":
+	{
+		"height": 100.0
+	},
+	"output.GoSublime-main-output":
+	{
+		"height": 100.0
+	},
+	"output.GsDoc-output-output":
+	{
+		"height": 100.0
+	},
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"subscriber",
+				"src/Zocprint/NewsletterBundle/Command/CronSubscribersExportCommand.php"
+			],
+			[
+				"",
+				"src/Zocprint/NewsletterBundle/Services/SubscriberExporterService.php"
+			],
+			[
+				"popu",
+				"src/Zocprint/NewsletterBundle/Command/PopulateSubscribersCommand.php"
+			],
+			[
+				"registrer",
+				"src/Rocket/UserBundle/Controller/RegistrationController.php"
+			],
+			[
+				"subsriberre",
+				"src/Zocprint/NewsletterBundle/Repository/SubscriberRepository.php"
+			],
+			[
+				"worker",
+				"src/Zocprint/NewsletterBundle/Command/WorkerSubscribersExportCommand.php"
+			],
+			[
+				"exporter",
+				"src/Zocprint/NewsletterBundle/Services/SubscriberExporterService.php"
+			],
+			[
+				"populate",
+				"src/Zocprint/NewsletterBundle/Command/PopulateSubscribersCommand.php"
+			],
+			[
+				"disk",
+				"src/Zocprint/InternalsBundle/Check/DiskSpaceUploadTmpDirCheck.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/home/cloud/sources/www/Saturno/python/reprovado/spoj.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 222.0,
+	"status_bar_visible": true
+}

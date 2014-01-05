@@ -1,0 +1,36 @@
+---
+layout: post
+title: "(new Blog)->HelloWorld();"
+date: 2013-08-17 00:01
+comments: true
+categories: [carreira, pessoal]
+---
+
+Da última vez que eu tive um blog, eu escrevi bastante mas publiquei pouco rsrs. Não me acho perfeccionista, me acho chato e por saber que minha escrita não é das melhores fico irritado e acabo demorando para chegar no nirvana do post hahaha.   
+
+### Quem é esse aí com cara de lesado? 
+
+![It's me...](http://en.gravatar.com/userimage/5255340/f664b6f32219eeef1bb0f287b40fa423.jpg?size=200)
+
+Sou o Claudson, um dia tive o insight de usar o trocadilho cloudson na internet, e acabei levando assim, sendo um tipo de filho das nuvens rs.  
+Sou mineiro, natural de [Muriaé](http://pt.wikipedia.org/wiki/Muria%C3%A9), comecei a gostar de computadores por causa de jogos, fui me interessando mais e acabei fazendo um curso chato de web design e html.  
+Estava tudo muito sem vida, e acabaram me falando que existiam linguagens de programação. Comecei com pascal mas não avancei muito, decidi me matar de estudar para passar no vestibular (tanto que só conheci o que era cerveja e balada com 17 anos haha) e apesar de não ter conseguido na federal de Viçosa (o subtítulo do blog tem a ver com isso), consegui na federal de Juiz de Fora.  
+Foram cinco longos e prazerosos anos de Ciência da Computação, e hoje, bacharel, tenho muito o que agradecer aos mestres de lá.  
+Durante essa caminhada fui começando a carreira como software developer, trabalhei tanto em agência, como em uma fábrica de software (não gosto muito desse termo rs). Sempre gostando mais da área, resolvi vir pra São Paulo interagir mais com o [phpsp]() (estou tentando, juro!) e aprender novas tecnologias. 
+Já brinquei com ruby, python, js, [já fiz um compilador em C](https://github.com/cloudson/Bocejo) rsrs, delphi (tá amarrado em nome de jesus!)... mas sempre levei minha carreira com php. Não tenho muito orgulho disso, php é uma linguagem que tem alguns problemas mas alguns frameworks e seus contribuidores levaram o ecossistema da linguagem para outro nível, nos últimos 5 anos.   
+
+
+### Por quê ter um blog? 
+
+* Você pode escrever coisas para se lembrar no futuro :). 
+* Você pode desabafar e criticar coisas sobre sua profissão (e eu tenho várias críticas guardadas rs).
+* Uma forma das pessoas te acharam rapidamente na internet.
+* Uma forma de ajudar a sua comunidade ou profissionais da sua área, compartilhando conhecimentos, mesmo que ínfimos.
+
+### Por quê agora vai ser diferente? 
+
+* Github pages e octopress pra gerenciar o blog, eu não vou perdê-lo já que sempre estará na minha conta do github .
+* Estou mais dedicado a minha carreira, agora que a universidade FINALMENTE terminou .
+* Tenho conhecido pessoas e projetos legais, então mesmo que citá-los já seria útil pra terceiros.
+
+
