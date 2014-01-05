@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>O que caiu na ZCPE? - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Meu último post tinha a intenção de ser uma série para quem está estudando para a certificação php. O problema é que muita coisa aconteceu, a ZCE &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2013/12/19/o-que-caiu-na-zcpe">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">O Que Caiu Na ZCPE?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-19T23:13:00-02:00" pubdate data-updated="true">Dec 19<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="http://www.zend.com/topics/ZCE-PHP-Engineer-logo-XS.jpg" alt="" /><br/>
+Meu último post tinha a intenção de ser uma série para quem está estudando para a certificação php.  O problema é que muita coisa aconteceu, a ZCE mudou, incluiu na sua grade o php 5.4 e 5.5, nomeou-se ZCPD e posteriormente ZCPE. <br/>
+Marquei minha prova para um dia antes do voucher vencer (risos), decidi fazer a mais atual e <a href="http://zend.com/en/store/education/certification/yellow-pages.php#show-ClientCandidateID=ZEND024222">passei!</a>. <br/>
+Abaixo listarei dez questões <strong>&ldquo;similares&rdquo;</strong> as que caíram, sintam-se a vontade para comentar sobre.</p>
+
+<h3>1 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">private</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$foo</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">foo</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">function</span><span class="p">(</span><span class="nv">$x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">foo</span> <span class="o">*</span> <span class="nv">$x</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$a</span><span class="o">-&gt;</span><span class="na">bar</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$x</span> <span class="o">*</span> <span class="nv">$x</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nv">$m</span> <span class="o">=</span> <span class="nv">$a</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">();</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$m</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) 6 <br/>
+b) 9 <br/>
+c) 0 <br/>
+d) Nenhuma das acima</p>
+
+<p>Essa questão é bonita! rs. Um atributo receber uma função anônima não faz com que o mesmo posso ser chamado como um método, lembrei disso por causa de uma <a href="https://github.com/cloudson/Gandalf">brincadeira que fiz no github</a>.<br/>
+Mesmo assim fiquei bem confuso pois achei que o $this dentro da primeira função anônima não era um ponteiro pro objeto de A, mas é. Sendo assim, a resposta correta é (a) 6 .</p>
+
+<h3>2 &ndash; Qual palavra chave deveria ser usada na linha comentada com &ldquo;HERE&rdquo; para que o código funcione corretamente com a saída &ldquo;Item&rdquo;</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Base</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nx">self</span><span class="p">();</span> <span class="c1">// HERE</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">myName</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">echo</span> <span class="nx">__CLASS__</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Item</span> <span class="k">extends</span> <span class="nx">Base</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">myName</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">echo</span> <span class="nx">__CLASS__</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">Item</span><span class="o">::</span><span class="na">create</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$foo</span><span class="o">-&gt;</span><span class="na">myName</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Questão sobre <a href="http://php.net/manual/pt_BR/language.oop5.late-static-bindings.php">late static binding</a>, usando a palavra reservada static, o método utilizado é o de Item.</p>
+
+<h3>3 &ndash; Suponha que você possui a classe MyObject já definida</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyObject</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para que o código acima funcione, MyObject precisa:</p>
+
+<p>a) Implementar a classe Callable <br/>
+d) Implementar a classe Closure<br/>
+b) Possuir o método __call <br/>
+c) Possuir o método __invoke</p>
+
+<p>Dentro de array_walk o segundo parâmetro será chamado como uma função, basta que a classe MyObject implemente o método __invoke, (d).</p>
+
+<h3>4 &ndash; Para conseguir usar a função count ou o construtor da linguagem sizeof em uma classe definida MyClass, essa classe precisa :</h3>
+
+<p>a) Implementar a interface ArrayAccess<br/>
+b) Possuir o método __count<br/>
+c) Ser convertido de um array para o objeto <br/>
+d) Nenhuma das anteriores</p>
+
+<p>Para que um objeto possa ser usado na função count, ele precisa implementar a interface Countable, que exige o método count. Letra (d)</p>
+
+<h3>5 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nx">boolval</span><span class="p">(</span><span class="k">new</span> <span class="nx">\StdClass</span><span class="p">));</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) true<br/>
+b) false</p>
+
+<p>Resposta certa é (a) true (e eu poderia jurar que um objeto standard vazio se comportaria como um array vazio mas&hellip;)</p>
+
+<h3>6 &ndash; Qual a saída do código abaixo</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">function</span>  <span class="nf">update</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$array</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$array</span> <span class="k">as</span> <span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$value</span> <span class="o">=</span> <span class="nv">$value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nv">$value</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$valores</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'><span class="nx">update</span><span class="p">(</span><span class="nv">$valores</span><span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) 2,3,4<br/>
+b) 2,3,6<br/>
+c) 1,2,3<br/>
+d) 0,0,0</p>
+
+<p>Problema que exigiu conhecimentos em escopos, vetor passado por referência e iterado &ldquo;por referência&rdquo; também. Assim que o laço foreach termina a variável $value mantém o último valor do array, logo a resposta era (b).</p>
+
+<h3>7 &ndash; Qual função php inverte os valores de um array sem alterar as chaves?</h3>
+
+<p>a) array_split<br/>
+b) array_reverse <br/>
+c) ksort<br/>
+d) sort</p>
+
+<p>Tipo de questão que eu odeio, apenas decoreba importa, resposta (b).</p>
+
+<h3>8 &ndash; Qual a saída do código abaixo</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">namespace</span> <span class="nx">MyFramework\MyNamespace</span><span class="p">;</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyClass</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">myMethod</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">__METHOD__</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$foo</span><span class="o">-&gt;</span><span class="na">myMethod</span><span class="p">();</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) MyFramework\MyNamespace\MyClass\myMethod<br/>
+b) MyFramework\MyNamespace\MyClass::myMethod<br/>
+c) MyFramework\MyNamespace\myMethod<br/>
+c) MyClass::myMethod</p>
+
+<p>A resposta inclui o namespace completo, letra (b).</p>
+
+<h3>9 &ndash; Qual o resultado da operação abaixo</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span> <span class="o">^</span> <span class="mi">2</span> <span class="p">;</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Utilizando o operador de ou exclusivo (^) a reposta correta é 3 pois  <br/>
+  01   <br/>
+  10<br/>
+  11</p>
+
+<p>A resposta é 11, seguindo o meu <a href="/2013/09/28/conversao-de-base-numerica/">post sobre conversão de base numérica</a>, dá 3.</p>
+
+<h3>10 &ndash; Qual a saída para o programa abaixo ?</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">operacao</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nv">$a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="k">echo</span> <span class="nx">operacao</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span><span class='line'><span class="k">echo</span> <span class="nx">operacao</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tentativa de pegadinha com passagem por referência, mas o resultado é 22 mesmo. :)</p>
+
+<h3>Conclusão</h3>
+
+<p>Outros temas que caíram na prova mas eu não consigo lembrar a questão inteira: <br/>
+* Caiu traits e resolução de conflitos com metodos com o mesmo nome. <br/>
+* Caiu uma questão simples pedindo para dizer como desabilitar os erros com uma diretiva do php.ini, a função error_reporting era uma das alternativas rsrs. <br/>
+* Como vimos acima caiu bastante sobre as interfaces da SPL.<br/>
+* Algumas questões de segurança, envolvendo roubo de sessão e como se previnir ou quais funções php podem evitar ataques vindo do usuário. <br/>
+* Caiu algumas questões sobre streams, tinha uma questão que mudou o contexto  da função <a href="http://php.net/manual/pt_BR/function.file-get-contents.php">file_get_contents</a> e fazia ela usar post, por exemplo. <br/>
+* Cairam questões sobre upload (e segurança). <br/>
+* Não caiu nada sobre generators.</p>
+
+<p>Não achei a prova extremamente fácil porque não estudei por meses como gostaria de ter feito, senão poderia ter ficado mais tranquilo durante. Mas a prova não é absurdamente difícil pra quem já trabalha com a linguagem há anos.
+Um dos motivos de eu escolher a 5.5 é porque prefiro fazer questões de comportamento de código/oop do que decorar funções, e de fato o primeiro tipo caiu bastante. <br/>
+Espero que o post encoraje muita gente! :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-19T23:13:00-02:00" pubdate data-updated="true">Dec 19<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/10/06/estudo-dirigido-zce/" title="Previous Post: Estudo dirigido ZCE">&laquo; Estudo dirigido ZCE</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/12/19/o-que-caiu-na-zcpe/">O que caiu na ZCPE?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/06/estudo-dirigido-zce/">Estudo dirigido ZCE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/09/28/conversao-de-base-numerica/">Conversão de base numérica</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/09/27/news-09-slash-13/">News - 09/13</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/09/01/meu-metaframework-em-php/">Meu metaframework em PHP</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2013/12/19/o-que-caiu-na-zcpe/';
+        var disqus_url = 'http://cloudson.github.io/2013/12/19/o-que-caiu-na-zcpe/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
