@@ -117,9 +117,12 @@ c) 2 ^ 3 == 8
 d) 2 & 3 == 2   
 
 ### Respostas
+Update 02/02/14: Agradecimentos ao [@rogeriopradoj](http://github.com/rogeriopradoj) que revisou o gabarito com várias alternatias incorretas! :)
+
+
 #### 1d
 Os três tipos de comentários apresentados são válidos, para minha surpresa, já que eu nunca tinha usado # .   
-#### 2b 
+#### 2c
 Fiz um [post sobre conversão de base numérica aqui](http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/), se você não soube responder essa, o texto pode te ajudar. Mas a conta realizada foi a seguinte: 
 017 = 1 x 8^1 + 7 x 8^0 = 7 + 8 = 15   
 #### 3b   
@@ -130,13 +133,13 @@ Fiz um [post sobre conversão de base numérica aqui](http://cloudson.github.io/
 0 convertido para um boolean é false, outro numérico qualquer é considerado true
 #### 6a,d,e
 Mais sobre coerção de tipos [http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting](http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting) 
-#### 7d  
+#### 7c  
 A variável $2foo não possui um nome válido, pois começa com um número [http://www.php.net/manual/en/language.variables.basics.php](http://www.php.net/manual/en/language.variables.basics.php)
 #### 8c 
 Um novo tipo foi definido no php 5.4 (?). Um callable é como o nome diz um valor que pode invocar uma função. Esses callables podem ser funções anônimas, ou até mesmo strings contendo o nome de uma função, como é o nosso caso. 
-#### 9d  
+#### 9b
 Como o próprio nome diz, a função isset testa se uma variável foi declarada (ou se uma região da memória associada ao identificador, existe)[http://php.net/manual/pt_BR/function.isset.php](http://php.net/manual/pt_BR/function.isset.php)  
-#### 10b,c
+#### 10a,c
 Essa questão tem a ver com álgebra de booleanos. Um gancho para um próximo post :)    
 1 | 2 == 01 + 10 == 11 == 3  
 1 ^ 3 == 2  
