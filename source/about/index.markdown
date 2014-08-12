@@ -14,7 +14,7 @@ Sou um [Certificado PHP ZCPD](http://zend.com/en/store/education/certification/y
 Linguagens, código e tecnologia são diversão pra mim, tanto que uso o verbo "brincar" ao me referir a novos estudos. 
 Minha carreira está focada na web, e como 70% do que está hospedado por aí foi escrito em php (dizem rs) foi impossível não me envolver com a linguagem lá em 2009. 
 Utilizo e amo Symfony, framework fullstack para a linguagem, gosto de TDD, arquitetura de software, filosofia REST e compiladores.   
-Sou bacharel em Ciência da Computação e atualmente penso e escrevo códigos na [Zocprint](http://zocprint.com.br), startup da [Rocket Internet](http://rocket-internet.de). 
+Sou bacharel em Ciência da Computação e atualmente penso e escrevo códigos no [Valor Econômico](http://valor.com.br). 
 
 ### Cloudson na web 
 
