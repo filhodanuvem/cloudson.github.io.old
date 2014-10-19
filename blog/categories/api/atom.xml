@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: api | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/api/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-10-19T10:07:27-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[HTTP - Entendendo uma negociação de conteúdo via cartas]]></title>
+    <link href="http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/"/>
+    <updated>2014-08-12T22:17:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas</id>
+    <content type="html"><![CDATA[<p>Atualmente é quase impossível implementar um sistema sem estabelecer conexão com outros sistemas, uma arquitetura orientada a serviços é cada vez mais valorizada.
+Hoje vamos falar um pouco sobre uma das características básicas do http e/ou de serviços sob a filosofia REST; <em>Content Negotiation</em>.</p>
+
+<h2>A brincadeira</h2>
+
+<p>Duas pessoas poliglotas resolvem trocar cartas em quaisquer idiomas que domiman, elas só precisam informar no envelope em que idioma a resposta deve ser enviada.</p>
+
+<h3>Caso 1: Tudo ou nada</h3>
+
+<p>João envia uma primeira carta para Maria perguntando como está seu novo emprego, seu envelope contém a informação</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: pt-BR
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Recebida a carta, Maria entende que João aceita uma carta de resposta em português do Brasil, o que não é problema para uma mineira.
+Ela envia a resposta e coloca no envolope
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Content-Language: pt-BR
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Ou seja, ela está confirmando que sua carta de resposta está em tal língua.</p>
+
+<h3>Caso 2: Várias Opções de línguas</h3>
+
+<p>João resolve testar os conhecimentos de Maria e envia uma carta com o seguinte envelope
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: fr; q=1.0, en-US; q=0.3, pt-BR; q=0.2
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Nesse envelope a informação de linguagem segue um padrão maluco que informa  <br/>
+fr; q=1.0 &ndash; Me responda em francês, num ranking de fluência, eu dou 100% de importância pra ela.<br/>
+en-US; q=0.3  &ndash; Se não falar francês, pode me responder em inglês americano.<br/>
+pt-BR; q=0.2 &ndash; Por fim, me responda em português brasileiro mesmo ¬¬</p>
+
+<p>Maria não fala francês e como viu que a segunda língua mais relevante pra João é o inglês, que domina, ela retorna
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Content-Language: en-US
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Caso 3: Línguas desconhecidas</h3>
+
+<p>Num terceiro momento João envia uma carta pra maria pedindo uma resposta em chinês
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: zh
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Mas &hellip; Maria não sabe falar essa língua e como ela não pode deixar João esperando, responde no envolope
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Status: 406
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>O campo de status fala sobre a resposta, nesse caso (<a href="http://httpstatus.es/406">406</a>), Maria informou que não consegue responder nessa língua.</p>
+
+<h2>Cliente e Servidor</h2>
+
+<p>Nos casos acima, João é o cliente, pode ser um navegador web, mas é mais interessante pensarmos genericamente num client consumindo uma api. Maria é o servidor que está expondo/servindo uma api.
+As mensagens em questão são <em>requests</em> e <em>responses</em> HTTP, e o envelope representa na verdade um cabeçaho do protocolo.</p>
+
+<h3>Negociação de conteúdo sobre mime-types</h3>
+
+<p>O caso mais usado sobre negociação de conteúdo em serviços fala sobre tipos. Você pode/deve desenvolver uma api que serve, transparentemente, conteúdos em mime-types diferentes, pelo menos em xml e json. A estória é a mesma, porém os cabeçalhos usado são <em>Accept</em>/<em>Content-type</em>. Veja um exemplo:</p>
+
+<p>Request:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept: application/json; q=1.0, text/html; q=0.5; &lt;em&gt;/&lt;/em&gt;; q=0.1
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Response:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Status: 200
+</span><span class='line'>Content-type: application/json
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>O Client pediu conteúdo em json ou html ou qualquer merda haha. <br/>
+A aplicação, serviu um json.</p>
+
+<h3>Conclusão</h3>
+
+<p>Como vimos, a negociação de conteúdo é um mecanismo do http para que uma aplicação sirva um conteúdo (ou melhor, uma representação de um recurso) de modo que o cliente entenda, pode haver negociação sobre tipos (quero que você me sirva uma imagem ao invés de um json), sobre linguagens (quero essa página em inglês), sobre encodings e charsets.<br/>
+Algumas (muitas) APIs fazem negociação de tipo via url, inserindo uma extensão (eu mesmo já <a href="http://phartitura.com/Guzzle/Http.png">fiz</a> <a href="http://phartitura.com/Guzzle/Http.json">isso</a>). Há bastante discussão sobre, não é a melhor maneira de se fazer, mas é a forma mais fácil e acessível via browser/humanos mais leigos. <br/>
+Espero poder voltar e falar um pouco sobre status code, que é algo simples que muitas APIs importantes não respeitam.</p>
+
+<h3>Referências</h3>
+
+<p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec12.html">RFC 2616</a><br/>
+<a href="http://en.wikipedia.org/wiki/Content_negotiation">Wikipedia</a><br/>
+<a href="http://httpstatus.es/">HTTP status</a></p>
+]]></content>
+  </entry>
+  
+</feed>
