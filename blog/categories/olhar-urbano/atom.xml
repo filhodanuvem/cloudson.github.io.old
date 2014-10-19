@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: olhar-urbano | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/olhar-urbano/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-10-19T09:44:33-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Olhar urbano 01]]></title>
+    <link href="http://cloudson.github.io/2014/08/11/olhar-urbano-01/"/>
+    <updated>2014-08-11T23:08:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/08/11/olhar-urbano-01</id>
+    <content type="html"><![CDATA[<p>São Paulo é uma cidade que fala com a gente. Passamos por manifestações com pressa, sempre atrasados.
+Já faz alguns meses que venho colecionando imagens da cidade, muitas vezes de paredes pintadas. Resolvi exibi-las aqui no blog
+aos poucos.</p>
+
+<p><img src="/images/olharurbano/01.jpg" alt="" /></p>
+
+<p>Essa imagem mostra uma crítica forte sobre as pichações da cidade. Enquanto todos afirmam que 1 + 1 = 3, apenas o pichação diz a verdade, uma verdade não
+aceita e julgada.</p>
+]]></content>
+  </entry>
+  
+</feed>

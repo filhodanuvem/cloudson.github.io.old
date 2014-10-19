@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: console | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/console/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-10-19T09:44:33-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mostrando o branch atual no bash]]></title>
+    <link href="http://cloudson.github.io/2014/03/15/mostrando-o-branch-atual-no-bash/"/>
+    <updated>2014-03-15T22:19:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/03/15/mostrando-o-branch-atual-no-bash</id>
+    <content type="html"><![CDATA[<p>Quando estamos num console unix vemos uma área fixa que informa &ndash; geralmente &ndash; o usuário, a máquina e o diretório em que estamos no momento.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cloudson@Matrix:/var/www<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Mas eu demorei um bocado para saber que dava para editar o padrão daquele área.<br/>
+Existe uma váriavel PS1 relacionado a ele. Poderíamos setar</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PS1</span><span class="o">=</span>&amp;ldquo;<span class="se">\u</span>:<span class="se">\w</span><span class="nv">$&amp;</span>rdquo;;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Isso irá exibir <code>cloudson:/var/www$</code> pois \u ser refere ao usuário e \w ap diretório atual. Podemos usar várias outras varáveis pra compor a informação:</p>
+
+<table>
+<thead>
+<tr>
+<th>Caractere  </th>
+<th>  Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\d  </td>
+<td>  Data, no formato &ldquo;DiaDaSemana Mês Dia&rdquo; (exe; &ldquo;Tue May 26&rdquo;).   </td>
+</tr>
+<tr>
+<td>\h  </td>
+<td>  O nome do host. (exe; Matrix)   </td>
+</tr>
+<tr>
+<td>\j  </td>
+<td>  O número de jobs atualmente rodando via shell. </td>
+</tr>
+<tr>
+<td>\t  </td>
+<td>  Tempo, no formato de 24 horas HH:MM:SS . </td>
+</tr>
+<tr>
+<td>\T  </td>
+<td>  Tempo,  no formato de 12 horas HH:MM:SS . </td>
+</tr>
+<tr>
+<td>\@  </td>
+<td>  Tempo, no formato 12 horas am/pm. </td>
+</tr>
+<tr>
+<td>\u  </td>
+<td>  O nome do usuário atual. </td>
+</tr>
+<tr>
+<td>\v  </td>
+<td>  A versão do Bash (ex; 2.00) </td>
+</tr>
+<tr>
+<td>\w  </td>
+<td>  A atual diretório. </td>
+</tr>
+<tr>
+<td>\W  </td>
+<td>  O nome base do $PWD. </td>
+</tr>
+<tr>
+<td>!  </td>
+<td>  O número histórico desse comando. </td>
+</tr>
+<tr>
+<td>\$  </td>
+<td> Se você não for root, insere um &ldquo;$&rdquo;; se for root, você terá um &ldquo;#&rdquo; .</td>
+</tr>
+<tr>
+<td>\n  </td>
+<td> Uma quebra de linha.  </td>
+</tr>
+<tr>
+<td>\e  </td>
+<td> An escape character.   </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Um exemplo útil seria exibir em qual branch estamos, caso possível.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PS1</span><span class="o">=</span>&amp;ldquo;<span class="se">\u</span>@<span class="se">\h</span>:<span class="se">\w</span><span class="k">$(</span>git branch 2&gt;/dev/null | grep &amp;lsquo;^*&amp;rsquo;<span class="k">)</span><span class="nv">$ </span>&amp;rdquo;;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>E é isso! Agora não há perigo de estar num branch errado e só perceber tarde :)</p>
+
+<p>Referências:</p>
+
+<ul>
+<li><a href="http://ss64.com/bash/syntax-prompt.html">http://ss64.com/bash/syntax-prompt.html</a></li>
+<li><a href="http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html">http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

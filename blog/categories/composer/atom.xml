@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: composer | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/composer/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-10-19T09:44:33-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Phartitura - Um novo modo de observar suas dependências em php]]></title>
+    <link href="http://cloudson.github.io/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php/"/>
+    <updated>2014-03-09T23:30:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php</id>
+    <content type="html"><![CDATA[<p>Hi guys! Neste post vou falar um pouco sobre o projeto que codei nas últimas semanas, <a href="http://phartitura.com">o Phartitura</a>.</p>
+
+<h3>Inspiração!</h3>
+
+<p>O twitter virou uma grande fonte de links técnicos para mim, e por lá, vi alguém postando um site para comunidade node-js. O <a href="http://david-dm.org/">David-www</a>. Foi naquele momento que eu pensei &ldquo;cara, não tem isso pro composer!&rdquo;.
+O David era uma aplicação/website que mostrava todas as dependências de um projeto hospedado no npm (gerenciador de dependências node-js), citando a versão mais atual e a versão que um projeto x usaria. Dessa forma ficaria fácil ver a distância entre as versões.</p>
+
+<h3>A ilusão; &ldquo;Parece simples!&rdquo;</h3>
+
+<p>Aparentemente parecia mamão com açúcar, eu precisava seguir um roteiro simples:</p>
+
+<p>1) Consumir metadados de um projeto A/B do packagist  <br/>
+   &ndash; Com alguma pesquisa percebi que o <a href="http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist/">packagist possuia uma interface para isso</a>.<br/>
+2) Pegar uma dependência C/D e olhar para sua regra de versão  <br/>
+   &ndash; Se C/D tem regra ~1.1, quer dizer que o composer vai baixar uma versão >=1.1.0 e &lt;1.2.0. <br/>
+3) Definir qual a versão mais atual de C/D que casa com a regra.<br/>
+4) Definir qual a versão mais atual (de todasss) de C/D. <br/>
+5) Voltar pro passo 2 com outra dependência.</p>
+
+<p>Implementar esse <em>Versioning Resolver</em> não era um dos casos mais simples porque o composer trabalha com muitos tipos de regras de versão (muitos um pouco distante do <a href="http://semver.org">semver</a> comum). Exemplos abaixo:</p>
+
+<ul>
+<li>~1.0</li>
+<li>2.0.3-alpha</li>
+<li>3.2.2-beta8</li>
+<li>>2.0,&lt;=4.0.2</li>
+<li>&lt;3.0.0 | > 5.0.3a</li>
+<li>6.6.*</li>
+<li>dev-master<br/>
+&hellip;</li>
+</ul>
+
+
+<p>Eu poderia (e pesquisei sobre) usar uma biblioteca pronta que me respondesse a questão &ldquo;Eu tenho 3 versões, qual deleas é a mais nova que casa com a regra x?&rdquo;. O Mais perto disso que eu conseguiria, era usar o próprio composer/composer. Mas seria uma <em>library</em> muito grande para ter como dependência do phartitura, então decidi escrever eu mesmo esse <em>Resolver</em>! #facaNaCaveira.</p>
+
+<h3>Desafios, desafios&hellip;</h3>
+
+<p>Além disso, existiam outros &ldquo;problemas&rdquo;:</p>
+
+<h4>Gargalo no curl/tempo de request</h4>
+
+<p>O exemplo mais claro e querido é o <a href="http://phartitura.com/symfony/symfony">symfony/symfony</a>.
+Quando você tenta ver uma phartitura do projeto, a aplicação vai pegar os metadados disponíveis pelo packagist deste projeto (ou seja, vai realizar aquele passo 1). Esses metadados vêm como json, vamos dar uma olhada na seção que nos interessa, as dependências:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="err">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">&lt;pre&gt;&lt;code&gt;</span><span class="nt">&quot;require&quot;</span><span class="p">:{</span>
+</span><span class='line'>   <span class="nt">&quot;php&quot;</span><span class="p">:</span><span class="s2">&quot;&amp;gt;=5.3.3&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/icu&quot;</span><span class="p">:</span><span class="s2">&quot;~1.0&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;doctrine\/common&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;twig\/twig&quot;</span><span class="p">:</span><span class="s2">&quot;~1.11&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;psr\/log&quot;</span><span class="p">:</span><span class="s2">&quot;~1.0&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="nt">&quot;require-dev&quot;</span><span class="p">:{</span>
+</span><span class='line'>   <span class="nt">&quot;doctrine\/data-fixtures&quot;</span><span class="p">:</span><span class="s2">&quot;1.0.*&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;doctrine\/dbal&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;doctrine\/orm&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2,&amp;gt;=2.2.3&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;monolog\/monolog&quot;</span><span class="p">:</span><span class="s2">&quot;~1.3&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;propel\/propel1&quot;</span><span class="p">:</span><span class="s2">&quot;1.6.*&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;ircmaxell\/password-compat&quot;</span><span class="p">:</span><span class="s2">&quot;1.0.*&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;ocramius\/proxy-manager&quot;</span><span class="p">:</span><span class="s2">&quot;&amp;gt;=0.3.1,&amp;lt;0.4-dev&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="nt">&quot;replace&quot;</span><span class="p">:{</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/browser-kit&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/class-loader&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/config&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/console&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/css-selector&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/dependency-injection&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/debug&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/doctrine-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/dom-crawler&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/event-dispatcher&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/filesystem&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/finder&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/form&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/framework-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/http-foundation&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/http-kernel&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/intl&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/locale&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/monolog-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/options-resolver&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/process&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/propel1-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/property-access&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/proxy-manager-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/routing&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/security&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/security-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/serializer&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/stopwatch&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/swiftmailer-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/templating&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/translation&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/twig-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/twig-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/validator&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/web-profiler-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>   <span class="nt">&quot;symfony\/yaml&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="err">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">&lt;p&gt;</span> <span class="p">}</span><span class="err">,</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>As informações são bem parecidas com um composer.json, então para descobrir dados de cada dependência, é preciso fazer várias novas requests pro packagist perguntando sobre cada uma dessas. Entendeu o problema com o Symfony? São MUITAS dependências. <br/>
+Como seria insano forçar todos os usuários a esperar essas trocentas requests com CURL, serializei a informação no Redis com TTL de algumas horas, isso torna um segundo pedido para symfony/symfony incrivelmente rápido mas acaba não dando uma visão exata do pacote. Por exemplo, se neste exato momento o symfony está cacheado no Phartitura, e no github sair um novo release, levará horas para que a informação mude. Abri uma <a href="https://github.com/cloudson/Phartitura/issues/4">issue</a> para criar um console job (provavelmente com <a href="http://symfony.com/doc/current/components/console/introduction.html">symfony/console</a>) que atualiza esses caras automaticamente.</p>
+
+<h4>Priorizando as versões</h4>
+
+<p>Outro problema divertido foi/é responder a pergunta &ldquo;Como eu sei qual a versão mais atual entre X,Y e Z?&rdquo;. Você pode pensar rapidamente, o timestamp de release da tag/versão responde isso mas &hellip; <br/>
+* A versão dev-master sempre é encontrada (e não pode ser descartada, já que alguns projetos apontam pra ela &ndash; tsc tsc tsc) <br/>
+* A versão dev-develop também é sempre encontrada e pode estar à frente de tags<br/>
+* Alguns projetos (Como o Symfony) mantêm duas ou mais versões   simultaneamente, então um release para a 2.3.4 pode vir depois de um release para a 2.4.1 :(  <br/>
+* Algumas pessoas versionam com umas tags %$@#!% 1.0.0-alpha8 (o composer por exemplo ¬¬). Cara, o mundo inteiro está usando algo alpha há mais de dois anos? Para mim o composer está na versão 1.0.x</p>
+
+<p>Implementei uma <a href="http://www.php.net/manual/en/class.splmaxheap.php">SplMaxHeap</a> para que a medida que eu fosse inserindo versões nessa pilha, ele ordenasse deixando a mais prioritária no topo. A classe atual está com problemas (como aquele citado sobre o symfony) e é encontrada <a href="https://github.com/cloudson/Phartitura/blob/master/src/Cloudson/Phartitura/Project/VersionHeap.php">aqui</a>.</p>
+
+<h4>Negociação de conteúdo com Respect/Rest</h4>
+
+<p>Foi um bom momento para estudar um pouco sobre HTTP/REST. Com a ferramenta brasileira, <a href="https://github.com/respect/rest#content-negotiation">foi muito simples dar o primeiro passo</a> para a tarefa
+<code>Se alguém quiser consumir os dados de um projeto como json, retorne como json</code>.</p>
+
+<p>Mas depois a situação foi ficando um pouco mais complicada. Geralmente as pessoas não usam cabeçalho http para negociar contéudo com serviços, elas usam a própria url. Então para a url <a href="http://phartitura.com/cloudson/gandalf">http://phartitura.com/cloudson/gandalf</a> eu criei uma rota <a href="http://phartitura.com/cloudson/gandalf.json">http://phartitura.com/cloudson/gandalf.json</a> . Acho que encontrei um problema na priorização das rotas do Respect/Rest:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">?</span><span class="nx">php</span>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">/&lt;</span><span class="nx">em</span><span class="o">&gt;/&lt;/</span><span class="nx">em</span><span class="o">&gt;.</span><span class="nx">json</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="nv">$jsonCallback</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">/&lt;</span><span class="nx">em</span><span class="o">&gt;/&lt;/</span><span class="nx">em</span><span class="o">&gt;&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="nv">$htmlCallback</span><span class="p">);</span><span class="o">&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Setando essas duas rotas, a ferramenta não sabe qual é a mais prioritária, escolhendo a segunda :( Provavelmente eu vá abrir uma issue daqui a uns dias, ou você mesmo pode fazer isso. <br/>
+As prioridades são dadas pelo número de <em>wild cards</em>, então resolvi da seguinte forma :
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">?</span><span class="nx">php</span>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">/&lt;</span><span class="nx">em</span><span class="o">&gt;/&lt;/</span><span class="nx">em</span><span class="o">&gt;.</span><span class="nx">json</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="nv">$jsonCallback</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">/*/**&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="nv">$htmlCallback</span><span class="p">);</span> <span class="c1">// três *&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Conclusão</h3>
+
+<p>Foi um projeto bem legal e desafiador. Prova que qualquer &ldquo;escritor de códigos&rdquo; pode lançar algo a nível mundial, pois apesar do maior número de acessos vir do brasil, Phartitura teve acessos de EUA, Inglaterra, Alemanha, Canada, Índia, Austrália, Japão&hellip; são 39 países nesse momento.<br/>
+Sobre o futuro, há muito a se implementar, quero fazer análise para projetos privados (subindo o composer.json), refatorar código, aumentar a cobertura de testes, criar jobs que atualizem informações no phartitura automaticamente, envio de notificação sobre novos releases para usuários que assim quiserem&hellip;
+Enfim, o céu é o limite! Fiquem com a música tema do projeto</p>
+
+<iframe width="420" height="315" src="http://cloudson.github.io//www.youtube.com/embed/k1-TrAvp_xs" frameborder="0" allowfullscreen></iframe>
+
+]]></content>
+  </entry>
+  
+</feed>

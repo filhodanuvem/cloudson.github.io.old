@@ -1,0 +1,1293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Hi guys! Neste post vou falar um pouco sobre o projeto que codei nas últimas semanas, o Phartitura. Inspiração! O twitter virou uma grande fonte de &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php/">Phartitura - Um Novo Modo De Observar Suas Dependências Em Php</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-09T23:30:00-03:00" pubdate data-updated="true">Mar 9<span>th</span>, 2014</time>
+        
+         | <a href="/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hi guys! Neste post vou falar um pouco sobre o projeto que codei nas últimas semanas, <a href="http://phartitura.com">o Phartitura</a>.</p>
+
+<h3>Inspiração!</h3>
+
+<p>O twitter virou uma grande fonte de links técnicos para mim, e por lá, vi alguém postando um site para comunidade node-js. O <a href="http://david-dm.org/">David-www</a>. Foi naquele momento que eu pensei &ldquo;cara, não tem isso pro composer!&rdquo;.
+O David era uma aplicação/website que mostrava todas as dependências de um projeto hospedado no npm (gerenciador de dependências node-js), citando a versão mais atual e a versão que um projeto x usaria. Dessa forma ficaria fácil ver a distância entre as versões.</p>
+
+<h3>A ilusão; &ldquo;Parece simples!&rdquo;</h3>
+
+<p>Aparentemente parecia mamão com açúcar, eu precisava seguir um roteiro simples:</p>
+
+<p>1) Consumir metadados de um projeto A/B do packagist  <br/>
+   &ndash; Com alguma pesquisa percebi que o <a href="http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist/">packagist possuia uma interface para isso</a>.<br/>
+2) Pegar uma dependência C/D e olhar para sua regra de versão  <br/>
+   &ndash; Se C/D tem regra ~1.1, quer dizer que o composer vai baixar uma versão >=1.1.0 e &lt;1.2.0. <br/>
+3) Definir qual a versão mais atual de C/D que casa com a regra.<br/>
+4) Definir qual a versão mais atual (de todasss) de C/D. <br/>
+5) Voltar pro passo 2 com outra dependência.</p>
+
+<p>Implementar esse <em>Versioning Resolver</em> não era um dos casos mais simples porque o composer trabalha com muitos tipos de regras de versão (muitos um pouco distante do <a href="http://semver.org">semver</a> comum). Exemplos abaixo:</p>
+
+<ul>
+<li>~1.0</li>
+<li>2.0.3-alpha</li>
+<li>3.2.2-beta8</li>
+<li>>2.0,&lt;=4.0.2</li>
+<li>&lt;3.0.0 | > 5.0.3a</li>
+<li>6.6.*</li>
+<li>dev-master<br/>
+&hellip;</li>
+</ul>
+
+
+<p>Eu poderia (e pesquisei sobre) usar uma biblioteca pronta que me respondesse a questão &ldquo;Eu tenho 3 versões, qual deleas é a mais nova que casa com a regra x?&rdquo;. O Mais perto disso que eu conseguiria, era usar o próprio composer/composer. Mas seria uma <em>library</em> muito grande para ter como dependência do phartitura, então decidi escrever eu mesmo esse <em>Resolver</em>! #facaNaCaveira.</p>
+
+<h3>Desafios, desafios&hellip;</h3>
+
+<p>Além disso, existiam outros &ldquo;problemas&rdquo;:</p>
+
+<h4>Gargalo no curl/tempo de request</h4>
+
+<p>O exemplo mais claro e querido é o <a href="http://phartitura.com/symfony/symfony">symfony/symfony</a>.
+Quando você tenta ver uma phartitura do projeto, a aplicação vai pegar os metadados disponíveis pelo packagist deste projeto (ou seja, vai realizar aquele passo 1). Esses metadados vêm como json, vamos dar uma olhada na seção que nos interessa, as dependências:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;require&quot;</span><span class="p">:{</span>
+</span><span class='line'>       <span class="nt">&quot;php&quot;</span><span class="p">:</span><span class="s2">&quot;&gt;=5.3.3&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/icu&quot;</span><span class="p">:</span><span class="s2">&quot;~1.0&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;doctrine\/common&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;twig\/twig&quot;</span><span class="p">:</span><span class="s2">&quot;~1.11&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;psr\/log&quot;</span><span class="p">:</span><span class="s2">&quot;~1.0&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;require-dev&quot;</span><span class="p">:{</span>
+</span><span class='line'>       <span class="nt">&quot;doctrine\/data-fixtures&quot;</span><span class="p">:</span><span class="s2">&quot;1.0.*&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;doctrine\/dbal&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;doctrine\/orm&quot;</span><span class="p">:</span><span class="s2">&quot;~2.2,&gt;=2.2.3&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;monolog\/monolog&quot;</span><span class="p">:</span><span class="s2">&quot;~1.3&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;propel\/propel1&quot;</span><span class="p">:</span><span class="s2">&quot;1.6.*&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;ircmaxell\/password-compat&quot;</span><span class="p">:</span><span class="s2">&quot;1.0.*&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;ocramius\/proxy-manager&quot;</span><span class="p">:</span><span class="s2">&quot;&gt;=0.3.1,&lt;0.4-dev&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;replace&quot;</span><span class="p">:{</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/browser-kit&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/class-loader&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/config&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/console&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/css-selector&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/dependency-injection&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/debug&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/doctrine-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/dom-crawler&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/event-dispatcher&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/filesystem&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/finder&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/form&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/framework-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/http-foundation&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/http-kernel&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/intl&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/locale&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/monolog-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/options-resolver&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/process&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/propel1-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/property-access&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/proxy-manager-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/routing&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/security&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/security-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/serializer&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/stopwatch&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/swiftmailer-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/templating&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/translation&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/twig-bridge&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/twig-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/validator&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/web-profiler-bundle&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span><span class="p">,</span>
+</span><span class='line'>       <span class="nt">&quot;symfony\/yaml&quot;</span><span class="p">:</span><span class="s2">&quot;self.version&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'> <span class="p">}</span><span class="err">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As informações são bem parecidas com um composer.json, então para descobrir dados de cada dependência, é preciso fazer várias novas requests pro packagist perguntando sobre cada uma dessas. Entendeu o problema com o Symfony? São MUITAS dependências. <br/>
+Como seria insano forçar todos os usuários a esperar essas trocentas requests com CURL, serializei a informação no Redis com TTL de algumas horas, isso torna um segundo pedido para symfony/symfony incrivelmente rápido mas acaba não dando uma visão exata do pacote. Por exemplo, se neste exato momento o symfony está cacheado no Phartitura, e no github sair um novo release, levará horas para que a informação mude. Abri uma <a href="https://github.com/cloudson/Phartitura/issues/4">issue</a> para criar um console job (provavelmente com <a href="http://symfony.com/doc/current/components/console/introduction.html">symfony/console</a>) que atualiza esses caras automaticamente.</p>
+
+<h4>Priorizando as versões</h4>
+
+<p>Outro problema divertido foi/é responder a pergunta &ldquo;Como eu sei qual a versão mais atual entre X,Y e Z?&rdquo;. Você pode pensar rapidamente, o timestamp de release da tag/versão responde isso mas &hellip; <br/>
+* A versão dev-master sempre é encontrada (e não pode ser descartada, já que alguns projetos apontam pra ela &ndash; tsc tsc tsc) <br/>
+* A versão dev-develop também é sempre encontrada e pode estar à frente de tags<br/>
+* Alguns projetos (Como o Symfony) mantêm duas ou mais versões   simultaneamente, então um release para a 2.3.4 pode vir depois de um release para a 2.4.1 :(  <br/>
+* Algumas pessoas versionam com umas tags %$@#!% 1.0.0-alpha8 (o composer por exemplo ¬¬). Cara, o mundo inteiro está usando algo alpha há mais de dois anos? Para mim o composer está na versão 1.0.x</p>
+
+<p>Implementei uma <a href="http://www.php.net/manual/en/class.splmaxheap.php">SplMaxHeap</a> para que a medida que eu fosse inserindo versões nessa pilha, ele ordenasse deixando a mais prioritária no topo. A classe atual está com problemas (como aquele citado sobre o symfony) e é encontrada <a href="https://github.com/cloudson/Phartitura/blob/master/src/Cloudson/Phartitura/Project/VersionHeap.php">aqui</a>.</p>
+
+<h4>Negociação de conteúdo com Respect/Rest</h4>
+
+<p>Foi um bom momento para estudar um pouco sobre HTTP/REST. Com a ferramenta brasileira, <a href="https://github.com/respect/rest#content-negotiation">foi muito simples dar o primeiro passo</a> para a tarefa
+<code>Se alguém quiser consumir os dados de um projeto como json, retorne como json</code>.</p>
+
+<p>Mas depois a situação foi ficando um pouco mais complicada. Geralmente as pessoas não usam cabeçalho http para negociar contéudo com serviços, elas usam a própria url. Então para a url <a href="http://phartitura.com/cloudson/gandalf">http://phartitura.com/cloudson/gandalf</a> eu criei uma rota <a href="http://phartitura.com/cloudson/gandalf.json">http://phartitura.com/cloudson/gandalf.json</a> . Acho que encontrei um problema na priorização das rotas do Respect/Rest:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/*/*.json&#39;</span><span class="p">,</span> <span class="nv">$jsonCallback</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/*/*&#39;</span><span class="p">,</span> <span class="nv">$htmlCallback</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Setando essas duas rotas, a ferramenta não sabe qual é a mais prioritária, escolhendo a segunda :( Provavelmente eu vá abrir uma issue daqui a uns dias, ou você mesmo pode fazer isso. <br/>
+As prioridades são dadas pelo número de <em>wild cards</em>, então resolvi da seguinte forma :</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Router</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/*/*.json&#39;</span><span class="p">,</span> <span class="nv">$jsonCallback</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/*/**&#39;</span><span class="p">,</span> <span class="nv">$htmlCallback</span><span class="p">);</span> <span class="c1">// três *</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusão</h3>
+
+<p>Foi um projeto bem legal e desafiador. Prova que qualquer &ldquo;escritor de códigos&rdquo; pode lançar algo a nível mundial, pois apesar do maior número de acessos vir do brasil, Phartitura teve acessos de EUA, Inglaterra, Alemanha, Canada, Índia, Austrália, Japão&hellip; são 39 países nesse momento.<br/>
+Sobre o futuro, há muito a se implementar, quero fazer análise para projetos privados (subindo o composer.json), refatorar código, aumentar a cobertura de testes, criar jobs que atualizem informações no phartitura automaticamente, envio de notificação sobre novos releases para usuários que assim quiserem&hellip;
+Enfim, o céu é o limite! Fiquem com a música tema do projeto</p>
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/k1-TrAvp_xs" frameborder="0" allowfullscreen></iframe>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/01/25/acessando-a-api-do-packagist/">Acessando a API Do Packagist</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-25T23:41:00-02:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+        
+         | <a href="/2014/01/25/acessando-a-api-do-packagist/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na <a href="http://github.com/composer">organization oficial</a> por um client mas não encontrei.
+Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma API para consumo de informações sobre os pacotes.</p>
+
+<p>Depois de algumas buscas encontrei uns links úteis que responderam minha dúvida (veja as fontes no final do post) e irei escrever alguns exemplos de requests para consumir dados.</p>
+
+<h3>Listando pacotes de uma organization</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/list.json?vendor<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes por uma tag</h3>
+
+<p>(atributo tag encontrado no composer.json, não confundir com git tag :P ).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?tags<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes pelo nome</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?q<span class="o">=</span>cloudson
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://packagist.org/packages/cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pegando dados de um repositório específico</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/cloudson/gandalf.json
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:26:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;maintainers&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;claudsonweb@gmail.com&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="nt">&quot;versions&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;dev-master&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;9999999-dev&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:20:55+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nt">&quot;0.7.0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:12:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;repository&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;monthly&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;daily&quot;</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você pode acabar percebendo uma certa semelhança entra as URIs citadas e aquelas acessadas no packagist (html), de fato essa semelhança existe e serve também como base pra consumir outras informações.</p>
+
+<p>Este foi um post rápido apenas para divulgar conhecimento e servir de lembrete pra mim. Até a próxima :)</p>
+
+<p>fontes:
+<a href="https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA">https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA</a>  <br/>
+<a href="https://github.com/KnpLabs/packagist-api">https://github.com/KnpLabs/packagist-api</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/10/06/estudo-dirigido-zce/">Estudo Dirigido ZCE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-06T21:43:00-03:00" pubdate data-updated="true">Oct 6<span>th</span>, 2013</time>
+        
+         | <a href="/2013/10/06/estudo-dirigido-zce/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A ZCE é a prova de cerficação oficial para programadores php. Essa semana a Zend anunciou uma <a href="http://shop.zend.com/en/zend-php5-certification-voucher.html">nova prova baseada nas versões mais atuais do php</a>. Na phpconference do ano passado, consegui um voucher pra cerficação, e até hoje não fui fazer a prova.
+O tempo está passando e eu acabarei indo pra guerra por livre e espontânea pressão.  <br/>
+Mas como dizem que a melhor forma de aprender é ensinando, então a proposta é gerar posts com questões para (eu mesmo) estudar pra prova. Dessa vez vamos abordar questões bem simples, muitas sobre coerção de tipos e conversão de base numérica.<br/>
+As respostas para as questões estão no final do post, se encontrar algum erro, é só deixar um comentário.</p>
+
+<h3>1- Qual dos seguintes comentários é inválido em php? :</h3>
+
+<p>a) // foo <br/>
+b) /* bar */ <br/>
+c) # baz<br/>
+d) None above</p>
+
+<h3>2- Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="mo">017</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">echo</span> <span class="nv">$foo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal error<br/>
+b) 18  <br/>
+c) 16<br/>
+d) 25</p>
+
+<h3>3- Selecioee uma ou mais alternativas corretas:</h3>
+
+<p>a) 3.14 == 3.142<br/>
+b) 314e-2 == 3.14 <br/>
+c) 3.14 == 314e2 <br/>
+d) 3 == 3.14</p>
+
+<h3>4- Selecione uma ou mais alternativas incorretas:</h3>
+
+<p>a) 0xF &lt; 015 <br/>
+b) 0x0a0 == 160  <br/>
+c) 0xf &lt; 15 <br/>
+d) 0xf == 0x0f</p>
+
+<h3>5- Veja o código abaixo e assinale a alternativa correta:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$cloud</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$zce</span>   <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$cloud</span> <span class="o">==</span> <span class="k">true</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) true<br/>
+b) false<br/>
+c) 23 <br/>
+d) None above</p>
+
+<h3>6- Selecione um ou mais respostas corretas:</h3>
+
+<p>a) &ldquo;&rdquo; == false<br/>
+b) &ldquo;00&rdquo; == false<br/>
+c) &ldquo;0&rdquo; == false<br/>
+d) &ldquo; &rdquo; == false<br/>
+e) &ldquo;false&rdquo; == true</p>
+
+<h3>7- Veja o código abaixo e responda :</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;Zend Compiler&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;Hip Hop&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$foo</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) true<br/>
+b) false<br/>
+c) Error <br/>
+d) &ldquo;Zend Compiler Hip Hop&rdquo;</p>
+
+<h3>8 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">menu</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s2">&quot;====ZCE day!====&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;menu&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$foo</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal error<br/>
+b) &ldquo;menu&#8221;<br/>
+c) &rdquo;====ZCE day!====&ldquo;<br/>
+d) None above</p>
+
+<h3>9 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">;</span>
+</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$foo</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$bar</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$baz</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal Error<br/>
+b) false, true, false<br/>
+c) false, false, true <br/>
+d) true, true, false</p>
+
+<h3>10 &ndash; Selecione uma ou mais respostas incorretas:</h3>
+
+<p>a) 1 | 2 == 1<br/>
+b) 1 ^ 3 == 2 <br/>
+c) 2 ^ 3 == 8 <br/>
+d) 2 &amp; 3 == 2</p>
+
+<h3>Respostas</h3>
+
+<p>Update 02/02/14: Agradecimentos ao <a href="http://github.com/rogeriopradoj">@rogeriopradoj</a> que revisou o gabarito com várias alternatias incorretas! :)</p>
+
+<h4>1d</h4>
+
+<p>Os três tipos de comentários apresentados são válidos, para minha surpresa, já que eu nunca tinha usado # .</p>
+
+<h4>2c</h4>
+
+<p>Fiz um <a href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/">post sobre conversão de base numérica aqui</a>, se você não soube responder essa, o texto pode te ajudar. Mas a conta realizada foi a seguinte:
+017 = 1 x 8<sup>1</sup> + 7 x 8<sup>0</sup> = 7 + 8 = 15</p>
+
+<h4>3b</h4>
+
+<p>314e-2 é 3.14 em notação cientifica, o mesmo que 314 x 10^-2</p>
+
+<h4>4a,c</h4>
+
+<p>0xf é 15 em hexadecimal e 015 é 15 em octal, o que afirma que a) e c) são incorretas. 0x0a0 == a x 16<sup>1</sup> == 10 x 16<sup>1</sup> == 160 e 0xf == 0x0f == 15</p>
+
+<h4>5a</h4>
+
+<p>0 convertido para um boolean é false, outro numérico qualquer é considerado true</p>
+
+<h4>6a,d,e</h4>
+
+<p>Mais sobre coerção de tipos <a href="http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting">http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting</a></p>
+
+<h4>7c</h4>
+
+<p>A variável $2foo não possui um nome válido, pois começa com um número <a href="http://www.php.net/manual/en/language.variables.basics.php">http://www.php.net/manual/en/language.variables.basics.php</a></p>
+
+<h4>8c</h4>
+
+<p>Um novo tipo foi definido no php 5.4 (?). Um callable é como o nome diz um valor que pode invocar uma função. Esses callables podem ser funções anônimas, ou até mesmo strings contendo o nome de uma função, como é o nosso caso.</p>
+
+<h4>9b</h4>
+
+<p>Como o próprio nome diz, a função isset testa se uma variável foi declarada (ou se uma região da memória associada ao identificador, existe)<a href="http://php.net/manual/pt_BR/function.isset.php">http://php.net/manual/pt_BR/function.isset.php</a></p>
+
+<h4>10a,c</h4>
+
+<p>Essa questão tem a ver com álgebra de booleanos. Um gancho para um próximo post :)  <br/>
+1 | 2 == 01 + 10 == 11 == 3<br/>
+1 ^ 3 == 2<br/>
+2 ^ 3 == 1  <br/>
+2 &amp; 3 == 2</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/28/conversao-de-base-numerica/">Conversão De Base Numérica</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-28T18:32:00-03:00" pubdate data-updated="true">Sep 28<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/28/conversao-de-base-numerica/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Não sei se esse é um tópico desnecessário mas vejo muitas questões de prova da ZCE (php) que se relacionam com conversão de base numérica. Se ajudar uma pessoa no mundo, já fico satisfeito.</p>
+
+<h3>Começando do começo</h3>
+
+<p>Com nossos algarismos indo-arábicos usamos a base 10. Ou seja, há 10 símbolos que representam qualquer número. Para um sistema computacional, a base utilizada é a 2, como você deve imaginar. Isso quer dizer que todas as representações utilizam 2 símbolos, o 0 e o 1. A seguir vamos ver como transformamos um número em base 10 para base 2:
+Para descrobrirmos qual a representação do número 9 (base 10) para base 2, divimos o mesmo por 2 sucessivamente:</p>
+
+<p>9 / 2 = 4 (resta 1) <br/>
+4 / 2 = 2 (resta 0) <br/>
+2 / 2 = 1 (resta 0)</p>
+
+<p>Quando o resultado da divisão inteira for 1, o método para e você já tem a resposta da conversão.
+O primeiro dígito binário é resultado da última divisão; 1. A seguir aparecem os restos das divisões de baixo para cima; 001. Ou seja, 9 em base 2 é 1001. <br/>
+Vamos repetir o método para alguns números</p>
+
+<p>8 / 2 = 4 (resta 0) <br/>
+4 / 2 = 2 (resta 0)<br/>
+2 / 2 = 1 (resta 0) <br/>
+8 em base 2 é 1000</p>
+
+<p>21 / 2 = 10 (resta 1)<br/>
+10 / 2 = 5  (resta 0)<br/>
+5  / 2 = 2  (resta 1)
+2  / 2 = 1  (resta 0)
+21 em base 2 é 10101</p>
+
+<h3>E o caso contrário ?</h3>
+
+<p>Eu tenho o número 1101 na base binária e quero saber qual sua representação na base decimal. Multiplicaremos cada dígito desse numero por 2 elevado a uma potência incremental (da direita pra esquerda). Ok, ficou mais confuso do que parece, veja abaixo:</p>
+
+<p>1101 = 1*2<sup>3</sup> + 1*2<sup>2</sup> + 0*2<sup>1</sup> + 1*2<sup>0</sup> = 8 + 4 + 0 + 1 = 13</p>
+
+<p>Para tirar a prova, vamos utilizar um número que convertemos na seção anterior, o 1001 (que deve dar 9):</p>
+
+<p>1001 = 1*2<sup>3</sup> + 0*2<sup>2</sup> + 0*2<sup>1</sup> + 1*2<sup>0</sup> = 8 + 0 + 0 + 1 = 9</p>
+
+<p>Satisfeito? :) Não? <br/>
+Vamos pegar um número maior então, 101010:</p>
+
+<p>101010 = 1*2<sup>5</sup> + 0 + 1*2<sup>3</sup> + 0 + 1*2<sup>1</sup> + 0 = 32 + 8 + 2 = 42</p>
+
+<h3>E se eu estiver em outra base?</h3>
+
+<p>Quando citei o php lá no começo do post estava me referindo aos números octais nele, veja o código abaixo:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="mo">013</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Qual o valor de $bar no fim do script? 18? Não. O valor é 16.<br/>
+Se você nunca trabalhou com php, eu te perdôo. Números na linguagem que começam com 0 (da esquerda pra direita) são automaticamente interpretados como base 8. Questões relacionadas a octais na ZCE (certificação da linguagem) são comuns, então vamos a seguir fazer a conversão do octal 013 para decimal, para que assim tenhamos a prova da &ldquo;hipótese&rdquo; de que o resultado é 16.<br/>
+A verdade é que não há nenhuma regra nova, a conversão de binário para decimal e de octal para decimal seguem o mesmo método, porém a base muda de 2 para 8 então &hellip;</p>
+
+<p>013 = 0*8<sup>2</sup> + 1*8<sup>1</sup> + 3*8<sup>0</sup> = 0 + 8 + 3 = 11</p>
+
+<p>Viram a diferença? Multiplicamos cada dígito por 8 elevado a um expoente incremental (incremental da direita pra esquerda rs).<br/>
+11 + 5 = 16, como foi dito anteriormente.</p>
+
+<h3>Já que estamos aqui, vamos falar também de &hellip;</h3>
+
+<p>Hexadecimais! 16 símbolos para representar qualquer número. Os símbolos são :</p>
+
+<table>
+<thead>
+<tr>
+<th> Simbolo  </th>
+<th>  Valor  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>   0      </td>
+<td>   0    </td>
+</tr>
+<tr>
+<td> 1 </td>
+<td> 1 </td>
+</tr>
+<tr>
+<td> 2 </td>
+<td> 2 </td>
+</tr>
+<tr>
+<td> 3 </td>
+<td> 3 </td>
+</tr>
+<tr>
+<td> 4 </td>
+<td> 4  </td>
+</tr>
+<tr>
+<td> 5 </td>
+<td> 5  </td>
+</tr>
+<tr>
+<td> 6 </td>
+<td> 6  </td>
+</tr>
+<tr>
+<td> 7 </td>
+<td> 7  </td>
+</tr>
+<tr>
+<td> 8 </td>
+<td> 8  </td>
+</tr>
+<tr>
+<td> 9 </td>
+<td> 9  </td>
+</tr>
+<tr>
+<td> a </td>
+<td> 10  </td>
+</tr>
+<tr>
+<td> b</td>
+<td> 11  </td>
+</tr>
+<tr>
+<td> c </td>
+<td> 12</td>
+</tr>
+<tr>
+<td> d </td>
+<td> 13 </td>
+</tr>
+<tr>
+<td> e </td>
+<td> 14  </td>
+</tr>
+<tr>
+<td> f </td>
+<td> 15  </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Sendo redundante: A regra pra conversão de hexadecimal para decimal é a mesma, vamos converter o número #f00 para decimal:</p>
+
+<p>f00 = f*16<sup>2</sup> + 0*16<sup>1</sup> + 0*16<sup>0</sup> = 15*16<sup>2</sup> + 0*16<sup>1</sup> + 0*16<sup>0</sup> = 15*256 + 0 + 0 = 3840 .</p>
+
+<p>Perceba que usamos a tabela para converter as letras por valores numéricos, nada além disso.</p>
+
+<h3>Conclusão</h3>
+
+<p>Com essas regrinhas, não há o que temer :). Dúvidas? Mande um comentário ali aí.<br/>
+Pretendo fazer mais posts de conhecimento menos específico como este, então nos veremos em breve. Até mais.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/27/news-09-slash-13/">News - 09/13</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-27T22:22:00-03:00" pubdate data-updated="true">Sep 27<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/27/news-09-slash-13/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A ideia é ter uma série de posts rápidos sobre o que eu vi, li e/ou utilizei durante o mês.</p>
+
+<h3>Vagrant</h3>
+
+<p>Já trabalhei em lugares em que cada job tinha dependências diferentes. Um com php 5.2, outro com php 5.3+, e para quem não sabe, as coisas mudaram bastante entre essas versões. O Vagrant torna a administração de ambientes de desenvolvimento mais fácil por meio de virtualização, ele utiliza o virtualbox para subir maquinas virtuais facilmente acessíveis via ssh.</p>
+
+<p><a href="http://www.vagrantup.com/">http://www.vagrantup.com/</a></p>
+
+<h3>Octopress</h3>
+
+<p>Esse é o cara! Eu já morro de preguiça de pagar hospedagem, preparar ambiente e manter um wordpress. Então pra esse blog, pensei em usar um gerador de sites estáticos utilizando o github pages e essa ferramenta, que possui gerenciamento de temas, posts e todo o mínimo que um blog precisa.</p>
+
+<p><a href="http://octopress.org">http://octopress.org</a></p>
+
+<h3>Golang</h3>
+
+<p>Golang, ou simplesmente Go, é uma linguagem do nível do C. Diferente desta, Go é menos burocrática, fortemente regrada e mais&hellip; organizada.
+A linguagem deve estar perto do período de hype (assim como ruby esteve há uns anos), eu sigo muitos devs no github, e do nada stars em projetos Go viraram rotina.<br/>
+Hype ou não, é uma boa dica.</p>
+
+<p><a href="http://golang.org/">http://golang.org/</a> <br/>
+<a href="http://www.grokpodcast.com/2013/07/17/episodio-95-golang/">http://www.grokpodcast.com/2013/07/17/episodio-95-golang/</a></p>
+
+<h3>Mondrian (php)</h3>
+
+<p>Um cara muito doido utilizou teoria dos grafos para analisar códigos php e gerar relatórios sobre acoplamento entre classes e outros furos do SOLID.</p>
+
+<p><a href="https://github.com/Trismegiste/Mondrian">https://github.com/Trismegiste/Mondrian</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/11/olhar-urbano-01/">Olhar urbano 01</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/23/gitql-do-que-e-feito/">Gitql - Do que é feito?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/15/mostrando-o-branch-atual-no-bash/">Mostrando o branch atual no bash</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
