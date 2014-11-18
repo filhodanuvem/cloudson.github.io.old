@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>API's usando HAL - Uma comparação com websites - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Novamente aqui para falar sobre HTTP e API&rsquo;s. Cada vez mais tenho tido a certeza de que apesar da necessidade, desenvolver serviços web envolve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2014/11/01/apis-uma-comparacao-com-websites">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">API's Usando HAL - Uma Comparação Com Websites</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-01T09:59:00-02:00" pubdate data-updated="true">Nov 1<span>st</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Novamente aqui para falar sobre HTTP e API&rsquo;s. Cada vez mais tenho tido a certeza de que apesar da necessidade, desenvolver serviços web envolve problemas arquiteturais muito complexos. Dessa vez viveremos um comparativo entre um serviço REST e websites.</p>
+
+<h3>O que é um serviço web?</h3>
+
+<p>Primeiro vamos dar nomes aos bois;</p>
+
+<pre><code>"Um website é um conjunto de hipertextos acessíveis geralmente pelo protocolo HTTP na internet."
+</code></pre>
+
+<p>Ou seja, por uma página web, temos hipertexos que se ligam a outros hipertextos através de links, que via navegador são clicáveis.</p>
+
+<p>Um serviço web é uma aplicação sob o http, criada com o intuito de prover informações a outras aplicações. Assim, se a prefeitura da sua cidade provê informações do posicionamento dos ônibus da cidade, ela possui um serviço web. Se o facebook consegue fornecer dados de usuários para que criemos aplicações, ele também fornece uma api, que seria uma maneira de se comunicar ao webservice.</p>
+
+<p>Em um serviço web apenas o conteúdo é importante. Esse conteúdo pode ser dividio em estruturas que são representações de algo, uma representação de uma pessoa (e não a pessoa em si), uma representação de um lugar (e não o lugar em si). Essa representação é chamada de <em>recurso</em>.<br/>
+Você também pode (e deve) desenvolver serviços com sua regra de negócio, afinal, hoje o mesmo dado utilizado num website é requerido por exemplo num aplicativo mobile.</p>
+
+<h3>REST e SOAP</h3>
+
+<p>Ao desenvolver uma API, podemos seguir um de dois padrões bem conhecidos. O primeiro é o SOAP, um padrão que faz com que criemos um tipo de mensagem com envelope, cabeçalho e corpo bem definidos, as transferências geralmente são em XML, é um padrão burocrático e verboso, porém bem flexível.<br/>
+Outro padrão que cresceu muito nos últimos anos é o REST. Diferente do SOAP que exige uma descrição de rotas e mensagens, o REST usa o próprio HTTP como padrão de transporte de mensagens.
+Ou seja, o corpo e o header das mensagens são os mesmos de uma request HTTP comum, veja abaixo uma request que pede um recurso usuário de id 5.</p>
+
+<pre><code>GET /users/5
+Host: api.meusite.com
+</code></pre>
+
+<p>Response:</p>
+
+<pre><code>HTTP/1.1 200 OK
+Content-type: application/json; charset=UTF-8
+
+{
+   id: 5,
+   name: "Claudson Oliveira",
+   email: "cloudson@outlook.com",
+   access: [
+       "2014-10-10 00:00:00", "2014-11-01 12:30:00"
+   ]
+}
+</code></pre>
+
+<p>A resposta da requisição retornou em formato json o recurso que contém, alem de id, nome e e-mail, um array com todas as datas de acesso desse usuário a aplicação (uma rede social, por exemplo)</p>
+
+<h3>Content negotiation</h3>
+
+<p>Como vimos no <a href="http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">post sobre negociação de conteúdo</a>, via cabeçalho HTTP podemos dizer a um serviço que gostaríamos de receber um recurso num certo mime-type. Pense agora em requisitar o mesmor recurso user em HTML</p>
+
+<pre><code>GET /users/5
+Host: api.meusite.com
+Accept: text/html; q=1.0 , application/json; 0.5
+</code></pre>
+
+<p>Response
+<img src="./images/posts/twitter-profile.png" alt="" /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-01T09:59:00-02:00" pubdate data-updated="true">Nov 1<span>st</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/api/'>API</a>, <a class='category' href='/blog/categories/http/'>HTTP</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/" title="Previous Post: Ligando extensões a linguagens no Vim">&laquo; Ligando extensões a linguagens no Vim</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/11/18/olhar-urbano-02/" title="Next Post: Olhar Urbano 02">Olhar Urbano 02 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/11/18/olhar-urbano-02/">Olhar Urbano 02</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/11/01/apis-uma-comparacao-com-websites/">API's usando HAL - Uma comparação com websites</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2014/11/01/apis-uma-comparacao-com-websites/';
+        var disqus_url = 'http://cloudson.github.io/2014/11/01/apis-uma-comparacao-com-websites/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

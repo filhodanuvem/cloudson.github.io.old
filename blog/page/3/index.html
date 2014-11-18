@@ -9,7 +9,7 @@
   <meta name="author" content="Claudson Oliveira">
 
   
-  <meta name="description" content="Não sei se esse é um tópico desnecessário mas vejo muitas questões de prova da ZCE (php) que se relacionam com conversão de base numérica. Se ajudar &hellip;">
+  <meta name="description" content="Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na organization oficial por um client mas não encontrei. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,724 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/01/25/acessando-a-api-do-packagist/">Acessando a API Do Packagist</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-25T23:41:00-02:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+        
+         | <a href="/2014/01/25/acessando-a-api-do-packagist/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na <a href="http://github.com/composer">organization oficial</a> por um client mas não encontrei.
+Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma API para consumo de informações sobre os pacotes.</p>
+
+<p>Depois de algumas buscas encontrei uns links úteis que responderam minha dúvida (veja as fontes no final do post) e irei escrever alguns exemplos de requests para consumir dados.</p>
+
+<h3>Listando pacotes de uma organization</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/list.json?vendor<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes por uma tag</h3>
+
+<p>(atributo tag encontrado no composer.json, não confundir com git tag :P ).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?tags<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes pelo nome</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?q<span class="o">=</span>cloudson
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://packagist.org/packages/cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pegando dados de um repositório específico</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/cloudson/gandalf.json
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:26:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;maintainers&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;claudsonweb@gmail.com&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="nt">&quot;versions&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;dev-master&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;9999999-dev&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:20:55+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nt">&quot;0.7.0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:12:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;repository&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;monthly&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;daily&quot;</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você pode acabar percebendo uma certa semelhança entra as URIs citadas e aquelas acessadas no packagist (html), de fato essa semelhança existe e serve também como base pra consumir outras informações.</p>
+
+<p>Este foi um post rápido apenas para divulgar conhecimento e servir de lembrete pra mim. Até a próxima :)</p>
+
+<p>fontes:
+<a href="https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA">https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA</a>  <br/>
+<a href="https://github.com/KnpLabs/packagist-api">https://github.com/KnpLabs/packagist-api</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit/">Iniciando Com Testes Unitários Usando PHPUnit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-04T22:15:00-02:00" pubdate data-updated="true">Jan 4<span>th</span>, 2014</time>
+        
+         | <a href="/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Olá pessoal! Primeiro post do ano e vamos falar de testes unitários em php com a abordagem mais simples possível. Gostaria que primeiramente você pensasse num cenário e respondesse uma pergunta; Supomos que você está desenvolvendo uma aplicação para a minha locadora de animes (se você não sabe o que é um anime, substitua por filmes rs). Na entrega eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você provavelmente me responde que fez baterias de testes simulando o que um usuário irá fazer com o sistema. Até aí nada de estranho.</p>
+
+<p>Uma semana depois eu faço um requerimento de uma mudança na <em>feature</em> de login de usuários. Você implementa a mudança e me entrega, novamente eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você dará a mesma justificativa, mas um furo já pode ser percebido; Provavelmente quando você mudou a feature, testou ela isoladamente e não o sistema todo, algo pode ter quebrado longe de seus olhos.<br/>
+É aí que surge a seguinte motivação; &ldquo;E se colocássemos robôs para testar nossas aplicações? Por que não escrever códigos que simulem pessoas testando partes do sistema?&rdquo;.<br/>
+Entre esses testes automatizados, podemos classificá-los em vários tipos, robôs que testam sua interface, robôs que testam performance da sua aplicação &hellip; robôs que testam um pedacinho do seu código. Vamos nos concentrar nesse último tipo, os testes unitários.</p>
+
+<h3>Ambiente</h3>
+
+<p>Para escrever esse post eu usei:</p>
+
+<ul>
+<li>Ubuntu 12.10</li>
+<li>php 5.4 (você pode usar 5.3)</li>
+<li>PHPUnit 3.7 (Baixado o <a href="https://phar.phpunit.de/phpunit.phar">phar</a> do site)</li>
+</ul>
+
+
+<h3>O problema</h3>
+
+<p>Nosso problema será bem simples, vamos implementar um programa que encontre o fatorial de um número.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/10/09/operacoes-bit-a-bit-com-algebra-booleana/">Operações Bit a Bit Com álgebra Booleana</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-09T22:39:00-03:00" pubdate data-updated="true">Oct 9<span>th</span>, 2013</time>
+        
+         | <a href="/2013/10/09/operacoes-bit-a-bit-com-algebra-booleana/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hoje vamos falar um pouco sobre álgebra booleana ou álgebra de boole. Recebeu esse nome em homenagem a George Boole, um matemático inglês que criou o sistema de lógica no século XIX <a href="http://pt.wikipedia.org/wiki/%C3%81lgebra_booleana">1</a>.<br/>
+Em cursos de conputação, essa disciplina se encontra no primeiro período, ela serve de base até mesmo para algoritmos, outra cadeira base desse tipo de curso. Neste post vamos apresentar a  álgebra e relacioná-la com linguagens de programação, utilizando o php como exemplo.</p>
+
+<h3>Domínio e operação de adição</h3>
+
+<p>Como já sabemos de <a href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/">outros carnavais</a> a álgebra booleana trabalha com valores binários, verdadeiro ou falso, ligado ou desligado, corrente elétrica ou ausência dela, ou por fim, 1 0u 0. Baseado nisso podemos realizar operações sob esses valores.<br/>
+A adição representa o mesmo que o OR lógico. Então o resultado entre 1 + 0 é 1, já que podemos ler &ldquo;verdadeiro ou falso resulta em verdadeiro&rdquo;. A partir disso temos a velha piada de que 1 + 1 na computação é 1 porque &ldquo;verdadeiro ou verdadeiro resulta em verdadeiro&rdquo;.
+Com duas variáveis lógicas ($a e $b) e o operador de adição, podemos montar todos os valores resultantes possíveis, no que chamamos de <em>tabela verdade</em> :</p>
+
+<table>
+<thead>
+<tr>
+<th>$a</th>
+<th>$b</th>
+<th>$a*b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/10/06/estudo-dirigido-zce/">Estudo Dirigido ZCE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-06T21:43:00-03:00" pubdate data-updated="true">Oct 6<span>th</span>, 2013</time>
+        
+         | <a href="/2013/10/06/estudo-dirigido-zce/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A ZCE é a prova de cerficação oficial para programadores php. Essa semana a Zend anunciou uma <a href="http://shop.zend.com/en/zend-php5-certification-voucher.html">nova prova baseada nas versões mais atuais do php</a>. Na phpconference do ano passado, consegui um voucher pra cerficação, e até hoje não fui fazer a prova.
+O tempo está passando e eu acabarei indo pra guerra por livre e espontânea pressão.  <br/>
+Mas como dizem que a melhor forma de aprender é ensinando, então a proposta é gerar posts com questões para (eu mesmo) estudar pra prova. Dessa vez vamos abordar questões bem simples, muitas sobre coerção de tipos e conversão de base numérica.<br/>
+As respostas para as questões estão no final do post, se encontrar algum erro, é só deixar um comentário.</p>
+
+<h3>1- Qual dos seguintes comentários é inválido em php? :</h3>
+
+<p>a) // foo <br/>
+b) /* bar */ <br/>
+c) # baz<br/>
+d) None above</p>
+
+<h3>2- Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="mo">017</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">echo</span> <span class="nv">$foo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal error<br/>
+b) 18  <br/>
+c) 16<br/>
+d) 25</p>
+
+<h3>3- Selecioee uma ou mais alternativas corretas:</h3>
+
+<p>a) 3.14 == 3.142<br/>
+b) 314e-2 == 3.14 <br/>
+c) 3.14 == 314e2 <br/>
+d) 3 == 3.14</p>
+
+<h3>4- Selecione uma ou mais alternativas incorretas:</h3>
+
+<p>a) 0xF &lt; 015 <br/>
+b) 0x0a0 == 160  <br/>
+c) 0xf &lt; 15 <br/>
+d) 0xf == 0x0f</p>
+
+<h3>5- Veja o código abaixo e assinale a alternativa correta:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$cloud</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$zce</span>   <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$cloud</span> <span class="o">==</span> <span class="k">true</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) true<br/>
+b) false<br/>
+c) 23 <br/>
+d) None above</p>
+
+<h3>6- Selecione um ou mais respostas corretas:</h3>
+
+<p>a) &ldquo;&rdquo; == false<br/>
+b) &ldquo;00&rdquo; == false<br/>
+c) &ldquo;0&rdquo; == false<br/>
+d) &ldquo; &rdquo; == false<br/>
+e) &ldquo;false&rdquo; == true</p>
+
+<h3>7- Veja o código abaixo e responda :</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;Zend Compiler&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;Hip Hop&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$foo</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) true<br/>
+b) false<br/>
+c) Error <br/>
+d) &ldquo;Zend Compiler Hip Hop&rdquo;</p>
+
+<h3>8 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">menu</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s2">&quot;====ZCE day!====&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;menu&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$foo</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal error<br/>
+b) &ldquo;menu&#8221;<br/>
+c) &rdquo;====ZCE day!====&ldquo;<br/>
+d) None above</p>
+
+<h3>9 &ndash; Qual a saída do código abaixo:</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">;</span>
+</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$foo</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$bar</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$baz</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a) Fatal Error<br/>
+b) false, true, false<br/>
+c) false, false, true <br/>
+d) true, true, false</p>
+
+<h3>10 &ndash; Selecione uma ou mais respostas incorretas:</h3>
+
+<p>a) 1 | 2 == 1<br/>
+b) 1 ^ 3 == 2 <br/>
+c) 2 ^ 3 == 8 <br/>
+d) 2 &amp; 3 == 2</p>
+
+<h3>Respostas</h3>
+
+<p>Update 02/02/14: Agradecimentos ao <a href="http://github.com/rogeriopradoj">@rogeriopradoj</a> que revisou o gabarito com várias alternatias incorretas! :)</p>
+
+<h4>1d</h4>
+
+<p>Os três tipos de comentários apresentados são válidos, para minha surpresa, já que eu nunca tinha usado # .</p>
+
+<h4>2c</h4>
+
+<p>Fiz um <a href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/">post sobre conversão de base numérica aqui</a>, se você não soube responder essa, o texto pode te ajudar. Mas a conta realizada foi a seguinte:
+017 = 1 x 8<sup>1</sup> + 7 x 8<sup>0</sup> = 7 + 8 = 15</p>
+
+<h4>3b</h4>
+
+<p>314e-2 é 3.14 em notação cientifica, o mesmo que 314 x 10^-2</p>
+
+<h4>4a,c</h4>
+
+<p>0xf é 15 em hexadecimal e 015 é 15 em octal, o que afirma que a) e c) são incorretas. 0x0a0 == a x 16<sup>1</sup> == 10 x 16<sup>1</sup> == 160 e 0xf == 0x0f == 15</p>
+
+<h4>5a</h4>
+
+<p>0 convertido para um boolean é false, outro numérico qualquer é considerado true</p>
+
+<h4>6a,d,e</h4>
+
+<p>Mais sobre coerção de tipos <a href="http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting">http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting</a></p>
+
+<h4>7c</h4>
+
+<p>A variável $2foo não possui um nome válido, pois começa com um número <a href="http://www.php.net/manual/en/language.variables.basics.php">http://www.php.net/manual/en/language.variables.basics.php</a></p>
+
+<h4>8c</h4>
+
+<p>Um novo tipo foi definido no php 5.4 (?). Um callable é como o nome diz um valor que pode invocar uma função. Esses callables podem ser funções anônimas, ou até mesmo strings contendo o nome de uma função, como é o nosso caso.</p>
+
+<h4>9b</h4>
+
+<p>Como o próprio nome diz, a função isset testa se uma variável foi declarada (ou se uma região da memória associada ao identificador, existe)<a href="http://php.net/manual/pt_BR/function.isset.php">http://php.net/manual/pt_BR/function.isset.php</a></p>
+
+<h4>10a,c</h4>
+
+<p>Essa questão tem a ver com álgebra de booleanos. Um gancho para um próximo post :)  <br/>
+1 | 2 == 01 + 10 == 11 == 3<br/>
+1 ^ 3 == 2<br/>
+2 ^ 3 == 1  <br/>
+2 &amp; 3 == 2</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -270,605 +988,9 @@ Pretendo fazer mais posts de conhecimento menos específico como este, então no
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/09/27/news-09-slash-13/">News - 09/13</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-27T22:22:00-03:00" pubdate data-updated="true">Sep 27<span>th</span>, 2013</time>
-        
-         | <a href="/2013/09/27/news-09-slash-13/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A ideia é ter uma série de posts rápidos sobre o que eu vi, li e/ou utilizei durante o mês.</p>
-
-<h3>Vagrant</h3>
-
-<p>Já trabalhei em lugares em que cada job tinha dependências diferentes. Um com php 5.2, outro com php 5.3+, e para quem não sabe, as coisas mudaram bastante entre essas versões. O Vagrant torna a administração de ambientes de desenvolvimento mais fácil por meio de virtualização, ele utiliza o virtualbox para subir maquinas virtuais facilmente acessíveis via ssh.</p>
-
-<p><a href="http://www.vagrantup.com/">http://www.vagrantup.com/</a></p>
-
-<h3>Octopress</h3>
-
-<p>Esse é o cara! Eu já morro de preguiça de pagar hospedagem, preparar ambiente e manter um wordpress. Então pra esse blog, pensei em usar um gerador de sites estáticos utilizando o github pages e essa ferramenta, que possui gerenciamento de temas, posts e todo o mínimo que um blog precisa.</p>
-
-<p><a href="http://octopress.org">http://octopress.org</a></p>
-
-<h3>Golang</h3>
-
-<p>Golang, ou simplesmente Go, é uma linguagem do nível do C. Diferente desta, Go é menos burocrática, fortemente regrada e mais&hellip; organizada.
-A linguagem deve estar perto do período de hype (assim como ruby esteve há uns anos), eu sigo muitos devs no github, e do nada stars em projetos Go viraram rotina.<br/>
-Hype ou não, é uma boa dica.</p>
-
-<p><a href="http://golang.org/">http://golang.org/</a> <br/>
-<a href="http://www.grokpodcast.com/2013/07/17/episodio-95-golang/">http://www.grokpodcast.com/2013/07/17/episodio-95-golang/</a></p>
-
-<h3>Mondrian (php)</h3>
-
-<p>Um cara muito doido utilizou teoria dos grafos para analisar códigos php e gerar relatórios sobre acoplamento entre classes e outros furos do SOLID.</p>
-
-<p><a href="https://github.com/Trismegiste/Mondrian">https://github.com/Trismegiste/Mondrian</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/09/01/meu-metaframework-em-php/">Meu Metaframework Em PHP</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-01T12:22:00-03:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
-        
-         | <a href="/2013/09/01/meu-metaframework-em-php/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Há algumas semanas saiu um artigo (baseado em <em>achismos</em> talvez) sobre <a href="http://www.sitepoint.com/a-php-from-the-future/">o php do futuro</a>, e um dos pontos do autor foi que as pessoas começariam a utilizar mais metaframeworks. Eu concordo. A verdade é que com os microframeworks instantaneamente temos metaframeworks; ferramentas próprias geradas a partir de outras menores.
-Eu mesmo, apesar de trabalhar com symfony há um tempo, nunca o utilizei em projetos pessoais &ndash; que <a href="http://temadehoje.gopagoda.com/">foram ou não pro ar</a>. <br/>
-Neste post, vou mostrar meu skeleton ou metaframework padrão para aplicações php.</p>
-
-<h3>Estrutura</h3>
-
-<p>Vamos trabalhar num sistema de diretórios análogo ao abaixo:</p>
-
-<p>&mdash;templates <br/>
-&mdash;public <br/>
-&mdash;cache <br/>
-&mdash;vendor</p>
-
-<h3>Composer</h3>
-
-<p>Este cara não é um ingrediente, mas sem ele você não vai conseguir começar. O <a href="http://getcomposer.org/">Composer</a> é um gerenciador de dependências pra projetos php. Se sua aplicação vai usar a ferramenta X, Y e Z, você as descreve num arquivo de configuração, roda um comando e todas estarão disponíveis. Se por acaso você queira atualizar Y ou trocar Z por W, basta reconfigurar esse arquivo. Veja um exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span>[composer.json] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;MeuProjeto&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;autoload&quot;</span> <span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nt">&quot;psr-0&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;MeuProjeto&quot;</span> <span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">}</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nt">&quot;php&quot;</span> <span class="p">:</span> <span class="s2">&quot;&gt;= 5.3.8&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;silex/silex&quot;</span> <span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;respect/relational&quot;</span><span class="p">:</span> <span class="s2">&quot;0.4.7&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;twig/twig&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Acima, o <em>composer.json</em> diz que faremos uma aplicação que precisa rodar num php pelo menos na versão 5.3.8 e que dependerá de outras ferramentas, que citaremos melhor abaixo.
-Vamos agora fazer com que essas dependências sejam baixadas.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>seu_diretorio_do_projeto
-</span><span class='line'><span class="nv">$ </span>curl -s http://getcomposer.org/installer | php <span class="c"># baixa o composer </span>
-</span><span class='line'><span class="nv">$ </span>php composer.phar install  <span class="c"># instala as dependencias</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Configuração</h3>
-
-<p>Costumo usar algumas constantes &ndash; que variam de acordo com o ambiente &ndash; no projeto. Agrupo essas informações num arquivo config.php</p>
-
-<figure class='code'><figcaption><span>[index.php] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="c1">// o composer gera um autoloader automático que já carrega as dependências</span>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>[config.php] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="c1">// configuração de envio de email</span>
-</span><span class='line'><span class="c1">// ou configuração de uma app do facebook </span>
-</span><span class='line'><span class="c1">// whatever</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// configurações de banco de dados</span>
-</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s1">&#39;/127.0.0.[0-9]+/&#39;</span><span class="p">,</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;SERVER_ADDR&#39;</span><span class="p">])){</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;motherfucker&#39;</span><span class="p">);</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;314159265359&#39;</span><span class="p">);</span>
-</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;path_db.app.com&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Silex</h3>
-
-<p>O <a href="http://silex.sensiolabs.org/">Silex</a> é um roteador, em poucas linhas você consegue escrever um programa que roda diferentes funções para cada url (rota) de sua aplicação.</p>
-
-<figure class='code'><figcaption><span>[index.php] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Estamos na home!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Twig</h3>
-
-<p>O <a href="http://twig.sensiolabs.org/">Twig</a> nasceu no ecossistema symfony (como quase tudo deste post). Ele é um motor de templates, uma forma de escrever o html com inserção de informações dinâmicas vindas da sua aplicação.<br/>
-Vamos primeiro integrar o Twig ao Silex:</p>
-
-<figure class='code'><figcaption><span>[index.php] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
-</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
-</span><span class='line'><span class="c1">// integrante do com silex</span>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;Claudson Oliveira&#39;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">));</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>[home.html] language:html</span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;head&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Blog<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;body&gt;</span>
-</span><span class='line'>        <span class="c">&lt;!-- leia a documentacao do twig para inserir as variaveis --&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Banco de dados</h3>
-
-<p>Para persistência em banco de dados, usaremos um cara brasileiro que eu sou fã. O <a href="http://github.com/respect/relational">Respect\Relational</a>, com ele não há trabalho em escrever classes que representam tabelas, ou qualquer dificuldade de configuração.</p>
-
-<figure class='code'><figcaption><span>[index.php] </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// instanciando o relational com pdo </span>
-</span><span class='line'><span class="nv">$mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mapper</span><span class="p">(</span><span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">&#39;mysql:dbname=seu_bd;host=&#39;</span><span class="o">.</span><span class="nx">DB_PATH</span><span class="p">,</span> <span class="nx">DB_USER</span><span class="p">,</span> <span class="nx">DB_PASS</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
-</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
-</span><span class='line'><span class="c1">// integrante do com silex</span>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// usa o mapper pra listar todos os usuarios do sistema (supondo que a tabela exista)</span>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$mapper</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nv">$usuarios</span> <span class="o">=</span> <span class="nv">$mapper</span><span class="o">-&gt;</span><span class="na">user</span><span class="o">-&gt;</span><span class="na">fetchAll</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;usuarios&#39;</span><span class="o">=&gt;</span> <span class="nv">$usuarios</span><span class="p">));</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Conclusão</h3>
-
-<p>Vimos o básico para começar um projeto rapidamente; um controlador, uma engine de templates e uma ferramenta de persistência e consulta em banco de dados. A partir disso você pode plugar outras ferramentas, de validação, envio de email ou alguma api de rede social.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/08/17/e-ai-ta-gostando-de-sp/">E aí, Tá Gostando De SP?!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-17T14:59:00-03:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
-        
-         | <a href="/2013/08/17/e-ai-ta-gostando-de-sp/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Bom, como você deve ter lido no pequeno <a href="/2013/08/17/begin/">primeiro post</a> do blog, sou um mineiro desbravando terras paulistan.. Hum, bom momento
-para falar sobre a diferença entre paulistano e paulista, o primeiro nasceu/vive na cidade de São Paulo, e o segundo
-é o mesmo que o mineiro, é o cara que nasceu/vive no estado de São Paulo, ok? rs. Mas bem, esse post não é (só) sobre isso.</p>
-
-<p>Cheguei na cidade grande no 5º dia do 5º mês desse ano, e desde então amigos, familiares e conhecidos
-têm me jogado essa pergunta; <em>&ldquo;E aí, Tá gostando de SP?!&rdquo;</em>. Eu poderia responder com uma direta falsa animação <em>&ldquo;Uai! Como não? São Paulo é foda,
-a cidade não para, há tanta coisa pra se fazer e&hellip;&rdquo;</em> mas não é bem por aí. Neste momento se você está numa cidade menor e com a suposta qualidade de vida superior, está pensando <em>&ldquo;haha, se *udeu, falei pra ele que não valia a pena viver sob o estress de uma capital&rdquo;</em>, será mesmo que não vale a pena?
-Abaixo vou listar pontos que eu gostaria de ter lido antes de vir pra cá, numa visão de quem chegou há menos de seis meses, e tentando ser bem honesto.</p>
-
-<p><img src="http://www.angularaerofoto.com.br/data/photos/207_1Ponte_Estaiada_4.jpg" alt="A ponte estaiada" /></p>
-
-<h3>Trânsito!!!!!!</h3>
-
-<p>Certo. Quando pensamos numa cidade grande, pensamos em estress e quando pensamos em estress pensamos em trânsito.
-Sim, a cidade é caótica nos horários de rush, parece que as pessoas nascem com carros por aqui, e há muitos deles rs.
-No primeiro mês empregado, eu levava pouco mais que 1 hora para chegar ao trabalho, isso quer dizer 10 horas semanais dentro de um automóvel.
-A pior parte do trajeto, claro, era que os ônibus da sptrans entravam no engarrafamento com os carros.
-Mas há poucas semanas a <a href="http://g1.globo.com/sao-paulo/noticia/2013/08/faixa-no-corredor-norte-sul-deixa-passageiros-de-onibus-aliviados.html">prefeitura começou um projeto</a>
-para dar prioridade a quem deixa o carro em casa e vai de transporte coletivo ao trabalho, está melhorando num sentido e piorando MUITO para quem tem carro.<br/>
-Sobre transporte público, pode ter muito o que melhorar, mas comparado com as cidades que conheci e morei, ele é muito bom sim.
-Metrôs e trens cortam a cidade toda, o cartão que as pessoas usam não é só por modinha ou pura economia dos empresários
-(como lá na minha cidade natal).
-Aqui rola &ldquo;integração&rdquo;; se você vai pegar vários transportes seguidos, terá descontos (usando o cartão) a partir do segundo (2 ônibus seguidos te custará R$ 3,00, em Juiz de fora &ndash; MG, te custa R$ 4,00).<br/>
-O Segredo é morar perto do trabalho e começar a ler mais enquanto está no trânsito :)</p>
-
-<h3>Poluição</h3>
-
-<p>Como eu disse, há muitos carros, e consequentemente há muita poluição, quando vejo um céu totalmente azul até paro para admirá-lo. No crepúsculo poente, você pode ver o quanto de CO2 (e sabe-se lá mais o quê) foi liberado no dia.
-Quando vim para cá, pensei em todos os lados ruins, mas confesso que este era o que pesava menos. Ingenuidade, como já tive problemas respiratórios na infância, já estou pensando em ir procurar um especialista para ver como está meu querido pulmão.</p>
-
-<h3>Criminalidade</h3>
-
-<p>Não há muito o que dizer, ela existe, pessoas conhecidas são assaltadas a todo momento. Você nunca está totalmente tranquilo em SP. É um preço por todas as outras coisas boas que a cidade oferece :(</p>
-
-<h3>Desigualdade</h3>
-
-<p>Na paulista você encontrará o maior desnivel social, quem sabe, da cidade. Artistas de TV moram lá, mas mendigos também. Jovens se drogam no meio da rua, artistas de rua começam carreira, recém chegados se escondem do frio, sem um teto pra dormir. Uma vez estava andando por lá e tinha uma limousine com várias meninas bebendo espumante (ou qualquer outra coisa que foge meu nivel social) e se divertindo como num filme.
-Achei hilário e ao mesmo tempo muito non-sense. <br/>
-A desigualdade em São Paulo é exagerada, pessoas ricas são muito ricas, estupidamente ricas, e eu sequer consigo ficar perto delas.
-Parece um filme que é muito bom pela sua crítica chamado <a href="http://pt.wikipedia.org/wiki/The_Hunger_Games">Jogos vorazes</a>, vejam, vale a pena.</p>
-
-<h3>O Paulistano!</h3>
-
-<p>Lá no topo eu defini o paulistano como quem vive ou nasce em São Paulo, isso porque é difícil encontrar pessoas naturais daqui, e essas provavelmente têm pais de outros estados e cidades. A mistura aqui é das boas, somos mineiros, baianos, franceses, paraibanos, gaúchos &hellip; convivendo direta e indiretamente.
-<a href="http://www.rocket-internet.de/">Lá onde eu trabalho mesmo</a> são tantos sotaques, que você pode até ficar perdido.<br/>
-A xenofobia existe, infelizmente, de vez em quando você vê um maluco na internet falando que a cidade é dele e não dos invasores. Mas quem sofre mais são os nordestinos, que são MUITOS por aqui.
-Baianada é sinônimo de trabalho ou ato mal feito, para você ver a que ponto chegamos.<br/>
-Colocando na média, o povo é incrível, é tão bom trabalhar e viver com pessoas com histórias totalmente diferentes ou até mesmo com histórias similares mas tão distantes geográficamente; o Brasil é foda!</p>
-
-<h3>O Paulistano (novamente!) &ndash; &ldquo;Povo frio&rdquo;</h3>
-
-<p>Aqui faz muito frio haha, custumam dizer que o povo é meio frio também, metaforicamente; Distante.
-Uma das minhas músicas preferidas atualmente é do Criolo. A música é velha mas música é isso, quando você menos espera ela se encaixa na sua vida :)</p>
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/Xo-gBWX_jXc" frameborder="0" allowfullscreen></iframe>
-
-
-<p>De certa forma é verdade, as pessoas estão trabalhando a todo momento, o foco em atingir algo aqui é alto; começa no fazer as malas seja do nordestino, seja do mineiro que está vindo &ldquo;tentar a vida&rdquo;.
-Mas isso não quer dizer que ser frio é ser desonesto. Você pode ser carioca e estar lendo isso agora, tem todo o direito de ficar ofendido; Mas eu acho o povo paulistano mais justo que o povo carioca, a cultura do malandro não me atrai.<br/>
-Essa frieza também faz bem; enquanto que numa cidade de 100 mil habitantes se você fizer uma tatuagem na testa vai ser levado pra fogueira da pracinha, numa cidde de 13 milhões pff, dane-se você, fez a tatuagem, o problema é seu! A vida é sua! Então se você não se encaixa onde está agora, aqui de certo você se encaixará.</p>
-
-<h3>&ldquo;Lá rola dinheiro&rdquo;</h3>
-
-<p>Crescemos ouvindo isso, que em São Paulo rola dinheiro.
-Rolar rola, mas as pessoas não vêem ou valorizam o que muitos paulistanos passam para ter seu carro e casa própria.
-As pessoas trabalham duro aqui, fazem hora extra sem torcer bico, tem um emprego CLT e um negócio paralelo para tirar uma grana, acordam 4:30 da manhã para pegar o busão infernal.
-Então pare de associar São Paulo e paulistanos com dinheiro fácil, (estude antes de querer um bom salário e) respeite os paulistanos pelo seu esforço, ok?<br/>
-Se você quer trabalhar, aqui tem lugar, se você quer ganhar dinheiro, pense duas vezes antes de vir (Leia essa frase até conseguir entendê-la rs).</p>
-
-<h3>Satisfação profissional</h3>
-
-<p>Estou apaixonado pelo meu trabalho, e é justamente o que eu estava buscando para minha carreira. Se você é desenvolvedor como eu e se interessa por inovação, não quer ficar programando em php 5.2 ou com tecnologias da década passada, aqui você será feliz. Eu trabalho com um conjunto de ferramentas que não iria lidar em nenhuma empresa que conhecia (por dentro ou por fora) em Juiz de fora.  Num post futuro falarei mais sobre isso.</p>
-
-<h3>Conclusão</h3>
-
-<p>São Paulo é uma cidade intensa, tudo aqui é proporcional, ganha-se mais dinheiro, há mais gente, há mais coisa pra se fazer culturalmente, há mais desiguldade, há mais crimes, há mais tudo.</p>
-
-<p>Eu não tinha conclusão quando comecei a escrever, a ideia era deixar o leitor decidir de acordo com minhas palavras, mas olha o tanto que eu escrevi.
-Descobri que estou amando São Paulo e esta fase da vida, e amor é diferente de paixão, que dá e passa.
-Quero ficar mais um cadim, reescrever conclusões e tirar novas.<br/>
-Seria legal se você também desse sua opinião, já morou aqui? Quer vir pra cá? Quer saber mais de como é? Entre em contato :)<br/>
-Ps:  Se você não ouviu a música, ouça! É melancólica, mas linda e sincera. Se gostar e não conhecer o cara, baixe um cd gratuito dele <a href="http://www.criolo.net/music.html">http://www.criolo.net/music.html</a>. Vai ter samba, rap, bolero&hellip;</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/08/17/begin/">(New Blog)->HelloWorld();</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-17T00:01:00-03:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
-        
-         | <a href="/2013/08/17/begin/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Da última vez que eu tive um blog, eu escrevi bastante mas publiquei pouco rsrs. Não me acho perfeccionista, me acho chato e por saber que minha escrita não é das melhores fico irritado e acabo demorando para chegar no nirvana do post hahaha.</p>
-
-<h3>Quem é esse aí com cara de lesado?</h3>
-
-<p><img src="http://en.gravatar.com/userimage/5255340/f664b6f32219eeef1bb0f287b40fa423.jpg?size=200" alt="It's me..." /></p>
-
-<p>Sou o Claudson, um dia tive o insight de usar o trocadilho cloudson na internet, e acabei levando assim, sendo um tipo de filho das nuvens rs.<br/>
-Sou mineiro, natural de <a href="http://pt.wikipedia.org/wiki/Muria%C3%A9">Muriaé</a>, comecei a gostar de computadores por causa de jogos, fui me interessando mais e acabei fazendo um curso chato de web design e html.<br/>
-Estava tudo muito sem vida, e acabaram me falando que existiam linguagens de programação. Comecei com pascal mas não avancei muito, decidi me matar de estudar para passar no vestibular (tanto que só conheci o que era cerveja e balada com 17 anos haha) e apesar de não ter conseguido na federal de Viçosa (o subtítulo do blog tem a ver com isso), consegui na federal de Juiz de Fora.<br/>
-Foram cinco longos e prazerosos anos de Ciência da Computação, e hoje, bacharel, tenho muito o que agradecer aos mestres de lá.<br/>
-Durante essa caminhada fui começando a carreira como software developer, trabalhei tanto em agência, como em uma fábrica de software (não gosto muito desse termo rs). Sempre gostando mais da área, resolvi vir pra São Paulo interagir mais com o <a href="">phpsp</a> (estou tentando, juro!) e aprender novas tecnologias.
-Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">já fiz um compilador em C</a> rsrs, delphi (tá amarrado em nome de jesus!)&hellip; mas sempre levei minha carreira com php. Não tenho muito orgulho disso, php é uma linguagem que tem alguns problemas mas alguns frameworks e seus contribuidores levaram o ecossistema da linguagem para outro nível, nos últimos 5 anos.</p>
-
-<h3>Por quê ter um blog?</h3>
-
-<ul>
-<li>Você pode escrever coisas para se lembrar no futuro :).</li>
-<li>Você pode desabafar e criticar coisas sobre sua profissão (e eu tenho várias críticas guardadas rs).</li>
-<li>Uma forma das pessoas te acharam rapidamente na internet.</li>
-<li>Uma forma de ajudar a sua comunidade ou profissionais da sua área, compartilhando conhecimentos, mesmo que ínfimos.</li>
-</ul>
-
-
-<h3>Por quê agora vai ser diferente?</h3>
-
-<ul>
-<li>Github pages e octopress pra gerenciar o blog, eu não vou perdê-lo já que sempre estará na minha conta do github .</li>
-<li>Estou mais dedicado a minha carreira, agora que a universidade FINALMENTE terminou .</li>
-<li>Tenho conhecido pessoas e projetos legais, então mesmo que citá-los já seria útil pra terceiros.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -887,6 +1009,10 @@ Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">
       </li>
     
       <li class="post">
+        <a href="/2014/11/01/apis-uma-comparacao-com-websites/">API&#8217;s usando HAL - Uma comparação com websites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
       </li>
     
@@ -896,10 +1022,6 @@ Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">
     
       <li class="post">
         <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/08/11/olhar-urbano-01/">Olhar urbano 01</a>
       </li>
     
   </ul>

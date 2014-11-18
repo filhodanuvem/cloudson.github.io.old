@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: testes | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/testes/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-11-18T00:50:08-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Iniciando com testes unitários usando PHPUnit]]></title>
+    <link href="http://cloudson.github.io/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit/"/>
+    <updated>2014-01-04T22:15:00-02:00</updated>
+    <id>http://cloudson.github.io/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit</id>
+    <content type="html"><![CDATA[<p>Olá pessoal! Primeiro post do ano e vamos falar de testes unitários em php com a abordagem mais simples possível. Gostaria que primeiramente você pensasse num cenário e respondesse uma pergunta; Supomos que você está desenvolvendo uma aplicação para a minha locadora de animes (se você não sabe o que é um anime, substitua por filmes rs). Na entrega eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você provavelmente me responde que fez baterias de testes simulando o que um usuário irá fazer com o sistema. Até aí nada de estranho.</p>
+
+<p>Uma semana depois eu faço um requerimento de uma mudança na <em>feature</em> de login de usuários. Você implementa a mudança e me entrega, novamente eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você dará a mesma justificativa, mas um furo já pode ser percebido; Provavelmente quando você mudou a feature, testou ela isoladamente e não o sistema todo, algo pode ter quebrado longe de seus olhos.<br/>
+É aí que surge a seguinte motivação; &ldquo;E se colocássemos robôs para testar nossas aplicações? Por que não escrever códigos que simulem pessoas testando partes do sistema?&rdquo;.<br/>
+Entre esses testes automatizados, podemos classificá-los em vários tipos, robôs que testam sua interface, robôs que testam performance da sua aplicação &hellip; robôs que testam um pedacinho do seu código. Vamos nos concentrar nesse último tipo, os testes unitários.</p>
+
+<h3>Ambiente</h3>
+
+<p>Para escrever esse post eu usei:</p>
+
+<ul>
+<li>Ubuntu 12.10</li>
+<li>php 5.4 (você pode usar 5.3)</li>
+<li>PHPUnit 3.7 (Baixado o <a href="https://phar.phpunit.de/phpunit.phar">phar</a> do site)</li>
+</ul>
+
+
+<h3>O problema</h3>
+
+<p>Nosso problema será bem simples, vamos implementar um programa que encontre o fatorial de um número.</p>
+]]></content>
+  </entry>
+  
+</feed>

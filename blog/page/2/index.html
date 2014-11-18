@@ -9,7 +9,8 @@
   <meta name="author" content="Claudson Oliveira">
 
   
-  <meta name="description" content="No começo do ano, um projeto bem legal apareceu no github, o textql. Aquilo me fez pensar novamente &ldquo;Como não tive essa ideia?&rdquo;; Baseado &hellip;">
+  <meta name="description" content="São Paulo é uma cidade que fala com a gente. Passamos por manifestações com pressa, sempre atrasados.
+Já faz alguns meses que venho colecionando &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +80,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/08/11/olhar-urbano-01/">Olhar Urbano 01</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-11T23:08:00-03:00" pubdate data-updated="true">Aug 11<span>th</span>, 2014</time>
+        
+         | <a href="/2014/08/11/olhar-urbano-01/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>São Paulo é uma cidade que fala com a gente. Passamos por manifestações com pressa, sempre atrasados.
+Já faz alguns meses que venho colecionando imagens da cidade, muitas vezes de paredes pintadas. Resolvi exibi-las aqui no blog
+aos poucos.</p>
+
+<p><img src="/images/olharurbano/01.jpg" alt="" /></p>
+
+<p>Essa imagem mostra uma crítica forte sobre as pichações da cidade. Enquanto todos afirmam que 1 + 1 = 3, apenas o pichação diz a verdade, uma verdade não
+aceita e julgada.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -557,7 +603,7 @@ Enfim, o céu é o limite! Fiquem com a música tema do projeto</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2014/01/25/acessando-a-api-do-packagist/">Acessando a API Do Packagist</a></h1>
+      <h1 class="entry-title"><a href="/2014/02/15/programacao-funcional-em-php/">Programação Funcional Em PHP</a></h1>
     
     
       <p class="meta">
@@ -573,142 +619,44 @@ Enfim, o céu é o limite! Fiquem com a música tema do projeto</p>
   
 
 
-<time datetime="2014-01-25T23:41:00-02:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+<time datetime="2014-02-15T20:01:00-02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2014</time>
         
-         | <a href="/2014/01/25/acessando-a-api-do-packagist/#disqus_thread">Comments</a>
+         | <a href="/2014/02/15/programacao-funcional-em-php/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na <a href="http://github.com/composer">organization oficial</a> por um client mas não encontrei.
-Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma API para consumo de informações sobre os pacotes.</p>
+  <div class="entry-content"><p>Hey guys! Hoje falaremos um pouco sobre as características de uma linguagem funcional encontradas no PHP. Citando um pouco as limitações da linguagem e o que ganhamos com o paradigma.</p>
 
-<p>Depois de algumas buscas encontrei uns links úteis que responderam minha dúvida (veja as fontes no final do post) e irei escrever alguns exemplos de requests para consumir dados.</p>
+<h3>Introdução</h3>
 
-<h3>Listando pacotes de uma organization</h3>
+<p>O que faz de uma linguagem funcional ou não?<br/>
+A principal característica é afirmar que uma função está no mesmo &ldquo;nível que um tipo de dado&rdquo;, ou seja, você consegue declarar uma variável do tipo função. Por quê isso? Para que você consiga encapsular blocos de código em uma variável e executá-lo em locais específicos.
+Complicado? Vamos tentar resolver o seguinte problema:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/list.json?vendor<span class="o">=</span>respect
-</span></code></pre></td></tr></table></div></figure>
+<p><code>Você possui o array de entrada $a de strins, faça um algoritmo que retorne o mesmo array com cada elemento sem os espaços iniciais e finais (trim) e com a primeira letra em maiúscula.</code></p>
 
-
-
+<p>No php 5.2 (já) existiam funções para percorrer arrays aplicando (outras) funções em cada elemento, uma delas é o <a href="http://www.php.net/manual/pt_BR/function.array-walk.php">array_walk</a>.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
-</span><span class='line'>  <span class="p">]</span>
-</span><span class='line'><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;trim&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;ucfirst&#39;</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Buscando pacotes por uma tag</h3>
+<p>Veja as linhas acima. A função array_walk recebe dois parâmetros, o primeiro é array que sofrerá as modificações, e o segundo é a função que será aplicada em cada elemento do array. Legal neh? Mas meio arcaico, isso não tem muito a ver com linguagens funcionais, foi só o jeito arcaico do php resolver isso (Opinão!!!!!! hahah).
+Vamos agora tornar o problema um pouco mais complexo:</p>
 
-<p>(atributo tag encontrado no composer.json, não confundir com git tag :P ).</p>
+<p><code>Você ainda possui o array $a de entrada, e precisa aplicar uma certa operação em cada elemento do array. Se esse elemento for uma string sem espaços, você precisa deixá-la no padrão CamelCase (primeira letra maiúscula, no caso), senão no padrão hifenado (caixa baixa e espaços tornam-se hífens)</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?tags<span class="o">=</span>respect
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
-</span><span class='line'>  <span class="p">]</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Buscando pacotes pelo nome</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?q<span class="o">=</span>cloudson
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nt">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://packagist.org/packages/cloudson/gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">],</span>
-</span><span class='line'>  <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Pegando dados de um repositório específico</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/cloudson/gandalf.json
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<p>A primeira solução que vem a sua mente, caso você não conheça programação funcional é</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -727,307 +675,27 @@ Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:26:17+00:00&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;maintainers&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>      <span class="p">{</span>
-</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;claudsonweb@gmail.com&quot;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">],</span>
-</span><span class='line'>    <span class="nt">&quot;versions&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nt">&quot;dev-master&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
-</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;9999999-dev&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
-</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>          <span class="p">{</span>
-</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">],</span>
-</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:20:55+00:00&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>      <span class="p">},</span>
-</span><span class='line'>      <span class="nt">&quot;0.7.0&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
-</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0.0&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
-</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>          <span class="p">{</span>
-</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">],</span>
-</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:12:17+00:00&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;repository&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;monthly&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>      <span class="nt">&quot;daily&quot;</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// Esses comentários dizem exatamento o que o código faz, o que é no mínimo estranho</span>
+</span><span class='line'><span class="c1">// mas caso alguém não tenha familiaridade com a queria api built-in do php</span>
+</span><span class='line'><span class="c1">// eles ajudarão</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$a</span> <span class="k">as</span> <span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// percorrer todo o vetor por referência (&amp;)</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// trocar espaços por hífens</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// tornar a primeira letra maiúscula</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Você pode acabar percebendo uma certa semelhança entra as URIs citadas e aquelas acessadas no packagist (html), de fato essa semelhança existe e serve também como base pra consumir outras informações.</p>
-
-<p>Este foi um post rápido apenas para divulgar conhecimento e servir de lembrete pra mim. Até a próxima :)</p>
-
-<p>fontes:
-<a href="https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA">https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA</a>  <br/>
-<a href="https://github.com/KnpLabs/packagist-api">https://github.com/KnpLabs/packagist-api</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/10/06/estudo-dirigido-zce/">Estudo Dirigido ZCE</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-06T21:43:00-03:00" pubdate data-updated="true">Oct 6<span>th</span>, 2013</time>
-        
-         | <a href="/2013/10/06/estudo-dirigido-zce/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A ZCE é a prova de cerficação oficial para programadores php. Essa semana a Zend anunciou uma <a href="http://shop.zend.com/en/zend-php5-certification-voucher.html">nova prova baseada nas versões mais atuais do php</a>. Na phpconference do ano passado, consegui um voucher pra cerficação, e até hoje não fui fazer a prova.
-O tempo está passando e eu acabarei indo pra guerra por livre e espontânea pressão.  <br/>
-Mas como dizem que a melhor forma de aprender é ensinando, então a proposta é gerar posts com questões para (eu mesmo) estudar pra prova. Dessa vez vamos abordar questões bem simples, muitas sobre coerção de tipos e conversão de base numérica.<br/>
-As respostas para as questões estão no final do post, se encontrar algum erro, é só deixar um comentário.</p>
-
-<h3>1- Qual dos seguintes comentários é inválido em php? :</h3>
-
-<p>a) // foo <br/>
-b) /* bar */ <br/>
-c) # baz<br/>
-d) None above</p>
-
-<h3>2- Qual a saída do código abaixo:</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="mo">017</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">echo</span> <span class="nv">$foo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>a) Fatal error<br/>
-b) 18  <br/>
-c) 16<br/>
-d) 25</p>
-
-<h3>3- Selecioee uma ou mais alternativas corretas:</h3>
-
-<p>a) 3.14 == 3.142<br/>
-b) 314e-2 == 3.14 <br/>
-c) 3.14 == 314e2 <br/>
-d) 3 == 3.14</p>
-
-<h3>4- Selecione uma ou mais alternativas incorretas:</h3>
-
-<p>a) 0xF &lt; 015 <br/>
-b) 0x0a0 == 160  <br/>
-c) 0xf &lt; 15 <br/>
-d) 0xf == 0x0f</p>
-
-<h3>5- Veja o código abaixo e assinale a alternativa correta:</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>    <span class="nv">$cloud</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
-</span><span class='line'>    <span class="nv">$zce</span>   <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nv">$cloud</span> <span class="o">==</span> <span class="k">true</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>a) true<br/>
-b) false<br/>
-c) 23 <br/>
-d) None above</p>
-
-<h3>6- Selecione um ou mais respostas corretas:</h3>
-
-<p>a) &ldquo;&rdquo; == false<br/>
-b) &ldquo;00&rdquo; == false<br/>
-c) &ldquo;0&rdquo; == false<br/>
-d) &ldquo; &rdquo; == false<br/>
-e) &ldquo;false&rdquo; == true</p>
-
-<h3>7- Veja o código abaixo e responda :</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;Zend Compiler&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;Hip Hop&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nv">$foo</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">2</span><span class="nx">foo</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>a) true<br/>
-b) false<br/>
-c) Error <br/>
-d) &ldquo;Zend Compiler Hip Hop&rdquo;</p>
-
-<h3>8 &ndash; Qual a saída do código abaixo:</h3>
+<p>Vamos resolver agora funcionalmente, passando um bloco de código para uma função:</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1038,96 +706,35 @@ d) &ldquo;Zend Compiler Hip Hop&rdquo;</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">function</span> <span class="nf">menu</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="s2">&quot;====ZCE day!====&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nv">$apply</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">$foo</span> <span class="o">=</span> <span class="s2">&quot;menu&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">echo</span> <span class="nv">$foo</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$apply</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>a) Fatal error<br/>
-b) &ldquo;menu&#8221;<br/>
-c) &rdquo;====ZCE day!====&ldquo;<br/>
-d) None above</p>
-
-<h3>9 &ndash; Qual a saída do código abaixo:</h3>
+<p>Observe duas coisas, na linha 3, $apply recebeu uma FUNÇÃO como valor. Essa função sem nome obviamente é chamada de função anônima.
+Se uma função é anônima, e essa variável guarda uma função, como executá-la?</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>    <span class="nv">$foo</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
-</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">var_dump</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$foo</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$bar</span><span class="p">),</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$baz</span><span class="p">));</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$apply</span><span class="p">(</span><span class="s1">&#39;Comunidade php de SP&#39;</span><span class="p">);</span> <span class="c1">// comunidade-php-de-sp</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>a) Fatal Error<br/>
-b) false, true, false<br/>
-c) false, false, true <br/>
-d) true, true, false</p>
-
-<h3>10 &ndash; Selecione uma ou mais respostas incorretas:</h3>
-
-<p>a) 1 | 2 == 1<br/>
-b) 1 ^ 3 == 2 <br/>
-c) 2 ^ 3 == 8 <br/>
-d) 2 &amp; 3 == 2</p>
-
-<h3>Respostas</h3>
-
-<p>Update 02/02/14: Agradecimentos ao <a href="http://github.com/rogeriopradoj">@rogeriopradoj</a> que revisou o gabarito com várias alternatias incorretas! :)</p>
-
-<h4>1d</h4>
-
-<p>Os três tipos de comentários apresentados são válidos, para minha surpresa, já que eu nunca tinha usado # .</p>
-
-<h4>2c</h4>
-
-<p>Fiz um <a href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/">post sobre conversão de base numérica aqui</a>, se você não soube responder essa, o texto pode te ajudar. Mas a conta realizada foi a seguinte:
-017 = 1 x 8<sup>1</sup> + 7 x 8<sup>0</sup> = 7 + 8 = 15</p>
-
-<h4>3b</h4>
-
-<p>314e-2 é 3.14 em notação cientifica, o mesmo que 314 x 10^-2</p>
-
-<h4>4a,c</h4>
-
-<p>0xf é 15 em hexadecimal e 015 é 15 em octal, o que afirma que a) e c) são incorretas. 0x0a0 == a x 16<sup>1</sup> == 10 x 16<sup>1</sup> == 160 e 0xf == 0x0f == 15</p>
-
-<h4>5a</h4>
-
-<p>0 convertido para um boolean é false, outro numérico qualquer é considerado true</p>
-
-<h4>6a,d,e</h4>
-
-<p>Mais sobre coerção de tipos <a href="http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting">http://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting</a></p>
-
-<h4>7c</h4>
-
-<p>A variável $2foo não possui um nome válido, pois começa com um número <a href="http://www.php.net/manual/en/language.variables.basics.php">http://www.php.net/manual/en/language.variables.basics.php</a></p>
-
-<h4>8c</h4>
-
-<p>Um novo tipo foi definido no php 5.4 (?). Um callable é como o nome diz um valor que pode invocar uma função. Esses callables podem ser funções anônimas, ou até mesmo strings contendo o nome de uma função, como é o nosso caso.</p>
-
-<h4>9b</h4>
-
-<p>Como o próprio nome diz, a função isset testa se uma variável foi declarada (ou se uma região da memória associada ao identificador, existe)<a href="http://php.net/manual/pt_BR/function.isset.php">http://php.net/manual/pt_BR/function.isset.php</a></p>
-
-<h4>10a,c</h4>
-
-<p>Essa questão tem a ver com álgebra de booleanos. Um gancho para um próximo post :)  <br/>
-1 | 2 == 01 + 10 == 11 == 3<br/>
-1 ^ 3 == 2<br/>
-2 ^ 3 == 1  <br/>
-2 &amp; 3 == 2</p>
+<p>Legal neh? :)</p>
 </div>
   
   
@@ -1156,6 +763,10 @@ d) 2 &amp; 3 == 2</p>
       </li>
     
       <li class="post">
+        <a href="/2014/11/01/apis-uma-comparacao-com-websites/">API&#8217;s usando HAL - Uma comparação com websites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
       </li>
     
@@ -1165,10 +776,6 @@ d) 2 &amp; 3 == 2</p>
     
       <li class="post">
         <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/08/11/olhar-urbano-01/">Olhar urbano 01</a>
       </li>
     
   </ul>

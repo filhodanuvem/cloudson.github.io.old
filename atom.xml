@@ -4,7 +4,7 @@
   <title><![CDATA[Claudson Oliveira]]></title>
   <link href="http://cloudson.github.io/atom.xml" rel="self"/>
   <link href="http://cloudson.github.io/"/>
-  <updated>2014-11-18T00:48:47-02:00</updated>
+  <updated>2014-11-18T00:50:08-02:00</updated>
   <id>http://cloudson.github.io/</id>
   <author>
     <name><![CDATA[Claudson Oliveira]]></name>
@@ -20,7 +20,69 @@
     <id>http://cloudson.github.io/2014/11/18/olhar-urbano-02</id>
     <content type="html"><![CDATA[<p>Contradição. Coincidência. A segunda foto da série olhar urbano foi tirado muito longe das capitais, voltando de minas pra são paulo, vi aquela casinha isolada, distante de tudo, e lembrei de onde eu cresci, de uma infância tão recente e tão distante ao mesmo tempo.</p>
 
-<p><img src="./images/olharurbano/02.jpg" alt="br 116" /></p>
+<p><img src="http://cloudson.github.io/images/olharurbano/02.jpg" alt="br 116" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[API's usando HAL - Uma comparação com websites]]></title>
+    <link href="http://cloudson.github.io/2014/11/01/apis-uma-comparacao-com-websites/"/>
+    <updated>2014-11-01T09:59:00-02:00</updated>
+    <id>http://cloudson.github.io/2014/11/01/apis-uma-comparacao-com-websites</id>
+    <content type="html"><![CDATA[<p>Novamente aqui para falar sobre HTTP e API&rsquo;s. Cada vez mais tenho tido a certeza de que apesar da necessidade, desenvolver serviços web envolve problemas arquiteturais muito complexos. Dessa vez viveremos um comparativo entre um serviço REST e websites.</p>
+
+<h3>O que é um serviço web?</h3>
+
+<p>Primeiro vamos dar nomes aos bois;</p>
+
+<pre><code>"Um website é um conjunto de hipertextos acessíveis geralmente pelo protocolo HTTP na internet."
+</code></pre>
+
+<p>Ou seja, por uma página web, temos hipertexos que se ligam a outros hipertextos através de links, que via navegador são clicáveis.</p>
+
+<p>Um serviço web é uma aplicação sob o http, criada com o intuito de prover informações a outras aplicações. Assim, se a prefeitura da sua cidade provê informações do posicionamento dos ônibus da cidade, ela possui um serviço web. Se o facebook consegue fornecer dados de usuários para que criemos aplicações, ele também fornece uma api, que seria uma maneira de se comunicar ao webservice.</p>
+
+<p>Em um serviço web apenas o conteúdo é importante. Esse conteúdo pode ser dividio em estruturas que são representações de algo, uma representação de uma pessoa (e não a pessoa em si), uma representação de um lugar (e não o lugar em si). Essa representação é chamada de <em>recurso</em>.<br/>
+Você também pode (e deve) desenvolver serviços com sua regra de negócio, afinal, hoje o mesmo dado utilizado num website é requerido por exemplo num aplicativo mobile.</p>
+
+<h3>REST e SOAP</h3>
+
+<p>Ao desenvolver uma API, podemos seguir um de dois padrões bem conhecidos. O primeiro é o SOAP, um padrão que faz com que criemos um tipo de mensagem com envelope, cabeçalho e corpo bem definidos, as transferências geralmente são em XML, é um padrão burocrático e verboso, porém bem flexível.<br/>
+Outro padrão que cresceu muito nos últimos anos é o REST. Diferente do SOAP que exige uma descrição de rotas e mensagens, o REST usa o próprio HTTP como padrão de transporte de mensagens.
+Ou seja, o corpo e o header das mensagens são os mesmos de uma request HTTP comum, veja abaixo uma request que pede um recurso usuário de id 5.</p>
+
+<pre><code>GET /users/5
+Host: api.meusite.com
+</code></pre>
+
+<p>Response:</p>
+
+<pre><code>HTTP/1.1 200 OK
+Content-type: application/json; charset=UTF-8
+
+{
+   id: 5,
+   name: "Claudson Oliveira",
+   email: "cloudson@outlook.com",
+   access: [
+       "2014-10-10 00:00:00", "2014-11-01 12:30:00"
+   ]
+}
+</code></pre>
+
+<p>A resposta da requisição retornou em formato json o recurso que contém, alem de id, nome e e-mail, um array com todas as datas de acesso desse usuário a aplicação (uma rede social, por exemplo)</p>
+
+<h3>Content negotiation</h3>
+
+<p>Como vimos no <a href="http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">post sobre negociação de conteúdo</a>, via cabeçalho HTTP podemos dizer a um serviço que gostaríamos de receber um recurso num certo mime-type. Pense agora em requisitar o mesmor recurso user em HTML</p>
+
+<pre><code>GET /users/5
+Host: api.meusite.com
+Accept: text/html; q=1.0 , application/json; 0.5
+</code></pre>
+
+<p>Response
+<img src="./images/posts/twitter-profile.png" alt="" /></p>
 ]]></content>
   </entry>
   
@@ -835,6 +897,121 @@ Enfim, o céu é o limite! Fiquem com a música tema do projeto</p>
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Programação funcional em PHP]]></title>
+    <link href="http://cloudson.github.io/2014/02/15/programacao-funcional-em-php/"/>
+    <updated>2014-02-15T20:01:00-02:00</updated>
+    <id>http://cloudson.github.io/2014/02/15/programacao-funcional-em-php</id>
+    <content type="html"><![CDATA[<p>Hey guys! Hoje falaremos um pouco sobre as características de uma linguagem funcional encontradas no PHP. Citando um pouco as limitações da linguagem e o que ganhamos com o paradigma.</p>
+
+<h3>Introdução</h3>
+
+<p>O que faz de uma linguagem funcional ou não?<br/>
+A principal característica é afirmar que uma função está no mesmo &ldquo;nível que um tipo de dado&rdquo;, ou seja, você consegue declarar uma variável do tipo função. Por quê isso? Para que você consiga encapsular blocos de código em uma variável e executá-lo em locais específicos.
+Complicado? Vamos tentar resolver o seguinte problema:</p>
+
+<p><code>Você possui o array de entrada $a de strins, faça um algoritmo que retorne o mesmo array com cada elemento sem os espaços iniciais e finais (trim) e com a primeira letra em maiúscula.</code></p>
+
+<p>No php 5.2 (já) existiam funções para percorrer arrays aplicando (outras) funções em cada elemento, uma delas é o <a href="http://www.php.net/manual/pt_BR/function.array-walk.php">array_walk</a>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;trim&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;ucfirst&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Veja as linhas acima. A função array_walk recebe dois parâmetros, o primeiro é array que sofrerá as modificações, e o segundo é a função que será aplicada em cada elemento do array. Legal neh? Mas meio arcaico, isso não tem muito a ver com linguagens funcionais, foi só o jeito arcaico do php resolver isso (Opinão!!!!!! hahah).
+Vamos agora tornar o problema um pouco mais complexo:</p>
+
+<p><code>Você ainda possui o array $a de entrada, e precisa aplicar uma certa operação em cada elemento do array. Se esse elemento for uma string sem espaços, você precisa deixá-la no padrão CamelCase (primeira letra maiúscula, no caso), senão no padrão hifenado (caixa baixa e espaços tornam-se hífens)</code>.</p>
+
+<p>A primeira solução que vem a sua mente, caso você não conheça programação funcional é</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// Esses comentários dizem exatamento o que o código faz, o que é no mínimo estranho</span>
+</span><span class='line'><span class="c1">// mas caso alguém não tenha familiaridade com a queria api built-in do php</span>
+</span><span class='line'><span class="c1">// eles ajudarão</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$a</span> <span class="k">as</span> <span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// percorrer todo o vetor por referência (&amp;)</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// trocar espaços por hífens</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// tornar a primeira letra maiúscula</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos resolver agora funcionalmente, passando um bloco de código para uma função:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$apply</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$apply</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Observe duas coisas, na linha 3, $apply recebeu uma FUNÇÃO como valor. Essa função sem nome obviamente é chamada de função anônima.
+Se uma função é anônima, e essa variável guarda uma função, como executá-la?</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$apply</span><span class="p">(</span><span class="s1">&#39;Comunidade php de SP&#39;</span><span class="p">);</span> <span class="c1">// comunidade-php-de-sp</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Legal neh? :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Acessando a API do Packagist]]></title>
     <link href="http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist/"/>
     <updated>2014-01-25T23:41:00-02:00</updated>
@@ -1159,6 +1336,83 @@ Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma
 <p>fontes:
 <a href="https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA">https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA</a>  <br/>
 <a href="https://github.com/KnpLabs/packagist-api">https://github.com/KnpLabs/packagist-api</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Iniciando com testes unitários usando PHPUnit]]></title>
+    <link href="http://cloudson.github.io/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit/"/>
+    <updated>2014-01-04T22:15:00-02:00</updated>
+    <id>http://cloudson.github.io/2014/01/04/iniciando-com-testes-unitarios-usando-phpunit</id>
+    <content type="html"><![CDATA[<p>Olá pessoal! Primeiro post do ano e vamos falar de testes unitários em php com a abordagem mais simples possível. Gostaria que primeiramente você pensasse num cenário e respondesse uma pergunta; Supomos que você está desenvolvendo uma aplicação para a minha locadora de animes (se você não sabe o que é um anime, substitua por filmes rs). Na entrega eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você provavelmente me responde que fez baterias de testes simulando o que um usuário irá fazer com o sistema. Até aí nada de estranho.</p>
+
+<p>Uma semana depois eu faço um requerimento de uma mudança na <em>feature</em> de login de usuários. Você implementa a mudança e me entrega, novamente eu te pergunto &ldquo;Como você me prova que sua aplicação realmente funciona?&rdquo;, você dará a mesma justificativa, mas um furo já pode ser percebido; Provavelmente quando você mudou a feature, testou ela isoladamente e não o sistema todo, algo pode ter quebrado longe de seus olhos.<br/>
+É aí que surge a seguinte motivação; &ldquo;E se colocássemos robôs para testar nossas aplicações? Por que não escrever códigos que simulem pessoas testando partes do sistema?&rdquo;.<br/>
+Entre esses testes automatizados, podemos classificá-los em vários tipos, robôs que testam sua interface, robôs que testam performance da sua aplicação &hellip; robôs que testam um pedacinho do seu código. Vamos nos concentrar nesse último tipo, os testes unitários.</p>
+
+<h3>Ambiente</h3>
+
+<p>Para escrever esse post eu usei:</p>
+
+<ul>
+<li>Ubuntu 12.10</li>
+<li>php 5.4 (você pode usar 5.3)</li>
+<li>PHPUnit 3.7 (Baixado o <a href="https://phar.phpunit.de/phpunit.phar">phar</a> do site)</li>
+</ul>
+
+
+<h3>O problema</h3>
+
+<p>Nosso problema será bem simples, vamos implementar um programa que encontre o fatorial de um número.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Operações bit a bit com álgebra booleana]]></title>
+    <link href="http://cloudson.github.io/2013/10/09/operacoes-bit-a-bit-com-algebra-booleana/"/>
+    <updated>2013-10-09T22:39:00-03:00</updated>
+    <id>http://cloudson.github.io/2013/10/09/operacoes-bit-a-bit-com-algebra-booleana</id>
+    <content type="html"><![CDATA[<p>Hoje vamos falar um pouco sobre álgebra booleana ou álgebra de boole. Recebeu esse nome em homenagem a George Boole, um matemático inglês que criou o sistema de lógica no século XIX <a href="http://pt.wikipedia.org/wiki/%C3%81lgebra_booleana">1</a>.<br/>
+Em cursos de conputação, essa disciplina se encontra no primeiro período, ela serve de base até mesmo para algoritmos, outra cadeira base desse tipo de curso. Neste post vamos apresentar a  álgebra e relacioná-la com linguagens de programação, utilizando o php como exemplo.</p>
+
+<h3>Domínio e operação de adição</h3>
+
+<p>Como já sabemos de <a href="http://cloudson.github.io/2013/09/28/conversao-de-base-numerica/">outros carnavais</a> a álgebra booleana trabalha com valores binários, verdadeiro ou falso, ligado ou desligado, corrente elétrica ou ausência dela, ou por fim, 1 0u 0. Baseado nisso podemos realizar operações sob esses valores.<br/>
+A adição representa o mesmo que o OR lógico. Então o resultado entre 1 + 0 é 1, já que podemos ler &ldquo;verdadeiro ou falso resulta em verdadeiro&rdquo;. A partir disso temos a velha piada de que 1 + 1 na computação é 1 porque &ldquo;verdadeiro ou verdadeiro resulta em verdadeiro&rdquo;.
+Com duas variáveis lógicas ($a e $b) e o operador de adição, podemos montar todos os valores resultantes possíveis, no que chamamos de <em>tabela verdade</em> :</p>
+
+<table>
+<thead>
+<tr>
+<th>$a</th>
+<th>$b</th>
+<th>$a*b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
 ]]></content>
   </entry>
   
@@ -1521,6 +1775,85 @@ Pretendo fazer mais posts de conhecimento menos específico como este, então no
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Criando um game simples com Phaser]]></title>
+    <link href="http://cloudson.github.io/2013/09/28/criando-um-game-simples-com-phaser/"/>
+    <updated>2013-09-28T09:58:00-03:00</updated>
+    <id>http://cloudson.github.io/2013/09/28/criando-um-game-simples-com-phaser</id>
+    <content type="html"><![CDATA[<p>Phaser é um framework para criar jogos usando tecnologias web, afinal com html5+js+whatever você pode rodar a app no browser, mobile e desktop (com a ideia dos webapps).</p>
+
+<p><img src="http://www.photonstorm.com/wp-content/uploads/2013/04/phaser-logo-small.png" alt="Phaser logo" /></p>
+
+<h3>Instalação</h3>
+
+<p>Vamos baixar o Phaser (versão 1.0.6) que está no <a href="http://github.com/photonstorm/phaser">github</a>, você pode pegá-lo para seu folder <a href="https://github.com/photonstorm/phaser/archive/1.0.6.tar.gz">pelo link</a> ou dando um git clone:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:photonstorm/phaser.git
+</span><span class='line'>git checkout 1.0.6
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Apesar de criarmos um jogo com tecnlogias web do lado do cliente, precisamos de entregar a aplicação utilizando um servidor web, não faz sentido que o usuário baixe todos os recursos (imagens, sons&hellip;) do jogo de uma só vez.<br/>
+Utilizaremos o apache da forma mais simples, sem mesmo setar um virtualhost. Vamos no diretório root e criar uma pasta chamada cloudsnake:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir /var/www/memorycloud
+</span><span class='line'><span class="nb">cd</span> /var/www/memorycloud
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos começar a codar a partir do exemplo que a equipe do phaser disponibiliza, então copiarei um folder do phaser dentro do cloudsnake</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cp /diretorio_onde_esta_o_phaser/Docs/Hello<span class="se">\ </span>Phaser ./
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ao acessar seu <a href="http://localhost/cloudsnake">http://localhost/cloudsnake</a> você verá uma imagem do Phaser. Instalação concluída!</p>
+
+<h3>Reconhecendo o campo</h3>
+
+<p>Por enquanto tudo que você precisa ver é o index.html do cloudsnake. Sugestivamente a função <em>preload</em> é chamada antes de rendereziar o jogo e a <em>create</em> seria o método chamado no momento inicial do jogo. Perceba que essas funções foram assinadas na instanciação do jogo, linha 13, pelo parâmetro json.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">game</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">Game</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">AUTO</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">preload</span><span class="o">:</span> <span class="nx">preload</span><span class="p">,</span> <span class="nx">create</span><span class="o">:</span> <span class="nx">create</span><span class="p">,</span> <span class="nx">update</span><span class="o">:</span> <span class="nx">update</span> <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Na linha 25 foi adicionada a logo (setada no método preload) na área de visão do jogo. Utilizaremos a palavra <strong>mundo</strong> pra representar todo o universo do seu jogo, a princípio você pode pensar que mundo é a área de visão do jogo, neste momento você está certo mas logo não estará (há coisas acontecendo no jogo fora do seu campo de visão, pense em uma fase do Super Mario World, o Yoshi está correndo mesmo que você não veja rs). Assim temos uma representação do mundo em código a partir do atributo <em>world</em> em <em>game</em>. Dando um console.log na primeira linha da função <em>create</em> podemos ver (usando firebug, ou qualquer console de um browser) todos os atributos do nosso mundo, de cara você reconhecerá informações de tamanho da tela do mundo.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Coordenadas</h3>
+
+<p>Eu não sou nenhum matemático e muito menos especialista em computação gráfica, mas vamos com o mínimo. No nosso index.html definimos (naquela mesma linha 13) que nosso mundo possui largura de 800px e altura de 600px.
+Na função <em>create</em> colocamos &ldquo;nossa&rdquo; logo na posição (x,y)=(0,0), ou seja, na origem do sistema de coordenadas. Essa origem está no canto <strong>superior esquerdo</strong>, por isso quando a imagem aparece na tela ela também está no canto superior esquerdo. Não devemos alterar a origem, mas podemos renderizar a imagem no centro da tela da seguinte forma:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">create</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// game.world possui dois atributos que representam o centro da tela. Nada mais do que </span>
+</span><span class='line'>    <span class="c1">// game.world.centerX == game.world.width / 2 </span>
+</span><span class='line'>    <span class="c1">// game.world.centerY == game.world.height / 2 </span>
+</span><span class='line'>    <span class="nx">logo</span> <span class="o">=</span> <span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">sprite</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">centerY</span><span class="p">,</span> <span class="s1">&#39;logo&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[News - 09/13]]></title>
     <link href="http://cloudson.github.io/2013/09/27/news-09-slash-13/"/>
     <updated>2013-09-27T22:22:00-03:00</updated>
@@ -1553,6 +1886,223 @@ Hype ou não, é uma boa dica.</p>
 <p>Um cara muito doido utilizou teoria dos grafos para analisar códigos php e gerar relatórios sobre acoplamento entre classes e outros furos do SOLID.</p>
 
 <p><a href="https://github.com/Trismegiste/Mondrian">https://github.com/Trismegiste/Mondrian</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Faça um sistema de buscas com Solr/Lucene]]></title>
+    <link href="http://cloudson.github.io/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene/"/>
+    <updated>2013-09-07T20:58:00-03:00</updated>
+    <id>http://cloudson.github.io/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene</id>
+    <content type="html"><![CDATA[<p>É muito comum necessitarmos de um sistema de buscas em um sistema web.<br/>
+Sabemos que o mysql, o banco de dados mais popular por desenvolvedores, não foi feito para isso. Se você tem um campo fulltext em uma tabela InnoDB, não podrá criar índices para esse campo, e consequentemente não conseguirá fazer uma busca otimizada.<br/>
+Eu já vi muitas soluções de busca encima do mysql, onde a aplicação tinha um algoritmo agindo como uma camada entre o usuário e a pesquisa em si.</p>
+
+<figure class='code'><figcaption><span>&#8220;Pega o valor de busca e buscar em cada campo&#8221; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">id</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span> <span class="k">OR</span> <span class="n">family</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span> <span class="k">OR</span> <span class="n">email</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nessas soluções torna-se um martírio tentar resolver vários problemas; algumas palavras (conjunções, preposições&hellip;) deveriam ser ignoradas na hora da busca, se no banco um índice está no plural uma busca pelo seu singular deveria ser eficaz, sinônimos deveriam funcionar também&hellip;</p>
+
+<p>O Solr é uma plataforma acima de uma engine de busca chamada lucene que atinge todos os problemas citados acima.</p>
+
+<h3>É Java sim !</h3>
+
+<p>O Solr necessita de um servidor de aplicações web em java. Utilizaremos o jetty neste post, mas primeiro vamos instalar o java 7 (supondo que estamos em um linux debian como ubuntu).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>add-apt-repository ppa:webupd8team/java <span class="c"># adiciona o ppa que aponta para java oficial da oracle </span>
+</span><span class='line'><span class="nv">$ </span>apt-get update
+</span><span class='line'><span class="nv">$ </span>apt-get install oracle-java7-installer
+</span><span class='line'><span class="nv">$ </span>apt-get install jetty <span class="c"># instala o servidor </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você verá que com o servidor/solr ligado, fazer com que sua aplicação converse com ele é incrivelmente fácil. Através de requests você faz as consultas. Então, largue de preconceito e preguiça!</p>
+
+<h3>Enfim, solr</h3>
+
+<p>Baixaremos o solr versão 4.4.0 em <a href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a></p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://ftp.unicamp.br/pub/apache/lucene/solr/4.4.0/solr-4.4.0.tgz
+</span><span class='line'>tar -xvf solr-4.4.0.tgz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Agora vamos mover os arquivos essenciais para outra pasta, onde usaremos para subir a aplicação.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir solr
+</span><span class='line'>cp solr-4.4.0/example/start.jar ./solr
+</span><span class='line'>mkdir ./solr/webapps &amp; cp solr-4.4.0/example/webapps/solr.war ./solr/webapps/
+</span><span class='line'>sudo cp -r solr-4.4.0/example/lib/ solr
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tempo de indexação e tempo de busca</h3>
+
+<h3>Schemas</h3>
+
+<p>Agora já podemos pensar na busca.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>solr
+</span><span class='line'>mkdir schemas
+</span><span class='line'><span class="nb">cd </span>schemas
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O arquivo principal de configuração aponta para o que ele chama de núcleos, já que você pode ter vários schemas tipos de documentos diferentes (ex: você pode ter uma aplicação grande, usar o solr para indexar produtos e categorias desses produtos).</p>
+
+<figure class='code'><figcaption><span>[solr.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+</span><span class='line'><span class="nt">&lt;solr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;core</span> <span class="na">name=</span><span class="s">&quot;product&quot;</span> <span class="na">instanceDir=</span><span class="s">&quot;product&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/cores&gt;</span>
+</span><span class='line'><span class="nt">&lt;/solr&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dentro do diretório <em>product/conf</em> ($SOLR_HOME/schemas/product/conf) teremos nosso schema xml que dita as regras da busca.</p>
+
+<figure class='code'><figcaption><span>[schema.xml]</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;schema</span> <span class="na">name=</span><span class="s">&quot;Product&quot;</span> <span class="na">version=</span><span class="s">&quot;1.1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- Definindo tipos que serão usados nos campos  --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;types&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldtype</span> <span class="na">name=</span><span class="s">&quot;sortableInt&quot;</span>  <span class="na">class=</span><span class="s">&quot;solr.SortableIntField&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;double&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TrieDoubleField&quot;</span>  <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;string&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TextField&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;text_general&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TextField&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;analyzer</span> <span class="na">type=</span><span class="s">&quot;index&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;tokenizer</span> <span class="na">class=</span><span class="s">&quot;solr.StandardTokenizerFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.EdgeNGramFilterFactory&quot;</span> <span class="na">minGramSize=</span><span class="s">&quot;2&quot;</span> <span class="na">maxGramSize=</span><span class="s">&quot;15&quot;</span> <span class="na">side=</span><span class="s">&quot;front&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.LowerCaseFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.BrazilianStemFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/analyzer&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;analyzer</span> <span class="na">type=</span><span class="s">&quot;query&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;tokenizer</span> <span class="na">class=</span><span class="s">&quot;solr.StandardTokenizerFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.LowerCaseFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.SynonymFilterFactory&quot;</span> <span class="na">synonyms=</span><span class="s">&quot;zocsynonyms.txt&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.BrazilianStemFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/analyzer&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/fieldType&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/types&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!-- </span>
+</span><span class='line'><span class="c">    Valores importantes para sua busca devem estar nos documentos do solr,</span>
+</span><span class='line'><span class="c">    podendo ser índices de busca ou não.</span>
+</span><span class='line'><span class="c">   --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;fields&gt;</span>
+</span><span class='line'>    <span class="c">&lt;!-- Basic fields --&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;sortableInt&quot;</span> <span class="na">indexed=</span><span class="s">&quot;true&quot;</span>  <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;text_general&quot;</span> <span class="na">indexed=</span><span class="s">&quot;true&quot;</span>  <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="na">required=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;slug&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;price&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;category&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/fields&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;uniqueKey&gt;</span>id<span class="nt">&lt;/uniqueKey&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;solrQueryParser</span> <span class="na">defaultOperator=</span><span class="s">&quot;AND&quot;</span><span class="nt">/&gt;</span><span class="c">&lt;!-- long tails search more specific thing  --&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/schema&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[solrconfig.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+</span><span class='line'><span class="nt">&lt;config&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;luceneMatchVersion&gt;</span>LUCENE_35<span class="nt">&lt;/luceneMatchVersion&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;directoryFactory</span> <span class="na">name=</span><span class="s">&quot;DirectoryFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;${solr.directoryFactory:solr.StandardDirectoryFactory}&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;updateHandler</span> <span class="na">class=</span><span class="s">&quot;solr.DirectUpdateHandler2&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/select/&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.SearchHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/update&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.XmlUpdateRequestHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/admin&quot;</span> <span class="na">class=</span><span class="s">&quot;org.apache.solr.handler.admin.AdminHandlers&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;dataDir&gt;</span>${solr.data.dir:}/product<span class="nt">&lt;/dataDir&gt;</span>
+</span><span class='line'><span class="nt">&lt;/config&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
@@ -1960,45 +2510,6 @@ Descobri que estou amando São Paulo e esta fase da vida, e amor é diferente de
 Quero ficar mais um cadim, reescrever conclusões e tirar novas.<br/>
 Seria legal se você também desse sua opinião, já morou aqui? Quer vir pra cá? Quer saber mais de como é? Entre em contato :)<br/>
 Ps:  Se você não ouviu a música, ouça! É melancólica, mas linda e sincera. Se gostar e não conhecer o cara, baixe um cd gratuito dele <a href="http://www.criolo.net/music.html">http://www.criolo.net/music.html</a>. Vai ter samba, rap, bolero&hellip;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[(new Blog)->HelloWorld();]]></title>
-    <link href="http://cloudson.github.io/2013/08/17/begin/"/>
-    <updated>2013-08-17T00:01:00-03:00</updated>
-    <id>http://cloudson.github.io/2013/08/17/begin</id>
-    <content type="html"><![CDATA[<p>Da última vez que eu tive um blog, eu escrevi bastante mas publiquei pouco rsrs. Não me acho perfeccionista, me acho chato e por saber que minha escrita não é das melhores fico irritado e acabo demorando para chegar no nirvana do post hahaha.</p>
-
-<h3>Quem é esse aí com cara de lesado?</h3>
-
-<p><img src="http://en.gravatar.com/userimage/5255340/f664b6f32219eeef1bb0f287b40fa423.jpg?size=200" alt="It's me..." /></p>
-
-<p>Sou o Claudson, um dia tive o insight de usar o trocadilho cloudson na internet, e acabei levando assim, sendo um tipo de filho das nuvens rs.<br/>
-Sou mineiro, natural de <a href="http://pt.wikipedia.org/wiki/Muria%C3%A9">Muriaé</a>, comecei a gostar de computadores por causa de jogos, fui me interessando mais e acabei fazendo um curso chato de web design e html.<br/>
-Estava tudo muito sem vida, e acabaram me falando que existiam linguagens de programação. Comecei com pascal mas não avancei muito, decidi me matar de estudar para passar no vestibular (tanto que só conheci o que era cerveja e balada com 17 anos haha) e apesar de não ter conseguido na federal de Viçosa (o subtítulo do blog tem a ver com isso), consegui na federal de Juiz de Fora.<br/>
-Foram cinco longos e prazerosos anos de Ciência da Computação, e hoje, bacharel, tenho muito o que agradecer aos mestres de lá.<br/>
-Durante essa caminhada fui começando a carreira como software developer, trabalhei tanto em agência, como em uma fábrica de software (não gosto muito desse termo rs). Sempre gostando mais da área, resolvi vir pra São Paulo interagir mais com o <a href="">phpsp</a> (estou tentando, juro!) e aprender novas tecnologias.
-Já brinquei com ruby, python, js, <a href="https://github.com/cloudson/Bocejo">já fiz um compilador em C</a> rsrs, delphi (tá amarrado em nome de jesus!)&hellip; mas sempre levei minha carreira com php. Não tenho muito orgulho disso, php é uma linguagem que tem alguns problemas mas alguns frameworks e seus contribuidores levaram o ecossistema da linguagem para outro nível, nos últimos 5 anos.</p>
-
-<h3>Por quê ter um blog?</h3>
-
-<ul>
-<li>Você pode escrever coisas para se lembrar no futuro :).</li>
-<li>Você pode desabafar e criticar coisas sobre sua profissão (e eu tenho várias críticas guardadas rs).</li>
-<li>Uma forma das pessoas te acharam rapidamente na internet.</li>
-<li>Uma forma de ajudar a sua comunidade ou profissionais da sua área, compartilhando conhecimentos, mesmo que ínfimos.</li>
-</ul>
-
-
-<h3>Por quê agora vai ser diferente?</h3>
-
-<ul>
-<li>Github pages e octopress pra gerenciar o blog, eu não vou perdê-lo já que sempre estará na minha conta do github .</li>
-<li>Estou mais dedicado a minha carreira, agora que a universidade FINALMENTE terminou .</li>
-<li>Tenho conhecido pessoas e projetos legais, então mesmo que citá-los já seria útil pra terceiros.</li>
-</ul>
-
 ]]></content>
   </entry>
   

@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Programação funcional em PHP - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Hey guys! Hoje falaremos um pouco sobre as características de uma linguagem funcional encontradas no PHP. Citando um pouco as limitações da linguagem &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2014/02/15/programacao-funcional-em-php">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Programação Funcional Em PHP</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-15T20:01:00-02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Hey guys! Hoje falaremos um pouco sobre as características de uma linguagem funcional encontradas no PHP. Citando um pouco as limitações da linguagem e o que ganhamos com o paradigma.</p>
+
+<h3>Introdução</h3>
+
+<p>O que faz de uma linguagem funcional ou não?<br/>
+A principal característica é afirmar que uma função está no mesmo &ldquo;nível que um tipo de dado&rdquo;, ou seja, você consegue declarar uma variável do tipo função. Por quê isso? Para que você consiga encapsular blocos de código em uma variável e executá-lo em locais específicos.
+Complicado? Vamos tentar resolver o seguinte problema:</p>
+
+<p><code>Você possui o array de entrada $a de strins, faça um algoritmo que retorne o mesmo array com cada elemento sem os espaços iniciais e finais (trim) e com a primeira letra em maiúscula.</code></p>
+
+<p>No php 5.2 (já) existiam funções para percorrer arrays aplicando (outras) funções em cada elemento, uma delas é o <a href="http://www.php.net/manual/pt_BR/function.array-walk.php">array_walk</a>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;trim&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;ucfirst&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Veja as linhas acima. A função array_walk recebe dois parâmetros, o primeiro é array que sofrerá as modificações, e o segundo é a função que será aplicada em cada elemento do array. Legal neh? Mas meio arcaico, isso não tem muito a ver com linguagens funcionais, foi só o jeito arcaico do php resolver isso (Opinão!!!!!! hahah).
+Vamos agora tornar o problema um pouco mais complexo:</p>
+
+<p><code>Você ainda possui o array $a de entrada, e precisa aplicar uma certa operação em cada elemento do array. Se esse elemento for uma string sem espaços, você precisa deixá-la no padrão CamelCase (primeira letra maiúscula, no caso), senão no padrão hifenado (caixa baixa e espaços tornam-se hífens)</code>.</p>
+
+<p>A primeira solução que vem a sua mente, caso você não conheça programação funcional é</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// Esses comentários dizem exatamento o que o código faz, o que é no mínimo estranho</span>
+</span><span class='line'><span class="c1">// mas caso alguém não tenha familiaridade com a queria api built-in do php</span>
+</span><span class='line'><span class="c1">// eles ajudarão</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$a</span> <span class="k">as</span> <span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// percorrer todo o vetor por referência (&amp;)</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// trocar espaços por hífens</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// tornar a primeira letra maiúscula</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos resolver agora funcionalmente, passando um bloco de código para uma função:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$apply</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">strpos</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">ucfirst</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nb">array_walk</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$apply</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Observe duas coisas, na linha 3, $apply recebeu uma FUNÇÃO como valor. Essa função sem nome obviamente é chamada de função anônima.
+Se uma função é anônima, e essa variável guarda uma função, como executá-la?</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$apply</span><span class="p">(</span><span class="s1">&#39;Comunidade php de SP&#39;</span><span class="p">);</span> <span class="c1">// comunidade-php-de-sp</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Legal neh? :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-15T20:01:00-02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/01/25/acessando-a-api-do-packagist/" title="Previous Post: Acessando a API do Packagist">&laquo; Acessando a API do Packagist</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php/" title="Next Post: Phartitura - Um novo modo de observar suas dependências em php">Phartitura - Um novo modo de observar suas dependências em php &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/11/18/olhar-urbano-02/">Olhar Urbano 02</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/11/01/apis-uma-comparacao-com-websites/">API's usando HAL - Uma comparação com websites</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2014/02/15/programacao-funcional-em-php/';
+        var disqus_url = 'http://cloudson.github.io/2014/02/15/programacao-funcional-em-php/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

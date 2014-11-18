@@ -1,0 +1,1088 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Phaser é um framework para criar jogos usando tecnologias web, afinal com html5+js+whatever você pode rodar a app no browser, mobile e desktop (com a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/blog/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/28/criando-um-game-simples-com-phaser/">Criando Um Game Simples Com Phaser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-28T09:58:00-03:00" pubdate data-updated="true">Sep 28<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/28/criando-um-game-simples-com-phaser/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Phaser é um framework para criar jogos usando tecnologias web, afinal com html5+js+whatever você pode rodar a app no browser, mobile e desktop (com a ideia dos webapps).</p>
+
+<p><img src="http://www.photonstorm.com/wp-content/uploads/2013/04/phaser-logo-small.png" alt="Phaser logo" /></p>
+
+<h3>Instalação</h3>
+
+<p>Vamos baixar o Phaser (versão 1.0.6) que está no <a href="http://github.com/photonstorm/phaser">github</a>, você pode pegá-lo para seu folder <a href="https://github.com/photonstorm/phaser/archive/1.0.6.tar.gz">pelo link</a> ou dando um git clone:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:photonstorm/phaser.git
+</span><span class='line'>git checkout 1.0.6
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Apesar de criarmos um jogo com tecnlogias web do lado do cliente, precisamos de entregar a aplicação utilizando um servidor web, não faz sentido que o usuário baixe todos os recursos (imagens, sons&hellip;) do jogo de uma só vez.<br/>
+Utilizaremos o apache da forma mais simples, sem mesmo setar um virtualhost. Vamos no diretório root e criar uma pasta chamada cloudsnake:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir /var/www/memorycloud
+</span><span class='line'><span class="nb">cd</span> /var/www/memorycloud
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos começar a codar a partir do exemplo que a equipe do phaser disponibiliza, então copiarei um folder do phaser dentro do cloudsnake</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cp /diretorio_onde_esta_o_phaser/Docs/Hello<span class="se">\ </span>Phaser ./
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ao acessar seu <a href="http://localhost/cloudsnake">http://localhost/cloudsnake</a> você verá uma imagem do Phaser. Instalação concluída!</p>
+
+<h3>Reconhecendo o campo</h3>
+
+<p>Por enquanto tudo que você precisa ver é o index.html do cloudsnake. Sugestivamente a função <em>preload</em> é chamada antes de rendereziar o jogo e a <em>create</em> seria o método chamado no momento inicial do jogo. Perceba que essas funções foram assinadas na instanciação do jogo, linha 13, pelo parâmetro json.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">game</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">Game</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">AUTO</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">preload</span><span class="o">:</span> <span class="nx">preload</span><span class="p">,</span> <span class="nx">create</span><span class="o">:</span> <span class="nx">create</span><span class="p">,</span> <span class="nx">update</span><span class="o">:</span> <span class="nx">update</span> <span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Na linha 25 foi adicionada a logo (setada no método preload) na área de visão do jogo. Utilizaremos a palavra <strong>mundo</strong> pra representar todo o universo do seu jogo, a princípio você pode pensar que mundo é a área de visão do jogo, neste momento você está certo mas logo não estará (há coisas acontecendo no jogo fora do seu campo de visão, pense em uma fase do Super Mario World, o Yoshi está correndo mesmo que você não veja rs). Assim temos uma representação do mundo em código a partir do atributo <em>world</em> em <em>game</em>. Dando um console.log na primeira linha da função <em>create</em> podemos ver (usando firebug, ou qualquer console de um browser) todos os atributos do nosso mundo, de cara você reconhecerá informações de tamanho da tela do mundo.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Coordenadas</h3>
+
+<p>Eu não sou nenhum matemático e muito menos especialista em computação gráfica, mas vamos com o mínimo. No nosso index.html definimos (naquela mesma linha 13) que nosso mundo possui largura de 800px e altura de 600px.
+Na função <em>create</em> colocamos &ldquo;nossa&rdquo; logo na posição (x,y)=(0,0), ou seja, na origem do sistema de coordenadas. Essa origem está no canto <strong>superior esquerdo</strong>, por isso quando a imagem aparece na tela ela também está no canto superior esquerdo. Não devemos alterar a origem, mas podemos renderizar a imagem no centro da tela da seguinte forma:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">create</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// game.world possui dois atributos que representam o centro da tela. Nada mais do que </span>
+</span><span class='line'>    <span class="c1">// game.world.centerX == game.world.width / 2 </span>
+</span><span class='line'>    <span class="c1">// game.world.centerY == game.world.height / 2 </span>
+</span><span class='line'>    <span class="nx">logo</span> <span class="o">=</span> <span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">sprite</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">centerY</span><span class="p">,</span> <span class="s1">&#39;logo&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/27/news-09-slash-13/">News - 09/13</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-27T22:22:00-03:00" pubdate data-updated="true">Sep 27<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/27/news-09-slash-13/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A ideia é ter uma série de posts rápidos sobre o que eu vi, li e/ou utilizei durante o mês.</p>
+
+<h3>Vagrant</h3>
+
+<p>Já trabalhei em lugares em que cada job tinha dependências diferentes. Um com php 5.2, outro com php 5.3+, e para quem não sabe, as coisas mudaram bastante entre essas versões. O Vagrant torna a administração de ambientes de desenvolvimento mais fácil por meio de virtualização, ele utiliza o virtualbox para subir maquinas virtuais facilmente acessíveis via ssh.</p>
+
+<p><a href="http://www.vagrantup.com/">http://www.vagrantup.com/</a></p>
+
+<h3>Octopress</h3>
+
+<p>Esse é o cara! Eu já morro de preguiça de pagar hospedagem, preparar ambiente e manter um wordpress. Então pra esse blog, pensei em usar um gerador de sites estáticos utilizando o github pages e essa ferramenta, que possui gerenciamento de temas, posts e todo o mínimo que um blog precisa.</p>
+
+<p><a href="http://octopress.org">http://octopress.org</a></p>
+
+<h3>Golang</h3>
+
+<p>Golang, ou simplesmente Go, é uma linguagem do nível do C. Diferente desta, Go é menos burocrática, fortemente regrada e mais&hellip; organizada.
+A linguagem deve estar perto do período de hype (assim como ruby esteve há uns anos), eu sigo muitos devs no github, e do nada stars em projetos Go viraram rotina.<br/>
+Hype ou não, é uma boa dica.</p>
+
+<p><a href="http://golang.org/">http://golang.org/</a> <br/>
+<a href="http://www.grokpodcast.com/2013/07/17/episodio-95-golang/">http://www.grokpodcast.com/2013/07/17/episodio-95-golang/</a></p>
+
+<h3>Mondrian (php)</h3>
+
+<p>Um cara muito doido utilizou teoria dos grafos para analisar códigos php e gerar relatórios sobre acoplamento entre classes e outros furos do SOLID.</p>
+
+<p><a href="https://github.com/Trismegiste/Mondrian">https://github.com/Trismegiste/Mondrian</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene/">Faça Um Sistema De Buscas Com Solr/Lucene</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-07T20:58:00-03:00" pubdate data-updated="true">Sep 7<span>th</span>, 2013</time>
+        
+         | <a href="/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>É muito comum necessitarmos de um sistema de buscas em um sistema web.<br/>
+Sabemos que o mysql, o banco de dados mais popular por desenvolvedores, não foi feito para isso. Se você tem um campo fulltext em uma tabela InnoDB, não podrá criar índices para esse campo, e consequentemente não conseguirá fazer uma busca otimizada.<br/>
+Eu já vi muitas soluções de busca encima do mysql, onde a aplicação tinha um algoritmo agindo como uma camada entre o usuário e a pesquisa em si.</p>
+
+<figure class='code'><figcaption><span>&#8220;Pega o valor de busca e buscar em cada campo&#8221; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">id</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span> <span class="k">OR</span> <span class="n">family</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span> <span class="k">OR</span> <span class="n">email</span> <span class="k">like</span> <span class="ss">&quot;%cloud%&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nessas soluções torna-se um martírio tentar resolver vários problemas; algumas palavras (conjunções, preposições&hellip;) deveriam ser ignoradas na hora da busca, se no banco um índice está no plural uma busca pelo seu singular deveria ser eficaz, sinônimos deveriam funcionar também&hellip;</p>
+
+<p>O Solr é uma plataforma acima de uma engine de busca chamada lucene que atinge todos os problemas citados acima.</p>
+
+<h3>É Java sim !</h3>
+
+<p>O Solr necessita de um servidor de aplicações web em java. Utilizaremos o jetty neste post, mas primeiro vamos instalar o java 7 (supondo que estamos em um linux debian como ubuntu).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>add-apt-repository ppa:webupd8team/java <span class="c"># adiciona o ppa que aponta para java oficial da oracle </span>
+</span><span class='line'><span class="nv">$ </span>apt-get update
+</span><span class='line'><span class="nv">$ </span>apt-get install oracle-java7-installer
+</span><span class='line'><span class="nv">$ </span>apt-get install jetty <span class="c"># instala o servidor </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você verá que com o servidor/solr ligado, fazer com que sua aplicação converse com ele é incrivelmente fácil. Através de requests você faz as consultas. Então, largue de preconceito e preguiça!</p>
+
+<h3>Enfim, solr</h3>
+
+<p>Baixaremos o solr versão 4.4.0 em <a href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a></p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://ftp.unicamp.br/pub/apache/lucene/solr/4.4.0/solr-4.4.0.tgz
+</span><span class='line'>tar -xvf solr-4.4.0.tgz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Agora vamos mover os arquivos essenciais para outra pasta, onde usaremos para subir a aplicação.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir solr
+</span><span class='line'>cp solr-4.4.0/example/start.jar ./solr
+</span><span class='line'>mkdir ./solr/webapps &amp; cp solr-4.4.0/example/webapps/solr.war ./solr/webapps/
+</span><span class='line'>sudo cp -r solr-4.4.0/example/lib/ solr
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tempo de indexação e tempo de busca</h3>
+
+<h3>Schemas</h3>
+
+<p>Agora já podemos pensar na busca.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>solr
+</span><span class='line'>mkdir schemas
+</span><span class='line'><span class="nb">cd </span>schemas
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O arquivo principal de configuração aponta para o que ele chama de núcleos, já que você pode ter vários schemas tipos de documentos diferentes (ex: você pode ter uma aplicação grande, usar o solr para indexar produtos e categorias desses produtos).</p>
+
+<figure class='code'><figcaption><span>[solr.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+</span><span class='line'><span class="nt">&lt;solr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;core</span> <span class="na">name=</span><span class="s">&quot;product&quot;</span> <span class="na">instanceDir=</span><span class="s">&quot;product&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/cores&gt;</span>
+</span><span class='line'><span class="nt">&lt;/solr&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dentro do diretório <em>product/conf</em> ($SOLR_HOME/schemas/product/conf) teremos nosso schema xml que dita as regras da busca.</p>
+
+<figure class='code'><figcaption><span>[schema.xml]</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;schema</span> <span class="na">name=</span><span class="s">&quot;Product&quot;</span> <span class="na">version=</span><span class="s">&quot;1.1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- Definindo tipos que serão usados nos campos  --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;types&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldtype</span> <span class="na">name=</span><span class="s">&quot;sortableInt&quot;</span>  <span class="na">class=</span><span class="s">&quot;solr.SortableIntField&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;double&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TrieDoubleField&quot;</span>  <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;string&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TextField&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;fieldType</span> <span class="na">name=</span><span class="s">&quot;text_general&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.TextField&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;analyzer</span> <span class="na">type=</span><span class="s">&quot;index&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;tokenizer</span> <span class="na">class=</span><span class="s">&quot;solr.StandardTokenizerFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.EdgeNGramFilterFactory&quot;</span> <span class="na">minGramSize=</span><span class="s">&quot;2&quot;</span> <span class="na">maxGramSize=</span><span class="s">&quot;15&quot;</span> <span class="na">side=</span><span class="s">&quot;front&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.LowerCaseFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.BrazilianStemFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/analyzer&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;analyzer</span> <span class="na">type=</span><span class="s">&quot;query&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;tokenizer</span> <span class="na">class=</span><span class="s">&quot;solr.StandardTokenizerFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.LowerCaseFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.SynonymFilterFactory&quot;</span> <span class="na">synonyms=</span><span class="s">&quot;zocsynonyms.txt&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;filter</span> <span class="na">class=</span><span class="s">&quot;solr.BrazilianStemFilterFactory&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/analyzer&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/fieldType&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/types&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!-- </span>
+</span><span class='line'><span class="c">    Valores importantes para sua busca devem estar nos documentos do solr,</span>
+</span><span class='line'><span class="c">    podendo ser índices de busca ou não.</span>
+</span><span class='line'><span class="c">   --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;fields&gt;</span>
+</span><span class='line'>    <span class="c">&lt;!-- Basic fields --&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;sortableInt&quot;</span> <span class="na">indexed=</span><span class="s">&quot;true&quot;</span>  <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;text_general&quot;</span> <span class="na">indexed=</span><span class="s">&quot;true&quot;</span>  <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="na">required=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;slug&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;price&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;category&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">stored=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/fields&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;uniqueKey&gt;</span>id<span class="nt">&lt;/uniqueKey&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;solrQueryParser</span> <span class="na">defaultOperator=</span><span class="s">&quot;AND&quot;</span><span class="nt">/&gt;</span><span class="c">&lt;!-- long tails search more specific thing  --&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/schema&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[solrconfig.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+</span><span class='line'><span class="nt">&lt;config&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;luceneMatchVersion&gt;</span>LUCENE_35<span class="nt">&lt;/luceneMatchVersion&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;directoryFactory</span> <span class="na">name=</span><span class="s">&quot;DirectoryFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;${solr.directoryFactory:solr.StandardDirectoryFactory}&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;updateHandler</span> <span class="na">class=</span><span class="s">&quot;solr.DirectUpdateHandler2&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/select/&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.SearchHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/update&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.XmlUpdateRequestHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/admin&quot;</span> <span class="na">class=</span><span class="s">&quot;org.apache.solr.handler.admin.AdminHandlers&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;dataDir&gt;</span>${solr.data.dir:}/product<span class="nt">&lt;/dataDir&gt;</span>
+</span><span class='line'><span class="nt">&lt;/config&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/09/01/meu-metaframework-em-php/">Meu Metaframework Em PHP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-01T12:22:00-03:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
+        
+         | <a href="/2013/09/01/meu-metaframework-em-php/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Há algumas semanas saiu um artigo (baseado em <em>achismos</em> talvez) sobre <a href="http://www.sitepoint.com/a-php-from-the-future/">o php do futuro</a>, e um dos pontos do autor foi que as pessoas começariam a utilizar mais metaframeworks. Eu concordo. A verdade é que com os microframeworks instantaneamente temos metaframeworks; ferramentas próprias geradas a partir de outras menores.
+Eu mesmo, apesar de trabalhar com symfony há um tempo, nunca o utilizei em projetos pessoais &ndash; que <a href="http://temadehoje.gopagoda.com/">foram ou não pro ar</a>. <br/>
+Neste post, vou mostrar meu skeleton ou metaframework padrão para aplicações php.</p>
+
+<h3>Estrutura</h3>
+
+<p>Vamos trabalhar num sistema de diretórios análogo ao abaixo:</p>
+
+<p>&mdash;templates <br/>
+&mdash;public <br/>
+&mdash;cache <br/>
+&mdash;vendor</p>
+
+<h3>Composer</h3>
+
+<p>Este cara não é um ingrediente, mas sem ele você não vai conseguir começar. O <a href="http://getcomposer.org/">Composer</a> é um gerenciador de dependências pra projetos php. Se sua aplicação vai usar a ferramenta X, Y e Z, você as descreve num arquivo de configuração, roda um comando e todas estarão disponíveis. Se por acaso você queira atualizar Y ou trocar Z por W, basta reconfigurar esse arquivo. Veja um exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span>[composer.json] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;MeuProjeto&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;autoload&quot;</span> <span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;psr-0&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;MeuProjeto&quot;</span> <span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;php&quot;</span> <span class="p">:</span> <span class="s2">&quot;&gt;= 5.3.8&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;silex/silex&quot;</span> <span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;respect/relational&quot;</span><span class="p">:</span> <span class="s2">&quot;0.4.7&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;twig/twig&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Acima, o <em>composer.json</em> diz que faremos uma aplicação que precisa rodar num php pelo menos na versão 5.3.8 e que dependerá de outras ferramentas, que citaremos melhor abaixo.
+Vamos agora fazer com que essas dependências sejam baixadas.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>seu_diretorio_do_projeto
+</span><span class='line'><span class="nv">$ </span>curl -s http://getcomposer.org/installer | php <span class="c"># baixa o composer </span>
+</span><span class='line'><span class="nv">$ </span>php composer.phar install  <span class="c"># instala as dependencias</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Configuração</h3>
+
+<p>Costumo usar algumas constantes &ndash; que variam de acordo com o ambiente &ndash; no projeto. Agrupo essas informações num arquivo config.php</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// o composer gera um autoloader automático que já carrega as dependências</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[config.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="c1">// configuração de envio de email</span>
+</span><span class='line'><span class="c1">// ou configuração de uma app do facebook </span>
+</span><span class='line'><span class="c1">// whatever</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// configurações de banco de dados</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s1">&#39;/127.0.0.[0-9]+/&#39;</span><span class="p">,</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;SERVER_ADDR&#39;</span><span class="p">])){</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">,</span><span class="s1">&#39;motherfucker&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASS&#39;</span><span class="p">,</span><span class="s1">&#39;314159265359&#39;</span><span class="p">);</span>
+</span><span class='line'>   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PATH&#39;</span><span class="p">,</span><span class="s1">&#39;path_db.app.com&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Silex</h3>
+
+<p>O <a href="http://silex.sensiolabs.org/">Silex</a> é um roteador, em poucas linhas você consegue escrever um programa que roda diferentes funções para cada url (rota) de sua aplicação.</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Estamos na home!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Twig</h3>
+
+<p>O <a href="http://twig.sensiolabs.org/">Twig</a> nasceu no ecossistema symfony (como quase tudo deste post). Ele é um motor de templates, uma forma de escrever o html com inserção de informações dinâmicas vindas da sua aplicação.<br/>
+Vamos primeiro integrar o Twig ao Silex:</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
+</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// integrante do com silex</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;Claudson Oliveira&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">));</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>[home.html] language:html</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Blog<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>        <span class="c">&lt;!-- leia a documentacao do twig para inserir as variaveis --&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Banco de dados</h3>
+
+<p>Para persistência em banco de dados, usaremos um cara brasileiro que eu sou fã. O <a href="http://github.com/respect/relational">Respect\Relational</a>, com ele não há trabalho em escrever classes que representam tabelas, ou qualquer dificuldade de configuração.</p>
+
+<figure class='code'><figcaption><span>[index.php] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/autoload.php&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config.php&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// instanciando o relational com pdo </span>
+</span><span class='line'><span class="nv">$mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mapper</span><span class="p">(</span><span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">&#39;mysql:dbname=seu_bd;host=&#39;</span><span class="o">.</span><span class="nx">DB_PATH</span><span class="p">,</span> <span class="nx">DB_USER</span><span class="p">,</span> <span class="nx">DB_PASS</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Apontando o twig para a pasta de cache e onde os arquivos html estarão</span>
+</span><span class='line'><span class="nv">$twig_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Loader_Filesystem</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/templates&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$twig</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">Twig_Environment</span><span class="p">(</span><span class="nv">$twig_loader</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/cache&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// integrante do com silex</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="k">new</span> <span class="nx">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;twig.path&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/templates&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// usa o mapper pra listar todos os usuarios do sistema (supondo que a tabela exista)</span>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$mapper</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$usuarios</span> <span class="o">=</span> <span class="nv">$mapper</span><span class="o">-&gt;</span><span class="na">user</span><span class="o">-&gt;</span><span class="na">fetchAll</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;twig&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;home.html&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;usuarios&#39;</span><span class="o">=&gt;</span> <span class="nv">$usuarios</span><span class="p">));</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&quot;/contato&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;Página de contato!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusão</h3>
+
+<p>Vimos o básico para começar um projeto rapidamente; um controlador, uma engine de templates e uma ferramenta de persistência e consulta em banco de dados. A partir disso você pode plugar outras ferramentas, de validação, envio de email ou alguma api de rede social.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/08/17/e-ai-ta-gostando-de-sp/">E aí, Tá Gostando De SP?!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-17T14:59:00-03:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
+        
+         | <a href="/2013/08/17/e-ai-ta-gostando-de-sp/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Bom, como você deve ter lido no pequeno <a href="/2013/08/17/begin/">primeiro post</a> do blog, sou um mineiro desbravando terras paulistan.. Hum, bom momento
+para falar sobre a diferença entre paulistano e paulista, o primeiro nasceu/vive na cidade de São Paulo, e o segundo
+é o mesmo que o mineiro, é o cara que nasceu/vive no estado de São Paulo, ok? rs. Mas bem, esse post não é (só) sobre isso.</p>
+
+<p>Cheguei na cidade grande no 5º dia do 5º mês desse ano, e desde então amigos, familiares e conhecidos
+têm me jogado essa pergunta; <em>&ldquo;E aí, Tá gostando de SP?!&rdquo;</em>. Eu poderia responder com uma direta falsa animação <em>&ldquo;Uai! Como não? São Paulo é foda,
+a cidade não para, há tanta coisa pra se fazer e&hellip;&rdquo;</em> mas não é bem por aí. Neste momento se você está numa cidade menor e com a suposta qualidade de vida superior, está pensando <em>&ldquo;haha, se *udeu, falei pra ele que não valia a pena viver sob o estress de uma capital&rdquo;</em>, será mesmo que não vale a pena?
+Abaixo vou listar pontos que eu gostaria de ter lido antes de vir pra cá, numa visão de quem chegou há menos de seis meses, e tentando ser bem honesto.</p>
+
+<p><img src="http://www.angularaerofoto.com.br/data/photos/207_1Ponte_Estaiada_4.jpg" alt="A ponte estaiada" /></p>
+
+<h3>Trânsito!!!!!!</h3>
+
+<p>Certo. Quando pensamos numa cidade grande, pensamos em estress e quando pensamos em estress pensamos em trânsito.
+Sim, a cidade é caótica nos horários de rush, parece que as pessoas nascem com carros por aqui, e há muitos deles rs.
+No primeiro mês empregado, eu levava pouco mais que 1 hora para chegar ao trabalho, isso quer dizer 10 horas semanais dentro de um automóvel.
+A pior parte do trajeto, claro, era que os ônibus da sptrans entravam no engarrafamento com os carros.
+Mas há poucas semanas a <a href="http://g1.globo.com/sao-paulo/noticia/2013/08/faixa-no-corredor-norte-sul-deixa-passageiros-de-onibus-aliviados.html">prefeitura começou um projeto</a>
+para dar prioridade a quem deixa o carro em casa e vai de transporte coletivo ao trabalho, está melhorando num sentido e piorando MUITO para quem tem carro.<br/>
+Sobre transporte público, pode ter muito o que melhorar, mas comparado com as cidades que conheci e morei, ele é muito bom sim.
+Metrôs e trens cortam a cidade toda, o cartão que as pessoas usam não é só por modinha ou pura economia dos empresários
+(como lá na minha cidade natal).
+Aqui rola &ldquo;integração&rdquo;; se você vai pegar vários transportes seguidos, terá descontos (usando o cartão) a partir do segundo (2 ônibus seguidos te custará R$ 3,00, em Juiz de fora &ndash; MG, te custa R$ 4,00).<br/>
+O Segredo é morar perto do trabalho e começar a ler mais enquanto está no trânsito :)</p>
+
+<h3>Poluição</h3>
+
+<p>Como eu disse, há muitos carros, e consequentemente há muita poluição, quando vejo um céu totalmente azul até paro para admirá-lo. No crepúsculo poente, você pode ver o quanto de CO2 (e sabe-se lá mais o quê) foi liberado no dia.
+Quando vim para cá, pensei em todos os lados ruins, mas confesso que este era o que pesava menos. Ingenuidade, como já tive problemas respiratórios na infância, já estou pensando em ir procurar um especialista para ver como está meu querido pulmão.</p>
+
+<h3>Criminalidade</h3>
+
+<p>Não há muito o que dizer, ela existe, pessoas conhecidas são assaltadas a todo momento. Você nunca está totalmente tranquilo em SP. É um preço por todas as outras coisas boas que a cidade oferece :(</p>
+
+<h3>Desigualdade</h3>
+
+<p>Na paulista você encontrará o maior desnivel social, quem sabe, da cidade. Artistas de TV moram lá, mas mendigos também. Jovens se drogam no meio da rua, artistas de rua começam carreira, recém chegados se escondem do frio, sem um teto pra dormir. Uma vez estava andando por lá e tinha uma limousine com várias meninas bebendo espumante (ou qualquer outra coisa que foge meu nivel social) e se divertindo como num filme.
+Achei hilário e ao mesmo tempo muito non-sense. <br/>
+A desigualdade em São Paulo é exagerada, pessoas ricas são muito ricas, estupidamente ricas, e eu sequer consigo ficar perto delas.
+Parece um filme que é muito bom pela sua crítica chamado <a href="http://pt.wikipedia.org/wiki/The_Hunger_Games">Jogos vorazes</a>, vejam, vale a pena.</p>
+
+<h3>O Paulistano!</h3>
+
+<p>Lá no topo eu defini o paulistano como quem vive ou nasce em São Paulo, isso porque é difícil encontrar pessoas naturais daqui, e essas provavelmente têm pais de outros estados e cidades. A mistura aqui é das boas, somos mineiros, baianos, franceses, paraibanos, gaúchos &hellip; convivendo direta e indiretamente.
+<a href="http://www.rocket-internet.de/">Lá onde eu trabalho mesmo</a> são tantos sotaques, que você pode até ficar perdido.<br/>
+A xenofobia existe, infelizmente, de vez em quando você vê um maluco na internet falando que a cidade é dele e não dos invasores. Mas quem sofre mais são os nordestinos, que são MUITOS por aqui.
+Baianada é sinônimo de trabalho ou ato mal feito, para você ver a que ponto chegamos.<br/>
+Colocando na média, o povo é incrível, é tão bom trabalhar e viver com pessoas com histórias totalmente diferentes ou até mesmo com histórias similares mas tão distantes geográficamente; o Brasil é foda!</p>
+
+<h3>O Paulistano (novamente!) &ndash; &ldquo;Povo frio&rdquo;</h3>
+
+<p>Aqui faz muito frio haha, custumam dizer que o povo é meio frio também, metaforicamente; Distante.
+Uma das minhas músicas preferidas atualmente é do Criolo. A música é velha mas música é isso, quando você menos espera ela se encaixa na sua vida :)</p>
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/Xo-gBWX_jXc" frameborder="0" allowfullscreen></iframe>
+
+
+<p>De certa forma é verdade, as pessoas estão trabalhando a todo momento, o foco em atingir algo aqui é alto; começa no fazer as malas seja do nordestino, seja do mineiro que está vindo &ldquo;tentar a vida&rdquo;.
+Mas isso não quer dizer que ser frio é ser desonesto. Você pode ser carioca e estar lendo isso agora, tem todo o direito de ficar ofendido; Mas eu acho o povo paulistano mais justo que o povo carioca, a cultura do malandro não me atrai.<br/>
+Essa frieza também faz bem; enquanto que numa cidade de 100 mil habitantes se você fizer uma tatuagem na testa vai ser levado pra fogueira da pracinha, numa cidde de 13 milhões pff, dane-se você, fez a tatuagem, o problema é seu! A vida é sua! Então se você não se encaixa onde está agora, aqui de certo você se encaixará.</p>
+
+<h3>&ldquo;Lá rola dinheiro&rdquo;</h3>
+
+<p>Crescemos ouvindo isso, que em São Paulo rola dinheiro.
+Rolar rola, mas as pessoas não vêem ou valorizam o que muitos paulistanos passam para ter seu carro e casa própria.
+As pessoas trabalham duro aqui, fazem hora extra sem torcer bico, tem um emprego CLT e um negócio paralelo para tirar uma grana, acordam 4:30 da manhã para pegar o busão infernal.
+Então pare de associar São Paulo e paulistanos com dinheiro fácil, (estude antes de querer um bom salário e) respeite os paulistanos pelo seu esforço, ok?<br/>
+Se você quer trabalhar, aqui tem lugar, se você quer ganhar dinheiro, pense duas vezes antes de vir (Leia essa frase até conseguir entendê-la rs).</p>
+
+<h3>Satisfação profissional</h3>
+
+<p>Estou apaixonado pelo meu trabalho, e é justamente o que eu estava buscando para minha carreira. Se você é desenvolvedor como eu e se interessa por inovação, não quer ficar programando em php 5.2 ou com tecnologias da década passada, aqui você será feliz. Eu trabalho com um conjunto de ferramentas que não iria lidar em nenhuma empresa que conhecia (por dentro ou por fora) em Juiz de fora.  Num post futuro falarei mais sobre isso.</p>
+
+<h3>Conclusão</h3>
+
+<p>São Paulo é uma cidade intensa, tudo aqui é proporcional, ganha-se mais dinheiro, há mais gente, há mais coisa pra se fazer culturalmente, há mais desiguldade, há mais crimes, há mais tudo.</p>
+
+<p>Eu não tinha conclusão quando comecei a escrever, a ideia era deixar o leitor decidir de acordo com minhas palavras, mas olha o tanto que eu escrevi.
+Descobri que estou amando São Paulo e esta fase da vida, e amor é diferente de paixão, que dá e passa.
+Quero ficar mais um cadim, reescrever conclusões e tirar novas.<br/>
+Seria legal se você também desse sua opinião, já morou aqui? Quer vir pra cá? Quer saber mais de como é? Entre em contato :)<br/>
+Ps:  Se você não ouviu a música, ouça! É melancólica, mas linda e sincera. Se gostar e não conhecer o cara, baixe um cd gratuito dele <a href="http://www.criolo.net/music.html">http://www.criolo.net/music.html</a>. Vai ter samba, rap, bolero&hellip;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/11/18/olhar-urbano-02/">Olhar Urbano 02</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/11/01/apis-uma-comparacao-com-websites/">API&#8217;s usando HAL - Uma comparação com websites</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

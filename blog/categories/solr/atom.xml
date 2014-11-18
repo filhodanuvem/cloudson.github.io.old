@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: solr | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/solr/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2014-11-18T00:50:08-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Faça um sistema de buscas com Solr/Lucene]]></title>
+    <link href="http://cloudson.github.io/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene/"/>
+    <updated>2013-09-07T20:58:00-03:00</updated>
+    <id>http://cloudson.github.io/2013/09/07/faca-um-sistema-de-buscas-com-solr-slash-lucene</id>
+    <content type="html"><![CDATA[<p>É muito comum necessitarmos de um sistema de buscas em um sistema web.<br/>
+Sabemos que o mysql, o banco de dados mais popular por desenvolvedores, não foi feito para isso. Se você tem um campo fulltext em uma tabela InnoDB, não podrá criar índices para esse campo, e consequentemente não conseguirá fazer uma busca otimizada.<br/>
+Eu já vi muitas soluções de busca encima do mysql, onde a aplicação tinha um algoritmo agindo como uma camada entre o usuário e a pesquisa em si.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;Pega o valor de busca e buscar em cada campo&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">id</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="k">like</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">cloud</span><span class="o">%&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="k">OR</span> <span class="n">family</span> <span class="k">like</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">cloud</span><span class="o">%&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="k">OR</span> <span class="n">email</span> <span class="k">like</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">cloud</span><span class="o">%</span><span class="err">&quot;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Nessas soluções torna-se um martírio tentar resolver vários problemas; algumas palavras (conjunções, preposições&hellip;) deveriam ser ignoradas na hora da busca, se no banco um índice está no plural uma busca pelo seu singular deveria ser eficaz, sinônimos deveriam funcionar também&hellip;</p>
+
+<p>O Solr é uma plataforma acima de uma engine de busca chamada lucene que atinge todos os problemas citados acima.</p>
+
+<h3>É Java sim !</h3>
+
+<p>O Solr necessita de um servidor de aplicações web em java. Utilizaremos o jetty neste post, mas primeiro vamos instalar o java 7 (supondo que estamos em um linux debian como ubuntu).<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>add-apt-repository ppa:webupd8team/java <span class="c"># adiciona o ppa que aponta para java oficial da oracle</span>
+</span><span class='line'><span class="nv">$ </span>apt-get update
+</span><span class='line'><span class="nv">$ </span>apt-get install oracle-java7-installer
+</span><span class='line'><span class="nv">$ </span>apt-get install jetty <span class="c"># instala o servidor</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Você verá que com o servidor/solr ligado, fazer com que sua aplicação converse com ele é incrivelmente fácil. Através de requests você faz as consultas. Então, largue de preconceito e preguiça!</p>
+
+<h3>Enfim, solr</h3>
+
+<p>Baixaremos o solr versão 4.4.0 em <a href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://ftp.unicamp.br/pub/apache/lucene/solr/4.4.0/solr-4.4.0.tgz&quot;</span>&gt;http://ftp.unicamp.br/pub/apache/lucene/solr/4.4.0/solr-4.4.0.tgz&lt;/a&gt;
+</span><span class='line'>tar -xvf solr-4.4.0.tgz
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Agora vamos mover os arquivos essenciais para outra pasta, onde usaremos para subir a aplicação.
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir solr
+</span><span class='line'>cp solr-4.4.0/example/start.jar ./solr
+</span><span class='line'>mkdir ./solr/webapps &amp;amp; cp solr-4.4.0/example/webapps/solr.war ./solr/webapps/
+</span><span class='line'>sudo cp -r solr-4.4.0/example/lib/ solr
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Tempo de indexação e tempo de busca</h3>
+
+<h3>Schemas</h3>
+
+<p>Agora já podemos pensar na busca.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>solr
+</span><span class='line'>mkdir schemas
+</span><span class='line'><span class="nb">cd </span>schemas
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>O arquivo principal de configuração aponta para o que ele chama de núcleos, já que você pode ter vários schemas tipos de documentos diferentes (ex: você pode ter uma aplicação grande, usar o solr para indexar produtos e categorias desses produtos).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>[solr.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span> ?&gt;
+</span><span class='line'><span class="nt">&lt;solr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;cores</span> <span class="na">adminPath=</span><span class="s">&quot;/admin/cores&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>core name=&quot;product&quot; instanceDir=&quot;product&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/cores&gt;</span>
+</span><span class='line'><span class="nt">&lt;/solr&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Dentro do diretório <em>product/conf</em> ($SOLR_HOME/schemas/product/conf) teremos nosso schema xml que dita as regras da busca.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>[schema.xml]</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;schema</span> <span class="na">name=</span><span class="s">&quot;Product&quot;</span> <span class="na">version=</span><span class="s">&quot;1.1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- Definindo tipos que serão usados nos campos  --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;types&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>fieldtype name=&quot;sortableInt&quot;  class=&quot;solr.SortableIntField&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>fieldType name=&quot;double&quot; class=&quot;solr.TrieDoubleField&quot;  /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>fieldType name=&quot;string&quot; class=&quot;solr.TextField&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>fieldType name=&quot;text_general&quot; class=&quot;solr.TextField&quot; <span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>analyzer type=&quot;index&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>     <span class="ni">&amp;lt;</span>tokenizer class=&quot;solr.StandardTokenizerFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>     <span class="ni">&amp;lt;</span>filter class=&quot;solr.EdgeNGramFilterFactory&quot; minGramSize=&quot;2&quot; maxGramSize=&quot;15&quot; side=&quot;front&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>     <span class="ni">&amp;lt;</span>filter class=&quot;solr.LowerCaseFilterFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>     <span class="ni">&amp;lt;</span>filter class=&quot;solr.BrazilianStemFilterFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>/analyzer<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>analyzer type=&quot;query&quot;<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>tokenizer class=&quot;solr.StandardTokenizerFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>filter class=&quot;solr.LowerCaseFilterFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>filter class=&quot;solr.SynonymFilterFactory&quot; synonyms=&quot;zocsynonyms.txt&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>filter class=&quot;solr.BrazilianStemFilterFactory&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>/analyzer<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/fieldType<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/types&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="ni">&amp;lt;</span>!<span class="ni">&amp;mdash;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>Valores importantes para sua busca devem estar nos documentos do solr,
+</span><span class='line'>podendo ser índices de busca ou não.
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>   <span class="ni">&amp;mdash;</span>&gt;
+</span><span class='line'>  <span class="nt">&lt;fields&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>!-- Basic fields --<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>field name=&quot;id&quot; type=&quot;sortableInt&quot; indexed=&quot;true&quot;  stored=&quot;true&quot; required=&quot;true&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>field name=&quot;name&quot; type=&quot;text_general&quot; indexed=&quot;true&quot;  stored=&quot;true&quot; required=&quot;true&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>field name=&quot;slug&quot; type=&quot;string&quot; stored=&quot;true&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>field name=&quot;price&quot; type=&quot;double&quot; stored=&quot;true&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>field name=&quot;category&quot; type=&quot;string&quot; stored=&quot;true&quot;/<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/fields&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;uniqueKey&gt;</span>id<span class="nt">&lt;/uniqueKey&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;solrQueryParser</span> <span class="na">defaultOperator=</span><span class="s">&quot;AND&quot;</span><span class="nt">/&gt;</span><span class="c">&lt;!-- long tails search more specific thing  --&gt;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/schema&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>[solrconfig.xml] </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span> ?&gt;
+</span><span class='line'><span class="nt">&lt;config&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;luceneMatchVersion&gt;</span>LUCENE_35<span class="nt">&lt;/luceneMatchVersion&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;directoryFactory</span> <span class="na">name=</span><span class="s">&quot;DirectoryFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;${solr.directoryFactory:solr.StandardDirectoryFactory}&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;updateHandler</span> <span class="na">class=</span><span class="s">&quot;solr.DirectUpdateHandler2&quot;</span> <span class="nt">/&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/select/&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.SearchHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/update&quot;</span> <span class="na">class=</span><span class="s">&quot;solr.XmlUpdateRequestHandler&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;requestHandler</span> <span class="na">name=</span><span class="s">&quot;/admin&quot;</span> <span class="na">class=</span><span class="s">&quot;org.apache.solr.handler.admin.AdminHandlers&quot;</span> <span class="nt">/&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;dataDir&gt;</span>${solr.data.dir:}/product<span class="nt">&lt;/dataDir&gt;</span>
+</span><span class='line'><span class="nt">&lt;/config&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>
