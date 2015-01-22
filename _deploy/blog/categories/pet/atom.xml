@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: pet | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/pet/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2015-01-21T23:23:57-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Gitql - Do que é feito?]]></title>
+    <link href="http://cloudson.github.io/2014/04/23/gitql-do-que-e-feito/"/>
+    <updated>2014-04-23T09:02:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/04/23/gitql-do-que-e-feito</id>
+    <content type="html"><![CDATA[<p>No começo do ano, um projeto bem legal apareceu no github, o <a href="https://github.com/dinedal/textql">textql</a>. Aquilo me fez pensar novamente &ldquo;Como não tive essa ideia?&rdquo;; Baseado num texto csv, poder fazer consultas sql. Simplesmente incrível.<br/>
+Depois de dar uma olhada no projeto, voltei ao trabalho; códigos, git status, git commit, git log &hellip; &ldquo;Hey! Todo mundo sabe sql, mas nem todo mundo sabe git log&rdquo;, e daí pensei em criar o <a href="https://github.com/cloudson/gitql">gitql</a>, uma forma fácil de extrair informações de repositórios git usando uma linguagem de consulta.</p>
+
+<h3>Desafios</h3>
+
+<p>Olhei um pouco mais de perto o que o textql fazia. Como seu objetivo era ler um arquivo aparentemente imutável, a ferramenta primeiramente criava um banco sqlite e importava todos os dados para uma tabela. &ldquo;Não bom&rdquo; para meu caso. Repositórios git mudam a todo momento, uma suposta tabela de commits não iria parar de crescer. Ter um banco sqlite para cada repositório e sincronizá-lo antes de cada consulta estava fora de cogitação.<br/>
+O que eu queria realmente era transformar o commando <code>select * from commits</code> em <code>git log</code>, ou seja, traduzir uma linguagem em outra.
+Além disso, percebi que era uma boa hora para estudar &ndash; na prática &ndash; uma linguagem emergente; <a href="http://golang.org/">golang</a>.</p>
+
+<h3>Enfrentando o terceiro dragão</h3>
+
+<p>Para quem me conhece desde a época (não tão distante) da faculdade, sabe que sou um pouco viciado em Teoria de compiladores, linguagens e outras coisas malucas. É uma área meio conturbadora, tanto que um compilador acaba tendo um <a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811">dragão</a> como símbolo. Mas como eu (junto a amigos) já tinha feito um <a href="https://github.com/cloudson/Bocejo">compilador de mini-java para assembly mips</a>, e um tcc que tinha um <a href="http://www.gcg.ufjf.br/cloudblocks/">interpretador de C para javascript</a>, toda a teoria ainda estava na minha cabeça (em algum lugar).</p>
+
+<h3>Definindo a linguagem</h3>
+
+<p>Gitql é somente leitura, então o interpretador acabaria rodando apenas comandos select, escrevi alguns exemplos úteis, como objetivo final.</p>
+
+<p><code>select * from commits</code><br/>
+<code>select author, message where (date &gt;= '2014-04-10' and date &lt; '2014-04-11') and (author = 'cloudson' or author = 'jeanpimentel')</code>
+<code>select author, message where 'Fuck' in full_message</code>
+&hellip;</p>
+
+<p>Alguns casos eram tão específicos que eu mesmo não conseguiria gerar um git log com tal informação, o que me animava.
+Definida as palavras chaves (ficaram de fora coisas como joins, alias e  group by), era hora de implementar as fases do compilador que tinham como objetivo gerar a <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a>.</p>
+
+<h3>Como a coisa funciona mais abaixo?</h3>
+
+<p><strong>select author from commits</strong><br/>
+Por padrão temos um limite de 10 linhas, então o que fazemos é percorrer pelos últimos commits (utilizando <a href="https://github.com/libgit2/">libgit2</a>) e quando tivermos 10 sucessos, paramos. A cada sucesso guardamos author, que é <a href="https://github.com/cloudson/gitql/blob/64ab944ad750a6da26456136f9c40b2a616534f8/runtime/runtime.go#L344">transcrito para objeto commit.Author.Name</a>.</p>
+
+<p><strong>select hash from commits where author = &lsquo;cloudson&rsquo; or author = &lsquo;jeanpimentel&rsquo;</strong>  <br/>
+A heurística é a mesma mas vamos agora observar o que é um <strong>sucesso</strong>. Percorrendo os commits procuramos aqueles que casam complementamente com o where, ou seja, um sucesso é um commit que possui um dos dois autores.</p>
+
+<p><strong> select message from commits order by date asc limit 2 </strong><br/>
+Neste caso queremos os 2 primeiros commits de um repositório. Qual o problema deste exemplo? A princípio eu não tenho uma coleção de commits alocada em memória, tudo que vimos até agora é um algoritmo que vai montando uma coleção a medida que encontra sucessos. Isso nos dá uma limitação, a forma para resolver essa consulta seria <br/>
+1º) Encontrando <strong>todas</strong> as mensagens de commits com sucesso.<br/>
+2º) Ordenando essas mensagens (poderia ser por nome de author).<br/>
+3º) Pegando apenas as 2 primeiras linhas.</p>
+
+<p>Isso faz com que o algoritmo se torne menos eficiente (no tempo e no espaço) é o que tentei relatar na <a href="https://github.com/cloudson/gitql/issues/4">issue #4</a>.
+Aparentemente não há outra forma, para que o order by funcione perfeitamente.</p>
+
+<h3>Conclusão</h3>
+
+<p>Valeu a pena todos os commits de madrugada para tentar finalizar a ferramenta, e também por estudar mais go, fazia tempos que eu não achava uma linguagem tão divertida. <br/>
+Também é <del>du caralho</del> gratificante receber 500 stars por uma ideia maluca. Divulgando no <a href="https://twitter.com/cloudson/status/455886564787519488">twitter</a> e no <a href="http://www.reddit.com/r/golang/comments/2334ys/gitql_a_git_query_language_built_with_golang/">reddit</a> gerou-se um movimento inesperado de <a href="https://twitter.com/search?q=gitql&amp;src=typd&amp;f=realtime">pessoas</a> <a href="http://www.reddit.com/r/git/comments/234e8y/gitql_a_git_query_language/">interessadas</a> no <a href="http://ruby5.envylabs.com/episodes/494-episode-457-april-18th-2014">projeto</a>. Insano!</p>
+]]></content>
+  </entry>
+  
+</feed>

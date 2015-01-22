@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Acessando a API do Packagist - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na organization oficial por um client mas não encontrei. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Acessando a API Do Packagist</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-25T23:41:00-02:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Essa semana precisei consumir dados de pacotes disponibilizados pelo composer. Procurei na <a href="http://github.com/composer">organization oficial</a> por um client mas não encontrei.
+Percebi que nunca tinha ouvido falar se o composer/packagist disponibilizava uma API para consumo de informações sobre os pacotes.</p>
+
+<p>Depois de algumas buscas encontrei uns links úteis que responderam minha dúvida (veja as fontes no final do post) e irei escrever alguns exemplos de requests para consumir dados.</p>
+
+<h3>Listando pacotes de uma organization</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/list.json?vendor<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes por uma tag</h3>
+
+<p>(atributo tag encontrado no composer.json, não confundir com git tag :P ).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?tags<span class="o">=</span>respect
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;packageNames&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;respect/config&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/data&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/loader&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/relational&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/rest&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/template&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/test&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;respect/validation-bundle&quot;</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Buscando pacotes pelo nome</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/search.json?q<span class="o">=</span>cloudson
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://packagist.org/packages/cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pegando dados de um repositório específico</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://packagist.org/packages/cloudson/gandalf.json
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:26:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;maintainers&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;claudsonweb@gmail.com&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="nt">&quot;versions&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;dev-master&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;9999999-dev&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;6050511663c47ba1bba37cd5e6ca0dde3eb72575&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:20:55+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nt">&quot;0.7.0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson/gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;version_normalized&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7.0.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Claudson Oliveira&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;cloudson@outlook.com&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">],</span>
+</span><span class='line'>        <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf.git&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;dist&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.github.com/repos/cloudson/Gandalf/zipball/119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;119fa3309ea4a988ca44cfa63a349bf4c21cca6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nt">&quot;shasum&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2014-01-26T00:12:17+00:00&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;psr-0&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf&quot;</span><span class="p">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;Gandalf/Tests&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;library&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;repository&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/cloudson/Gandalf&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;downloads&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;monthly&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;daily&quot;</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;favers&quot;</span><span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você pode acabar percebendo uma certa semelhança entra as URIs citadas e aquelas acessadas no packagist (html), de fato essa semelhança existe e serve também como base pra consumir outras informações.</p>
+
+<p>Este foi um post rápido apenas para divulgar conhecimento e servir de lembrete pra mim. Até a próxima :)</p>
+
+<p>fontes:
+<a href="https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA">https://groups.google.com/forum/#!topic/composer-dev/pb_Jo_cu4IA</a>  <br/>
+<a href="https://github.com/KnpLabs/packagist-api">https://github.com/KnpLabs/packagist-api</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-25T23:41:00-02:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/12/19/o-que-caiu-na-zcpe/" title="Previous Post: O que caiu na ZCPE?">&laquo; O que caiu na ZCPE?</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/03/09/phartitura-um-novo-modo-de-observar-suas-dependencias-em-php/" title="Next Post: Phartitura - Um novo modo de observar suas dependências em php">Phartitura - Um novo modo de observar suas dependências em php &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/11/olhar-urbano-01/">Olhar urbano 01</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/23/gitql-do-que-e-feito/">Gitql - Do que é feito?</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist/';
+        var disqus_url = 'http://cloudson.github.io/2014/01/25/acessando-a-api-do-packagist/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

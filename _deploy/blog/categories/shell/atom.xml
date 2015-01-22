@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: shell | Claudson Oliveira]]></title>
+  <link href="http://cloudson.github.io/blog/categories/shell/atom.xml" rel="self"/>
+  <link href="http://cloudson.github.io/"/>
+  <updated>2015-01-21T23:23:57-02:00</updated>
+  <id>http://cloudson.github.io/</id>
+  <author>
+    <name><![CDATA[Claudson Oliveira]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ligando extensões a linguagens no Vim]]></title>
+    <link href="http://cloudson.github.io/2014/10/15/ligando-extensoes-a-linguagens-no-vim/"/>
+    <updated>2014-10-15T23:31:00-03:00</updated>
+    <id>http://cloudson.github.io/2014/10/15/ligando-extensoes-a-linguagens-no-vim</id>
+    <content type="html"><![CDATA[<p>Estou engatinhando no vim, porém já venho substituído meu editor de texto principal (o sublime). Trabalhando com Drupal, muitos arquivos possuem extensões que fogem do padrão da linguagem php, então nesse pequeno post mostro como dizer pro editor que a extensão X refere-se à linguagem Y.</p>
+
+<p>Primeiramente criarei um arquivo de configuração de nome .vimrc na home do meu usuário local.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&amp;ldquo; em ~/.vimrc&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;autocmd BufRead,BufNewFile *.module <span class="nb">set </span><span class="nv">filetype</span><span class="o">=</span>php&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Com essa linha estamos executando um comando automaticamente no vim assim que lermos ou abrirmos um arquivo que termina com <strong>.module</strong>, esse comando seta o editor dizendo que o tipo de arquivo é um php.
+Como executar esse arquivo a cada chamada do vim ? Vamos chamá-lo no arquivo /etc/vim/vimrc no debian</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&amp;ldquo; final <span class="k">do </span>arquivo /etc/vim/vimrc&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;. &amp;ldquo;~/.vimrc&amp;rdquo;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Pronto! :)
+Este post é mais uma daquelas dicas rápidas que seguem de lembrete pra mim. Caso você descubra uma forma mais legal de resolver o problema, não deixe de comentar. Abraços.</p>
+]]></content>
+  </entry>
+  
+</feed>

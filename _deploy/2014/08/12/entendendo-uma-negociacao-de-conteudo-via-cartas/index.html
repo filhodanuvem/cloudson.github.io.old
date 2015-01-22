@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HTTP - Entendendo uma negociação de conteúdo via cartas - Claudson Oliveira</title>
+  <meta name="author" content="Claudson Oliveira">
+
+  
+  <meta name="description" content="Atualmente é quase impossível implementar um sistema sem estabelecer conexão com outros sistemas, uma arquitetura orientada a serviços é cada vez &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Claudson Oliveira" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17973396-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Claudson Oliveira</a></h1>
+  
+    <h2>Ediscere, Scire, Agere, Vincere.</h2>
+  
+</hgroup>
+       
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+   <li><a href="http://github.com/cloudson" target="_blank"><img src="/images/github.png" width="20px"/></a></li>
+   <li><a href="http://twitter.com/cloudson" target="_blank"><img src="/images/bird_32_gray.png" width="24px"/></a></li>
+   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><img src="/images/rss.png" width="20px"/></a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cloudson.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">Sobre</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HTTP - Entendendo Uma Negociação De Conteúdo via Cartas</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T22:17:00-03:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Atualmente é quase impossível implementar um sistema sem estabelecer conexão com outros sistemas, uma arquitetura orientada a serviços é cada vez mais valorizada.
+Hoje vamos falar um pouco sobre uma das características básicas do http e/ou de serviços sob a filosofia REST; <em>Content Negotiation</em>.</p>
+
+<h2>A brincadeira</h2>
+
+<p>Duas pessoas poliglotas resolvem trocar cartas em quaisquer idiomas que domiman, elas só precisam informar no envelope em que idioma a resposta deve ser enviada.</p>
+
+<h3>Caso 1: Tudo ou nada</h3>
+
+<p>João envia uma primeira carta para Maria perguntando como está seu novo emprego, seu envelope contém a informação</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: pt-BR
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recebida a carta, Maria entende que João aceita uma carta de resposta em português do Brasil, o que não é problema para uma mineira.
+Ela envia a resposta e coloca no envolope</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Content-Language: pt-BR
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ou seja, ela está confirmando que sua carta de resposta está em tal língua.</p>
+
+<h3>Caso 2: Várias Opções de línguas</h3>
+
+<p>João resolve testar os conhecimentos de Maria e envia uma carta com o seguinte envelope</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: fr; q=1.0, en-US; q=0.3, pt-BR; q=0.2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nesse envelope a informação de linguagem segue um padrão maluco que informa  <br/>
+fr; q=1.0 &ndash; Me responda em francês, num ranking de fluência, eu dou 100% de importância pra ela.<br/>
+en-US; q=0.3  &ndash; Se não falar francês, pode me responder em inglês americano.<br/>
+pt-BR; q=0.2 &ndash; Por fim, me responda em português brasileiro mesmo ¬¬</p>
+
+<p>Maria não fala francês e como viu que a segunda língua mais relevante pra João é o inglês, que domina, ela retorna</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Content-Language: en-US
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Caso 3: Línguas desconhecidas</h3>
+
+<p>Num terceiro momento João envia uma carta pra maria pedindo uma resposta em chinês</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept-Language: zh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Mas &hellip; Maria não sabe falar essa língua e como ela não pode deixar João esperando, responde no envolope</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Status: 406
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O campo de status fala sobre a resposta, nesse caso (<a href="http://httpstatus.es/406">406</a>), Maria informou que não consegue responder nessa língua.</p>
+
+<h2>Cliente e Servidor</h2>
+
+<p>Nos casos acima, João é o cliente, pode ser um navegador web, mas é mais interessante pensarmos genericamente num client consumindo uma api. Maria é o servidor que está expondo/servindo uma api.
+As mensagens em questão são <em>requests</em> e <em>responses</em> HTTP, e o envelope representa na verdade um cabeçaho do protocolo.</p>
+
+<h3>Negociação de conteúdo sobre mime-types</h3>
+
+<p>O caso mais usado sobre negociação de conteúdo em serviços fala sobre tipos. Você pode/deve desenvolver uma api que serve, transparentemente, conteúdos em mime-types diferentes, pelo menos em xml e json. A estória é a mesma, porém os cabeçalhos usado são <em>Accept</em>/<em>Content-type</em>. Veja um exemplo:</p>
+
+<p>Request:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Accept: application/json; q=1.0, text/html; q=0.5; */*; q=0.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Response:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Status: 200
+</span><span class='line'>Content-type: application/json
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O Client pediu conteúdo em json ou html ou qualquer merda haha. <br/>
+A aplicação, serviu um json.</p>
+
+<h3>Conclusão</h3>
+
+<p>Como vimos, a negociação de conteúdo é um mecanismo do http para que uma aplicação sirva um conteúdo (ou melhor, uma representação de um recurso) de modo que o cliente entenda, pode haver negociação sobre tipos (quero que você me sirva uma imagem ao invés de um json), sobre linguagens (quero essa página em inglês), sobre encodings e charsets.<br/>
+Algumas (muitas) APIs fazem negociação de tipo via url, inserindo uma extensão (eu mesmo já <a href="http://phartitura.com/Guzzle/Http.png">fiz</a> <a href="http://phartitura.com/Guzzle/Http.json">isso</a>). Há bastante discussão sobre, não é a melhor maneira de se fazer, mas é a forma mais fácil e acessível via browser/humanos mais leigos. <br/>
+Espero poder voltar e falar um pouco sobre status code, que é algo simples que muitas APIs importantes não respeitam.</p>
+
+<h3>Referências</h3>
+
+<p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec12.html">RFC 2616</a><br/>
+<a href="http://en.wikipedia.org/wiki/Content_negotiation">Wikipedia</a><br/>
+<a href="http://httpstatus.es/">HTTP status</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Claudson Oliveira</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T22:17:00-03:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/api/'>api</a>, <a class='category' href='/blog/categories/http/'>http</a>, <a class='category' href='/blog/categories/rest/'>rest</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/08/11/olhar-urbano-01/" title="Previous Post: Olhar urbano 01">&laquo; Olhar urbano 01</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/09/06/streams-em-php/" title="Next Post: Streams em PHP">Streams em PHP &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/10/15/ligando-extensoes-a-linguagens-no-vim/">Ligando extensões a linguagens no Vim</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/09/06/streams-em-php/">Streams em PHP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/">HTTP - Entendendo uma negociação de conteúdo via cartas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/08/11/olhar-urbano-01/">Olhar urbano 01</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/23/gitql-do-que-e-feito/">Gitql - Do que é feito?</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cloudson">@cloudson</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cloudson',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Claudson Oliveira -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cloudsonblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/';
+        var disqus_url = 'http://cloudson.github.io/2014/08/12/entendendo-uma-negociacao-de-conteudo-via-cartas/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
